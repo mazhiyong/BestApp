@@ -1,0 +1,9 @@
+include ':app',
+        ':KLineChartLib',
+        ':framelibrary',
+        ':mars-core-release',
+        ':client',
+        ':emojilibrary',
+        ':imagepicker',
+        ':avenginekit',
+        ':push'

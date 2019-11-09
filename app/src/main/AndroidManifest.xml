@@ -1,0 +1,1548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.lr.best">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions"/>
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" /> <!-- 支持iBeancon 需要蓝牙权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 支持个推3.0 电子围栏功能 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="com.shsk.shop.activity.permission.JPUSH_MESSAGE"
+        tools:ignore="UniquePermission" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- Optional for location -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 保存或读出图片还应该添加读写权限 -->
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" /> <!-- 添加程序访问网络的权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+    <uses-permission android:name="android.permission.ADD_VOICEMAIL" />
+    <uses-permission android:name="android.permission.USE_SIP" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" /> <!-- 读取联系人权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- 拨打电话权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- 读取短信权限 -->
+    <uses-permission android:name="android.permission.READ_SMS" /> <!-- 开机启动权限 -->
+    <!-- <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> -->
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" /> <!-- 融云permission -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="MediaStore.Images.Media.INTERNAL_CONTENT_URI" />
+    <uses-permission android:name="MediaStore.Images.Media.EXTERNAL_CONTENT_URI" /> <!-- ⼩米 配置开始 < -->
+
+    <permission
+        android:name="permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature"
+        tools:ignore="UniquePermission" />
+
+    <uses-permission android:name="cn.rongcloud.im.permission.MIPUSH_RECEIVE" /> <!-- ⼩米 配置结束 < -->
+    <!-- GCM 配置开始 < -->
+    <permission
+        android:name="permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="cn.rongcloud.im.permission.C2D_MESSAGE" /> <!-- GCM 配置结束 < -->
+    <!-- 华为 配置开始 < -->
+    <!-- HMS-SDK引导升级HMS功能，访问OTA服务器需要网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- HMS-SDK引导升级HMS功能，保存下载的升级包需要SD卡写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 检测网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 检测wifi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 为了获取用户手机的IMEI，用来唯一的标识用户。 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 华为 配置结束 < -->
+    <!-- MeiZu 配置开始 < -->
+    <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到 消息 -->
+    <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
+
+    <permission
+        android:name="rongyun.push.permission.MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="cn.rongcloud.im.push.permission.MESSAGE" /> <!-- 兼容 flyme3.0 配置权限 -->
+    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" /> <!-- MeiZu 配置结束 < -->
+    <!-- OPPPO 权限配置 -->
+    <uses-permission android:name="com.coloros.mcs.permission.SEND_MCS_MESSAGE" /> <!-- OPPO 配置结束 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
+
+    <application
+        android:name=".basic.BasicApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher_foreground"
+        android:label="@string/app_name_main"
+        android:networkSecurityConfig="@xml/net_request"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon,android:label,android:allowBackup,android:name,android:networkSecurityConfig">
+
+
+        <meta-data
+            android:name="TencentMapSDK"
+            android:value="TOEBZ-67IR4-ZDHUV-DSDXX-TJZU7-UYFE7" />
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+        <!--
+ <meta-data
+            tools:replace="android:value"
+            android:name="RONG_CLOUD_APP_KEY"
+            android:value="k51hidwqk4j8b" />
+        -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.lr.best.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity
+            android:name=".ui.moudle.activity.SplashActivity"
+            android:label="@string/app_name_main"
+            android:theme="@style/SplashTheme">
+            <intent-filter android:label="@string/app_name_main">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
+                <data
+                    android:host="www.example.com"
+                    android:pathPrefix="/gizmos"
+                    android:scheme="http" />
+                <!-- note that the leading "/" is required for pathPrefix -->
+                <!--
+                Accepts URIs that begin with "example://gizmos”
+                <data android:scheme="example"
+                      android:host="gizmos" />
+                -->
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <meta-data
+            android:name="com.lr.best.utils.imageload.MyGlideAppModule"
+            android:value="MyGlideAppModule" />
+
+        <activity
+            android:name=".ui.moudle.activity.GuideViewPageActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".ui.moudle.activity.MainActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name=".ui.moudle.activity.LoginActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".ui.temporary.activity.PerfectInfoActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".ui.temporary.activity.ChoosePhoneActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".ui.temporary.activity.NormalNameListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".ui.temporary.activity.FoodManagerActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".ui.temporary.activity.TellUsActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".ui.moudle.activity.RegistActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 注册 -->
+        <activity
+            android:name=".ui.temporary.activity.MoreSetActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 登录手机号 -->
+        <activity
+            android:name=".ui.temporary.activity.LoginPhoneInfoActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 更改手机号 -->
+        <activity
+            android:name=".ui.temporary.activity.ChangePhoneActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 短信验证码 -->
+        <activity
+            android:name=".ui.temporary.activity.CodeMsgActivity"
+            android:configChanges="screenSize|orientation|keyboard|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateAlwaysVisible"/> <!-- 修改登录密码 -->
+        <activity
+            android:name=".ui.temporary.activity.ModifyLoginPassActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 重置登录密码 -->
+        <activity
+            android:name=".ui.moudle.activity.ResetLoginPassActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 重置登录密码 -->
+        <activity
+            android:name=".ui.moudle.activity.ResetLoginPassButActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 用户信息页面 -->
+        <activity
+            android:name=".ui.moudle1.activity.UserInfoActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 用户信息页面 -->
+
+        <activity
+            android:name="cn.wildfire.chat.kit.conversation.ConversationActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale" />
+
+        <activity
+            android:name="cn.wildfire.chat.kit.location.ui.activity.ShowLocationActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"  />
+
+        <activity
+            android:name="cn.wildfire.chat.kit.location.ui.activity.MyLocationActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"/>
+
+        <activity
+            android:name="cn.wildfire.chat.kit.location.ui.activity.TestActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"/>
+
+        <activity
+            android:name="cn.wildfire.chat.kit.user.SetAliasActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"  />
+        <activity
+            android:name="cn.wildfire.chat.kit.user.ChangeMyNameActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale" />
+
+        <activity
+            android:name="cn.wildfire.chat.kit.mm.TakePhotoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen" />
+
+        <activity
+            android:name="cn.wildfire.chat.kit.group.SetGroupNameActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"  />
+        <activity
+            android:name="cn.wildfire.chat.kit.mm.MMPreviewActivity"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity android:name="cn.wildfire.chat.kit.voip.SingleVoipCallActivity">
+            <intent-filter>
+                <action android:name="${applicationId}.kit.voip.single" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+        <activity
+            android:name="cn.wildfire.chat.kit.conversation.CreateConversationActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale" />
+        <activity
+            android:name="cn.wildfire.chat.kit.group.AddGroupMemberActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale" />
+        <activity
+            android:name="cn.wildfire.chat.kit.group.RemoveGroupMemberActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale" />
+        <activity
+            android:name="cn.wildfire.chat.kit.conversation.mention.MentionGroupMemberActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale" />
+        <activity
+            android:name="cn.wildfire.chat.kit.group.GroupListActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            />
+        <activity
+            android:name="cn.wildfire.chat.kit.contact.newfriend.FriendRequestListActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale" />
+        <activity
+            android:name="cn.wildfire.chat.kit.contact.newfriend.SearchUserActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale" />
+        <activity
+            android:name="cn.wildfire.chat.kit.contact.newfriend.InviteFriendActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            />
+        <activity
+            android:name="cn.wildfire.chat.kit.user.UserInfoActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale" />
+        <activity
+            android:name="cn.wildfire.chat.kit.conversation.ConversationInfoActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            />
+        <activity
+            android:name="cn.wildfire.chat.kit.chatroom.ChatRoomListActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:label="聊天室列表" />
+        <activity
+            android:name="cn.wildfire.chat.kit.search.SearchPortalActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            />
+        <activity
+            android:name="cn.wildfire.chat.kit.conversation.forward.ForwardActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            />
+        <activity
+            android:name="cn.wildfire.chat.kit.conversation.forward.PickConversationTargetToForwardActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale" />
+
+        <activity
+            android:name="cn.wildfire.chat.kit.channel.ChannelListActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:label="频道列表" />
+
+        <activity
+            android:name="cn.wildfire.chat.kit.channel.CreateChannelActivity"
+            android:label="创建频道"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            />
+
+        <activity android:name="cn.wildfire.chat.kit.channel.ChannelInfoActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"/>
+
+        <activity android:name="cn.wildfire.chat.kit.WfcWebViewActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale">
+            <intent-filter>
+                <action android:name="${applicationId}.webview" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="cn.wildfire.chat.kit.search.SearchMessageActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"/>
+        <activity android:name="cn.wildfire.chat.kit.channel.SearchChannelActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"/>
+        <activity android:name="cn.wildfire.chat.kit.group.PickGroupMemberActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"/>
+
+        <activity android:name="cn.wildfire.chat.kit.qrcode.QRCodeActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"/>
+        <activity
+            android:name="cn.wildfire.chat.kit.group.GroupInfoActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            />
+        <activity
+            android:name="cn.wildfire.chat.kit.qrcode.ScanQRCodeActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:label="扫一扫" />
+        <activity android:name="cn.wildfire.chat.kit.group.manage.GroupManageActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"/>
+        <activity android:name="cn.wildfire.chat.kit.group.manage.GroupManagerListActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"/>
+        <activity android:name="cn.wildfire.chat.kit.group.manage.AddGroupManagerActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"/>
+        <activity android:name="cn.wildfire.chat.kit.group.manage.GroupMuteActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"/>
+        <activity android:name="cn.wildfire.chat.kit.group.manage.GroupMemberPermissionActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"/>
+        <activity
+            android:name="cn.wildfire.chat.kit.group.GroupMemberListActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            />
+        <activity
+            android:name="cn.wildfire.chat.kit.contact.pick.PickContactActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale" />
+
+
+        <activity
+            android:name=".ui.temporary.activity.MoreInfoManagerActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 用户信息页面 -->
+        <activity
+            android:name=".ui.temporary.activity.HangYeActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 我的额度 授信列表   授信详情  预授信详情 -->
+        <activity
+            android:name=".ui.temporary.activity.ShouxinPreDetailActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 还款计划界面 -->
+        <activity
+            android:name=".ui.temporary.activity.PayPlanActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 身份证实名认证 -->
+        <activity
+            android:name=".ui.temporary.activity.IdCardCheckActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 身份证实名认证图片界面 -->
+        <activity
+            android:name=".ui.temporary.activity.IdCardPicActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 人脸认证 -->
+        <activity
+            android:name=".ui.temporary.activity.FaceCheckActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 人工认证审核 -->
+        <activity
+            android:name=".ui.temporary.activity.IdCardMyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 审核等待界面 -->
+        <activity
+            android:name=".ui.temporary.activity.CheckWatiActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 审核成功 -->
+        <activity
+            android:name=".ui.temporary.activity.IdCardSuccessActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 银行卡绑定 -->
+        <activity
+            android:name=".ui.temporary.activity.BankCardActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 银行卡绑定 -->
+        <activity
+            android:name=".ui.temporary.activity.BankCardBindActivity"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="adjustResize|stateHidden"/> <!-- 开户 -->
+        <activity
+            android:name=".ui.temporary.activity.BankOpenActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/> <!-- 开户协议 -->
+        <activity
+            android:name=".ui.temporary.activity.BankOpenXieyiActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateAlwaysHidden"/> <!-- 开户成功 -->
+        <activity
+            android:name=".ui.temporary.activity.BankOpenSuccessActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateAlwaysHidden"/> <!-- 网银签约 -->
+        <activity
+            android:name=".ui.temporary.activity.BankQianyueActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 网银签约 -->
+        <activity
+            android:name=".ui.temporary.activity.BankBindSuccessActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 银行名称列表 -->
+        <activity
+            android:name=".ui.temporary.activity.BankNameListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateAlwaysHidden"/> <!-- 选择银行 -->
+        <activity
+            android:name=".ui.temporary.activity.SelectBankListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateAlwaysHidden"/> <!-- 交易明细 -->
+        <activity
+            android:name=".ui.moudle5.activity.TradeListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 交易明细 -->
+        <activity
+            android:name=".ui.temporary.activity.TradeDetailActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 借款详情 -->
+        <activity
+            android:name=".ui.temporary.activity.BorrowDetailActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 借款信息 -->
+        <activity
+            android:name=".ui.temporary.activity.MyBorrowMoneyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 我的借款 -->
+        <activity
+            android:name=".ui.temporary.activity.BorrowInfoActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 附件信息 -->
+        <activity
+            android:name=".ui.temporary.activity.FujianShowActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 合同信息 -->
+        <activity
+            android:name=".ui.temporary.activity.HeTongShowActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 上传贷款凭证 -->
+        <activity
+            android:name=".ui.temporary.activity.UploadDkYongTActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 受托支付信息 -->
+        <activity
+            android:name=".ui.temporary.activity.PayTheInfoActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 还款记录 -->
+        <activity
+            android:name=".ui.temporary.activity.PayHistoryActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 还款记录 -->
+        <activity
+            android:name=".ui.temporary.activity.RepaymentInfoActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 工作信息 -->
+        <activity
+            android:name=".ui.temporary.activity.WorkInfoActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 待办信息 -->
+        <activity
+            android:name=".ui.temporary.activity.ApplyAmountActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 申请额度 -->
+        <activity
+            android:name=".ui.temporary.activity.ModifyFileActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/YourTheme"
+            android:windowSoftInputMode="stateHidden"/> <!-- 添加附件 -->
+        <activity
+            android:name=".ui.temporary.activity.AddFileActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 添加附件 -->
+        <activity
+            android:name=".ui.moudle.activity.ShowDetailPictrue"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/YourTheme"
+            android:windowSoftInputMode="stateHidden"/> <!-- 申请成功界面 -->
+        <activity
+            android:name=".ui.temporary.activity.SubmitResultActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 借款  还款  成功界面 -->
+        <activity
+            android:name=".ui.temporary.activity.ResultMoneyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 我的-  我的额度 -->
+        <activity
+            android:name=".ui.temporary.activity.MyAmountActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 授信详情页面 -->
+        <activity
+            android:name=".ui.temporary.activity.ShouxinDetailActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 授信详情页面 -->
+        <activity
+            android:name=".ui.temporary.activity.ShouxinJkListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 授信合同页面 -->
+        <activity
+            android:name=".ui.temporary.activity.HeTongListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 添加共同借款人 -->
+        <activity
+            android:name=".ui.temporary.activity.AddSamePeopleActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 共同借款人列表 -->
+        <activity
+            android:name=".ui.temporary.activity.SamePeopleListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 我要借款 -->
+        <activity
+            android:name=".ui.temporary.activity.BorrowMoneyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 添加收款人 -->
+        <activity
+            android:name=".ui.temporary.activity.BorrowMoneySelectActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 我要借款  选择借款类型 -->
+        <activity
+            android:name=".ui.temporary.activity.AddSKPeopleActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 添加收款人 -->
+        <activity
+            android:name=".ui.temporary.activity.PeopleCheckActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 银行网点选择 -->
+        <activity
+            android:name=".ui.temporary.activity.ChoseBankAddActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 银行网点选择 -->
+        <activity
+            android:name=".ui.temporary.activity.BankWdActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 收款人列表 -->
+        <activity
+            android:name=".ui.temporary.activity.SkPeopleListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- 还款 -->
+        <activity
+            android:name=".ui.moudle4.activity.PayMoneyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- html界面 还款协议 -->
+        <activity
+            android:name=".ui.moudle1.activity.HtmlActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:process=":RemoteProcess"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/> <!-- pdf界面 还款协议 -->
+        <activity
+            android:name=".ui.temporary.activity.PDFLookActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/>
+
+        <service android:name=".service.DownloadService"/>
+        <service
+            android:name=".service.InitService"
+            android:exported="false" /> <!-- 总资产 -->
+        <activity
+            android:name=".ui.temporary.activity.AllZiChanActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".ui.temporary.activity.IdCardMyPicActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 修改交易密码 -->
+        <activity
+            android:name=".ui.temporary.activity.ModifyOrderPassActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 修改交易密码  填写新的密码以及确认密码 -->
+        <activity
+            android:name=".ui.temporary.activity.NewOrderPassActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 手动输入身份证号界面 -->
+        <activity
+            android:name=".ui.moudle.activity.IdCardEditActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 发帖 -->
+        <activity
+            android:name=".ui.temporary.activity.UserIdeaActivity"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 待办事项列表 -->
+        <activity
+            android:name=".ui.temporary.activity.WaitDoWorkActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 指纹登录 -->
+        <activity
+            android:name=".ui.temporary.activity.FingermentActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 指纹登录 -->
+        <activity
+            android:name=".ui.temporary.activity.FingerCheckActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 手势登录 -->
+        <activity
+            android:name=".ui.temporary.activity.PatternActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 手势的解锁或者绘制 -->
+        <activity
+            android:name=".ui.temporary.activity.DrawPatternActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 指纹识别 -->
+        <activity
+            android:name=".ui.temporary.activity.FingerRecognieActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 关于我们 -->
+        <activity
+            android:name=".ui.moudle.activity.SettingActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 币友在线介绍 -->
+        <activity
+            android:name=".ui.moudle5.activity.ChongBiActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 合同签署 -->
+        <activity
+            android:name=".ui.temporary.activity.SignLoanActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 提现 -->
+        <activity
+            android:name=".ui.temporary.activity.TiXianActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 充值校验 -->
+        <activity
+            android:name=".ui.temporary.activity.ChongzhiTestActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 添加新的充值卡 -->
+        <activity
+            android:name=".ui.temporary.activity.ChongZhiCardAddActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 提现校验 -->
+        <activity
+            android:name=".ui.temporary.activity.TiXianTestActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 状态反馈 -->
+        <!-- 提现校验 -->
+        <activity
+            android:name=".ui.temporary.activity.FuKuanFinishActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 状态反馈 -->
+        <activity
+            android:name=".ui.temporary.activity.StateFeedbackActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 开启服务提醒 -->
+        <activity
+            android:name=".ui.temporary.activity.ServicesRemindActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".ui.temporary.activity.ServicesRemindInfoActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业信息录入 认证 -->
+        <activity
+            android:name=".ui.temporary.activity.QiyeInfoActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业信息展示 -->
+        <activity
+            android:name=".ui.temporary.activity.QiyeInfoShowActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业账号信息录入 认证 -->
+        <activity
+            android:name=".ui.temporary.activity.QiyeCardInfoActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业打款认证 -->
+        <activity
+            android:name=".ui.temporary.activity.QiyeDakuanCheckActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业申请证书 -->
+        <activity
+            android:name=".ui.temporary.activity.QiyeApplyCaActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业申请证书 支付界面 -->
+        <!-- 企业申请证书 修改后的 -->
+        <activity
+            android:name=".ui.temporary.activity.QiyeCaPayActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业申请证书 支付界面 转账界面 -->
+        <activity
+            android:name=".ui.temporary.activity.QiyeCaZhuanZhangActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业申请证书 提交结果界面 -->
+        <activity
+            android:name=".ui.temporary.activity.QiyeCaActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 扫描注册二维码 -->
+        <activity
+            android:name=".ui.moudle.activity.TestScanActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 扫描发票 -->
+        <activity
+            android:name=".ui.temporary.activity.InvoiceActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 完善合同信息 -->
+        <activity
+            android:name=".ui.temporary.activity.InvoiceListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 发票导入结果 -->
+        <activity
+            android:name=".ui.temporary.activity.InvoiceAddActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 手动录入发票 -->
+        <activity
+            android:name=".ui.temporary.activity.InvoiceImportActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 发票导入结果 -->
+        <activity
+            android:name=".ui.temporary.activity.HeTongSelectActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 完善合同信息 -->
+        <activity
+            android:name=".ui.temporary.activity.HeTongAddActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 新增合同 -->
+        <activity
+            android:name=".ui.temporary.activity.SelectFukuanFangActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 选择付款方 -->
+        <activity
+            android:name=".ui.temporary.activity.ShouldShouMoneyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 选择应收账款 -->
+        <activity
+            android:name=".ui.temporary.activity.SelectPingZhengActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 选择关联凭证 -->
+        <activity
+            android:name=".ui.temporary.activity.IntoChiActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 申请入池 -->
+        <activity
+            android:name=".ui.temporary.activity.IntoChiFinishActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 申请入池完成 -->
+        <activity
+            android:name=".ui.temporary.activity.MyShouMoneyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 我的应收账款 -->
+        <activity
+            android:name=".ui.temporary.activity.ShouMoneyItemActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".ui.temporary.activity.BankTiXianModifyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 预付款列表 -->
+        <activity
+            android:name=".ui.temporary.activity.AdvancePayListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 预付款合同添加 -->
+        <activity
+            android:name=".ui.temporary.activity.AdvanceHtAddActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 邀请好友 -->
+        <activity
+            android:name=".ui.moudle1.activity.YaoQingActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 折线走势图 -->
+        <activity
+            android:name=".ui.moudle3.activity.CoinInfoDetailActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 充币选择币种类型 -->
+        <activity
+            android:name=".ui.moudle5.activity.ChoseBiTypeActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 提币 -->
+        <activity
+            android:name=".ui.moudle5.activity.TiBiActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 提币  地址管理 -->
+        <activity
+            android:name=".ui.moudle5.activity.TibiAddressActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 提币  添加地址 -->
+        <activity
+            android:name=".ui.moudle5.activity.AddAddressActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 划转 -->
+        <activity
+            android:name=".ui.moudle5.activity.HuaZhuanActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 划转记录 -->
+        <activity
+            android:name=".ui.moudle5.activity.HuaZhuanListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 订单历史 -->
+        <activity
+            android:name=".ui.moudle4.activity.DingDanListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 关于我们 -->
+        <activity
+            android:name=".ui.moudle.activity.AboutActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 联系客服 -->
+        <activity
+            android:name=".ui.moudle.activity.ContactKefuActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 安全中心 -->
+        <activity
+            android:name=".ui.moudle.activity.SecurityActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 安全中心  二维码校验 -->
+        <activity
+            android:name=".ui.moudle.activity.SecurityCheckActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 重置支付密码 -->
+        <activity
+            android:name=".ui.moudle.activity.ResetPayPassButActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 收款方式 -->
+        <activity
+            android:name=".ui.moudle1.activity.PayListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 添加支付方式 -->
+        <activity
+            android:name=".ui.moudle1.activity.AddPayWayActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 公告列表 -->
+        <activity
+            android:name=".ui.moudle1.activity.NoticeListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 公告详情 -->
+        <activity
+            android:name=".ui.moudle1.activity.NoticeDetialActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 帮助列表 -->
+        <activity
+            android:name=".ui.moudle1.activity.HelpListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 帮助详情 -->
+        <activity
+            android:name=".ui.moudle1.activity.HelpDetialActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 委托列表 -->
+        <activity
+            android:name=".ui.moudle4.activity.WeiTuoListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 聊天界面 -->
+        <activity
+            android:name=".ui.moudle2.activity.ChatActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/><!-- 修改昵称 -->
+        <activity
+            android:name=".ui.moudle.activity.UpdateNichengActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 添加好友 -->
+        <!-- 聊天消息通知列表 -->
+        <activity
+            android:name=".ui.moudle2.activity.ChatNoticeListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustResize"/> <!-- 选择联系人 -->
+        <!-- 聊天详情 -->
+        <!-- 群聊聊天详情 -->
+        <!-- 投诉原因选择 -->
+        <activity
+            android:name=".ui.moudle2.activity.ChoseReasonTypeActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 投诉原因选择 -->
+        <activity
+            android:name=".ui.moudle2.activity.TousuActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 群二维码名片 -->
+        <!-- 群管理 -->
+        <!-- 红包 -->
+        <activity
+            android:name=".ui.moudle2.activity.RedMoneyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 红包领取界面 -->
+        <activity
+            android:name=".ui.moudle2.activity.RedListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 红包记录界面 -->
+        <activity
+            android:name=".ui.moudle2.activity.RedRecordListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 转账 -->
+
+
+
+        <activity
+            android:name=".ui.moudle2.activity.TransferMoneyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 融云Activity -->
+        <activity
+            android:name=".chatry.ui.activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".chatry.ui.activity.SelectCountryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.ConversationActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.lr.best"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity> <!-- 聚合会话列表 -->
+        <activity
+            android:name=".chatry.ui.activity.SubConversationListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.lr.best"
+                    android:path="/subconversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity> <!-- 聚合会话列表 -->
+        <activity
+            android:name=".chatry.ui.activity.NewFriendListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".chatry.ui.activity.GroupNoticeListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".chatry.ui.activity.SealSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.SearchFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.SearchHistoryMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.GroupListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.PublicServiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.PublicServiceSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.PublicServiceInfoActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.lr.best"
+                    android:pathPrefix="/publicServiceProfile"
+                    android:scheme="rong" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.lr.best"
+                    android:pathPrefix="/publicServiceInfo"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".chatry.ui.activity.AccountSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.ChangeLanguageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.AboutSealTalkActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.WebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.PrivateChatSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.GroupDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.GroupMemberListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.GroupNoticeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.UserDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.SelectSingleFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.SelectGroupMemberActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.SelectFriendExcluedGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.SelectForwardCreateChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.SelectCreateGroupActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".chatry.ui.activity.ForwardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".chatry.ui.activity.MyAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.UpdateNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.UpdateStAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.UpdateGenderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.CreateGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.EditAliasActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.PrivacyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.UpdatePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.BlackListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.NewMessageRemindActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.MessageDonotDisturbSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.MemberMentionedExActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.QrCodeDisplayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.QrCodeDisplayWindowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentNoTitleActivity" />
+        <activity
+            android:name=".chatry.ui.activity.SealPicturePagerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".chatry.ui.activity.JoinGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.GroupManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.GroupManagementsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.GroupSetManagementsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.GroupSetNewGroupOwnerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.SelectForwardMoreContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.ForwardSelectedDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.ScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.AddFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.AddFriendFromContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.InviteFriendFromContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chatry.ui.activity.RequestContactPermissionActivity"
+            android:screenOrientation="portrait" /> <!-- 请将CHANNAL改为app的发布渠道 < -->
+        <meta-data
+            android:name="InstallChannel"
+            android:value="CHANNAL" /> <!-- 高德地图 -->
+        <!--
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="替换你申请的高德地图 ApiKey" />
+        -->
+        <!--
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="替换您申请的 UMeng AppKey" />
+        -->
+        <!--
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="替换您申请的 UMeng Channel" />
+        -->
+        <!-- push start -->
+        <receiver
+            android:name=".chatry.push.SealNotificationReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
+            </intent-filter>
+        </receiver> <!-- 第三方的推送 权限 广播 和服务 -->
+        <!-- 小米 配置开始 < -->
+        <service
+            android:name="com.xiaomi.push.service.XMPushService"
+            android:enabled="true" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" /> <!-- 注：此service必须在2.2.5版本以后（包括2.2.5版本）加入 -->
+        <service
+            android:name="com.xiaomi.push.service.XMJobService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 注：此service必须在3.0.1版本以后（包括3.0.1版本）加入 -->
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.PingReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.xiaomi.push.PING_TIMER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="io.rong.push.platform.mi.MiMessageReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver> <!-- 小米 配置结束 < -->
+        <!-- HMS 配置开始 -->
+        <!--
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="替换为您申请的华为推送 AppId" />
+        -->
+        <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面 -->
+        <!--
+<activity
+            android:name="com.huawei.hms.activity.BridgeActivity"
+            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent">
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui.Translucent" />
+        </activity>
+        -->
+        <!-- 解决华为移动服务升级问题的透明界面（必须声明） -->
+        <activity
+            android:name="io.rong.push.platform.hms.common.HMSAgentActivity"
+            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent">
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui.Translucent" />
+        </activity>
+        <!--
+  <provider
+              android:name="com.huawei.hms.update.provider.UpdateProvider"
+              android:authorities="hms.update.provider"
+              android:exported="false"
+              android:grantUriPermissions="true"></provider>
+        -->
+        <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
+        <receiver android:name="io.rong.push.platform.hms.HMSReceiver">
+            <intent-filter>
+
+                <!-- 必须,用于接收token -->
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+                <!-- 必须，用于接收消息 -->
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
+                <action android:name="com.huawei.android.push.intent.CLICK" />
+                <!-- 可选，查看push通道是否连接，不查看则不需要 -->
+                <action android:name="com.huawei.intent.action.PUSH_STATE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
+            <intent-filter>
+
+                <!-- 接收通道发来的通知栏消息，兼容老版本Push -->
+                <action android:name="com.huawei.intent.action.PUSH" />
+            </intent-filter>
+        </receiver> <!-- HMS 配置结束 -->
+        <!-- [START firebase_service] -->
+        <!--
+        <service
+            android:name="io.rong.push.platform.google.RongFirebaseMessagingService"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+        -->
+        <!-- [END firebase_service] -->
+        <!-- MeiZu 配置开始 < -->
+        <receiver android:name="io.rong.push.platform.meizu.MeiZuReceiver">
+            <intent-filter>
+
+                <!-- 接收 push 消息 -->
+                <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
+                <!-- 接收 register 消息 -->
+                <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
+                <!-- 接收 unregister 消息 -->
+                <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
+
+                <!-- 兼容低版本 Flyme3 推送服务配置 -->
+                <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
+                <action android:name="com.meizu.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.lr.best" />
+            </intent-filter>
+        </receiver> <!-- MeiZu 配置结束 < -->
+        <!-- vivo 推送配置 开始 -->
+        <service
+            android:name="com.vivo.push.sdk.service.CommandClientService"
+            android:exported="true" />
+
+        <activity
+            android:name="com.vivo.push.sdk.LinkProxyClientActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".chatry.ui.activity.GroupReadReceiptDetailActivity"
+            android:screenOrientation="portrait" /> <!-- 微信 接收微信的请求及返回值 -->
+        <activity
+            android:name=".chatry.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:taskAffinity="net.sourceforge.simcpux"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- 推送配置项 -->
+        <!--
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="您申请的 vivo 推送 ApiKey" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="您申请的 vivo 推送 AppId" />
+        -->
+        <!-- push 应用定义消息 receiver 声明 -->
+        <receiver android:name="io.rong.push.platform.vivo.VivoPushMessageReceiver">
+            <intent-filter>
+
+                <!-- 接收 push 消息 -->
+                <action android:name="com.vivo.pushclient.action.RECEIVE" />
+            </intent-filter>
+        </receiver> <!-- vivo 推送配置 结束 -->
+        <!-- OPPO push 配置开始 -->
+        <service
+            android:name="com.coloros.mcssdk.PushService"
+            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
+            <intent-filter>
+                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+
+        <!-- Socket后台服务-->
+        <service android:name=".service.SocketService"/>
+
+        <service android:name="com.lzf.easyfloat.service.FloatService" />
+    </application>
+
+</manifest>

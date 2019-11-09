@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/white"
+              android:orientation="vertical">
+        <include
+            android:id="@+id/top_layout"
+            layout="@layout/title_leftbut_bar"/>
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+         >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/item_padding"
+                            android:background="@color/body_bg"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:background="@color/divide_line"/>
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/head_img_lay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            android:clickable="true"
+                            app:contentPadding="0dp"
+                            app:paddingEnd="0dp"
+                            app:paddingStart="0dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:focusable="false">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="@dimen/dp_15"
+                                    android:paddingRight="@dimen/dp_15"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    >
+                                        <TextView
+                                            android:layout_width="0dip"
+                                            android:layout_height="match_parent"
+                                            android:layout_weight="1"
+                                            android:gravity="left|center_vertical"
+                                            android:textSize="@dimen/sp_14"
+                                            android:textColor="@color/black"
+                                            android:text="@string/head_img" />
+
+                                        <de.hdodenhof.circleimageview.CircleImageView
+                                            android:id="@+id/head_img_view"
+                                            android:layout_width="@dimen/dp_45"
+                                            android:layout_height="@dimen/dp_45"
+                                            android:layout_marginBottom="@dimen/dp_5"
+                                            android:layout_marginTop="@dimen/dp_5"
+                                            android:src="@drawable/head"
+                                            />
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:layout_width="@dimen/dp_10"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginLeft="@dimen/dp_10"
+                                            android:src="@drawable/android_list_idex"
+                                            android:layout_height="@dimen/dp_10" />
+                                </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:background="@color/divide_line"/>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            android:padding="@dimen/item_padding"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:focusable="false">
+                                <LinearLayout
+                                    android:id="@+id/busines_name_lay"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="@dimen/dp_15"
+                                    android:paddingRight="@dimen/dp_15"
+                                    android:paddingTop="@dimen/item_padding"
+                                    android:paddingBottom="@dimen/item_padding"
+                                    android:orientation="horizontal"
+                                    >
+
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:gravity="left|center_vertical"
+                                            android:textSize="@dimen/sp_15"
+                                            android:textColor="@color/black"
+                                            android:text="昵称" />
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="@dimen/dp_2"
+                                            android:layout_weight="1"/>
+                                        <TextView
+                                            android:id="@+id/phone_tv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="@dimen/sp_13"
+                                            android:text="小马哥"
+                                            android:textColor="@color/gray"
+                                            />
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:layout_width="@dimen/dp_10"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginLeft="@dimen/dp_10"
+                                            android:src="@drawable/android_list_idex"
+                                            android:layout_height="@dimen/dp_10" />
+                                </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:background="@color/divide_line"/>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/ercode_lay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            android:padding="@dimen/item_padding"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:focusable="false">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:orientation="vertical"
+                                    android:layout_height="wrap_content">
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/white"
+                                            android:paddingLeft="@dimen/dp_15"
+                                            android:paddingRight="@dimen/dp_15"
+                                            android:paddingTop="@dimen/item_padding"
+                                            android:paddingBottom="@dimen/item_padding"
+                                            android:orientation="horizontal">
+
+                                                <TextView
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="1"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:text="我的二维码"
+                                                    android:textSize="@dimen/sp_15"
+                                                    android:textColor="@color/black"
+                                                    />
+                                                <ImageView
+                                                    android:id="@+id/iv_code"
+                                                    android:layout_width="@dimen/dp_20"
+                                                    android:src="@drawable/erweimacode"
+                                                    android:layout_gravity="center_vertical"
+                                                    android:layout_height="@dimen/dp_20" />
+
+                                                <androidx.appcompat.widget.AppCompatImageView
+                                                    android:layout_width="@dimen/dp_10"
+                                                    android:layout_gravity="center_vertical"
+                                                    android:layout_marginLeft="@dimen/dp_10"
+                                                    android:src="@drawable/android_list_idex"
+                                                    android:layout_height="@dimen/dp_10" />
+                                        </LinearLayout>
+
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/divide_hight"
+                                            android:visibility="gone"
+                                            android:background="@color/divide_line"/>
+                                </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/item_padding"
+                            android:visibility="gone"
+                            android:background="@color/body_bg"/>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
+                            android:background="@color/divide_line"/>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            android:visibility="gone"
+                            app:cardElevation="0dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:focusable="false">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="@dimen/dp_15"
+                                    android:paddingRight="@dimen/dp_15"
+                                    android:paddingTop="@dimen/item_padding"
+                                    android:paddingBottom="@dimen/item_padding"
+                                    android:orientation="horizontal"
+                                    >
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:gravity="left|center_vertical"
+                                            android:textSize="@dimen/sp_15"
+                                            android:textColor="@color/black"
+                                            android:text="@string/user_name_str" />
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="@dimen/dp_2"
+                                            android:layout_weight="1"/>
+                                        <TextView
+                                            android:id="@+id/name_tv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="@dimen/sp_15"
+                                            android:textColor="@color/black"
+
+                                            />
+                                </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
+                            android:background="@color/divide_line"/>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:focusable="false">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="@dimen/dp_15"
+                                    android:paddingRight="@dimen/dp_15"
+                                    android:paddingTop="@dimen/item_padding"
+                                    android:paddingBottom="@dimen/item_padding"
+                                    android:orientation="horizontal"
+                                    >
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:gravity="left|center_vertical"
+                                            android:textSize="@dimen/sp_15"
+                                            android:textColor="@color/black"
+                                            android:text="@string/card_kind" />
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="@dimen/dp_2"
+                                            android:layout_weight="1"/>
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="@dimen/sp_15"
+                                            android:textColor="@color/black"
+                                            android:text="身份证"
+                                            />
+                                </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
+                            android:background="@color/divide_line"/>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            android:visibility="gone"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:focusable="false">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="@dimen/dp_15"
+                                    android:paddingRight="@dimen/dp_15"
+                                    android:paddingTop="@dimen/item_padding"
+                                    android:paddingBottom="@dimen/item_padding"
+                                    android:orientation="horizontal"
+                                    >
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:gravity="left|center_vertical"
+                                            android:textSize="@dimen/sp_15"
+                                            android:textColor="@color/black"
+                                            android:text="@string/card_num" />
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="@dimen/dp_2"
+                                            android:layout_weight="1"/>
+                                        <TextView
+                                            android:id="@+id/idcard_value_tv"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="@dimen/sp_15"
+                                            android:textColor="@color/black"
+                                            />
+                                </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
+                            android:background="@color/divide_line"/>
+
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            android:visibility="gone"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:focusable="false">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="@dimen/dp_15"
+                                    android:paddingRight="@dimen/dp_15"
+                                    android:paddingTop="@dimen/item_padding"
+                                    android:paddingBottom="@dimen/item_padding"
+                                    android:orientation="horizontal"
+                                    >
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:gravity="left|center_vertical"
+                                            android:textSize="@dimen/sp_15"
+                                            android:textColor="@color/black"
+                                            android:text="@string/phone_number" />
+                                        <View
+                                            android:layout_width="0dp"
+                                            android:layout_height="@dimen/dp_2"
+                                            android:layout_weight="1"/>
+                                        <TextView
+                                            android:id="@+id/phone_tv2"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="@dimen/sp_15"
+                                            android:textColor="@color/black"
+                                            />
+                                </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
+                            android:background="@color/divide_line"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/more_info_lay"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:focusable="false">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:paddingLeft="@dimen/dp_20"
+                                    android:paddingRight="@dimen/dp_20"
+                                    android:paddingTop="@dimen/item_padding"
+                                    android:paddingBottom="@dimen/item_padding"
+                                    android:orientation="horizontal">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:gravity="left|center_vertical"
+                                            android:textSize="@dimen/sp_15"
+                                            android:textColor="@color/black"
+                                            android:layout_gravity="center"
+                                            android:text="@string/more_info" />
+                                </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <View
+                            android:id="@+id/more_info_line"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
+                            android:background="@color/divide_line"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:layout_marginTop="@dimen/dp_30"
+                            android:visibility="gone"
+                            android:background="@color/divide_line"/>
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/logout_lay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="0dp"
+                            android:visibility="gone"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:focusable="false">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:paddingLeft="@dimen/dp_20"
+                                    android:paddingRight="@dimen/dp_20"
+                                    android:paddingTop="@dimen/item_padding"
+                                    android:paddingBottom="@dimen/item_padding"
+                                    android:orientation="horizontal">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="match_parent"
+                                            android:gravity="left|center_vertical"
+                                            android:layout_gravity="center"
+                                            android:textSize="@dimen/sp_15"
+                                            android:textColor="@color/black"
+                                            android:text="@string/logout" />
+                                </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:background="@color/divide_line"/>
+                        <TextView
+                            android:id="@+id/exit_tv"
+                            android:layout_width="match_parent"
+                            android:layout_margin="@dimen/dp_35"
+                            android:text="退  出  应  用"
+                            android:padding="@dimen/dp_10"
+                            android:background="@drawable/btn_next"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            android:gravity="center_horizontal"
+                            android:layout_height="wrap_content" />
+                </LinearLayout>
+        </ScrollView>
+</LinearLayout>
