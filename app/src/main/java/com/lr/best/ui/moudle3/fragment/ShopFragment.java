@@ -60,7 +60,7 @@ import com.lr.best.ui.moudle3.adapter.BuyAdapter;
 import com.lr.best.ui.moudle3.adapter.SellAdapter;
 import com.lr.best.ui.moudle3.adapter.ShouMoneyListAdapter;
 import com.lr.best.ui.moudle3.adapter.TypeSelectAdapter;
-import com.lr.best.ui.moudle4.adapter.MyViewPagerAdapter;
+import com.lr.best.ui.moudle2.adapter.MyViewPagerAdapter;
 import com.lr.best.utils.tool.AnimUtil;
 import com.lr.best.utils.tool.JSONUtil;
 import com.lr.best.utils.tool.LogUtilDebug;
@@ -81,7 +81,7 @@ import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
 
-public class HeYueFragment extends BasicFragment implements RequestView, ReLoadingData, SelectBackListener,WeiboHeaderPagerBehavior.OnPagerStateListener {
+public class ShopFragment extends BasicFragment implements RequestView, ReLoadingData, SelectBackListener,WeiboHeaderPagerBehavior.OnPagerStateListener {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.appbar_layout)
@@ -312,7 +312,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         }
     };
 
-    public HeYueFragment() {
+    public ShopFragment() {
         // Required empty public constructor
     }
 

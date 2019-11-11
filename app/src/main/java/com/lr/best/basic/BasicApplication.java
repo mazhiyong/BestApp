@@ -129,7 +129,7 @@ public class BasicApplication extends MultiDexApplication {
 		 */
 		BGASwipeBackHelper.init(this,  null);
 
-		Bugly.init(this, "07f9d2bf36", false);
+		Bugly.init(this, "006c11db32", false);
 
 		new Handler().post(new Runnable() {
 			@Override

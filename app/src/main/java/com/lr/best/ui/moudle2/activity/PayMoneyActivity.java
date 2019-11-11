@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle4.activity;
+package com.lr.best.ui.moudle2.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.ClipData;

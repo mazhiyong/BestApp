@@ -1,13 +1,11 @@
-package com.lr.best.ui.moudle4.adapter;
+package com.lr.best.ui.moudle2.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lr.best.R;
 import com.lr.best.listener.OnChildClickListener;
 import com.lr.best.ui.moudle.adapter.ListBaseAdapter;
-import com.lr.best.utils.tool.LogUtilDebug;
 import com.lr.best.utils.tool.UtilTools;
 
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle4.fragment;
+package com.lr.best.ui.moudle2.fragment;
 
 import android.animation.Animator;
 import android.app.Activity;
@@ -48,10 +48,10 @@ import com.lr.best.mywidget.view.LoadingWindow;
 import com.lr.best.mywidget.view.PageView;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle.activity.ResetPayPassButActivity;
-import com.lr.best.ui.moudle4.activity.DingDanListActivity;
-import com.lr.best.ui.moudle4.activity.PayMoneyActivity;
-import com.lr.best.ui.moudle4.adapter.DingDanListAdapter;
-import com.lr.best.ui.moudle4.adapter.FBTradeListAdapter;
+import com.lr.best.ui.moudle2.activity.DingDanListActivity;
+import com.lr.best.ui.moudle2.activity.PayMoneyActivity;
+import com.lr.best.ui.moudle2.adapter.DingDanListAdapter;
+import com.lr.best.ui.moudle2.adapter.FBTradeListAdapter;
 import com.lr.best.utils.tool.AnimUtil;
 import com.lr.best.utils.tool.LogUtilDebug;
 import com.lr.best.utils.tool.SPUtils;

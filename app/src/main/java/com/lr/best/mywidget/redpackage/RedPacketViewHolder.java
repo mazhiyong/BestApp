@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lr.best.R;
-import com.lr.best.ui.moudle2.activity.RedListActivity;
+import com.lr.best.ui.moudle4.activity.RedListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

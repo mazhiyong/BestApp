@@ -34,9 +34,9 @@ import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.dialog.UpdateDialog;
 import com.lr.best.service.DownloadService;
 import com.lr.best.ui.moudle1.fragment.HomeFragment;
-import com.lr.best.ui.moudle2.fragment.ChatViewFragment;
-import com.lr.best.ui.moudle3.fragment.HeYueFragment;
-import com.lr.best.ui.moudle4.fragment.OTCFragment;
+import com.lr.best.ui.moudle4.fragment.ChatViewFragment;
+import com.lr.best.ui.moudle3.fragment.ShopFragment;
+import com.lr.best.ui.moudle2.fragment.TradeFragment;
 import com.lr.best.ui.moudle5.fragment.ZiChanFragment;
 import com.lr.best.utils.permission.PermissionsUtils;
 import com.lr.best.utils.permission.RePermissionResultBack;
@@ -89,9 +89,9 @@ public class MainActivity extends BasicActivity implements RequestView {
     private ImageView[] mTabs;
     private TextView[] mTextViews;
     private HomeFragment mHomeFrament;
-    private ChatViewFragment mIndexFragment;
-    private HeYueFragment mBorrowFragment;
-    private OTCFragment mRepaymentFragment;
+    private ChatViewFragment mChatFragment;
+    private ShopFragment mShopFragment;
+    private TradeFragment mTradeFragment;
     private ZiChanFragment mPersonFragment;
     private Fragment[] fragments;
 
@@ -242,33 +242,6 @@ public class MainActivity extends BasicActivity implements RequestView {
         });
 
 
-
-       /* //连接融云
-        if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
-            String s = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
-            MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
-        }
-       imManager.connectIM(MbsConstans.RONGYUN_MAP.get("token")+"", true, new ResultCallback<String>() {
-                            @Override
-                            public void onSuccess(String s) {
-                                // 存储当前登录成功的用户信息
-                                String mAccount = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.LOGIN_ACCOUNT,"")+"";
-                                String mPassWord = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.LOGIN_PASSWORD,"")+"";
-                                UserCacheInfo info = new UserCacheInfo( MbsConstans.RONGYUN_MAP.get("id")+"",
-                                        MbsConstans.RONGYUN_MAP.get("token")+"",
-                                        mAccount+"", mPassWord+"", "86", null);
-                                userCache.saveUserCache(info);
-                                LogUtilDebug.i("show","链接rong融云成功");
-                        }
-
-                            @Override
-                            public void onFail(int errorCode) {
-                                LogUtilDebug.i("show","链接rong融云失败");
-                            }
-                        });
-*/
-
-
         //0 红跌绿涨   1红涨绿跌
         String colorType = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE, "0").toString();
         if (colorType.equals("0")) {
@@ -348,9 +321,6 @@ public class MainActivity extends BasicActivity implements RequestView {
             }
         });
 
-
-
-
     }
 
 
@@ -387,11 +357,11 @@ public class MainActivity extends BasicActivity implements RequestView {
         mTextViews[0].setSelected(true);
 
         mHomeFrament = new HomeFragment();
-        mIndexFragment = new ChatViewFragment();
-        mBorrowFragment = new HeYueFragment();
-        mRepaymentFragment = new OTCFragment();
+        mChatFragment = new ChatViewFragment();
+        mShopFragment = new ShopFragment();
+        mTradeFragment = new TradeFragment();
         mPersonFragment = new ZiChanFragment();
-        fragments = new Fragment[]{mHomeFrament, mIndexFragment, mBorrowFragment, mRepaymentFragment, mPersonFragment};
+        fragments = new Fragment[]{mHomeFrament,  mTradeFragment, mShopFragment,  mChatFragment,mPersonFragment};
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mHomeFrament)
                 .show(mHomeFrament)
                 .commitAllowingStateLoss();
@@ -475,18 +445,18 @@ public class MainActivity extends BasicActivity implements RequestView {
             if (!fragments[index].isAdded()) {
                 trx.add(R.id.fragment_container, fragments[index]);
             } else {
-                switch (index) {// mIndexFragment, mBorrowFragment, mRepaymentFragment,mPersonFragment
+                switch (index) {// mChatFragment, mBorrowFragment, mTradeFragment,mPersonFragment
                     case 0:
                         ((HomeFragment) fragments[index]).setBarTextColor();
                         break;
                     case 1:
-                        ((ChatViewFragment) fragments[index]).setBarTextColor();
+                        ((TradeFragment) fragments[index]).setBarTextColor();
                         break;
                     case 2:
-                        ((HeYueFragment) fragments[index]).setBarTextColor();
+                        ((ShopFragment) fragments[index]).setBarTextColor();
                         break;
                     case 3:
-                        ((OTCFragment) fragments[index]).setBarTextColor();
+                        ((ChatViewFragment) fragments[index]).setBarTextColor();
                         break;
                     case 4:
                         ((ZiChanFragment) fragments[index]).setBarTextColor();
@@ -521,18 +491,18 @@ public class MainActivity extends BasicActivity implements RequestView {
                     if (!fragments[index].isAdded()) {
                         trx.add(R.id.fragment_container, fragments[index]);
                     } else {
-                        switch (index) {// mIndexFragment, mBorrowFragment, mRepaymentFragment,mPersonFragment
+                        switch (index) {// mChatFragment, mBorrowFragment, mTradeFragment,mPersonFragment
                             case 0:
                                 ((HomeFragment) fragments[index]).setBarTextColor();
                                 break;
                             case 1:
-                                ((ChatViewFragment) fragments[index]).setBarTextColor();
+                                ((TradeFragment) fragments[index]).setBarTextColor();
                                 break;
                             case 2:
-                                ((HeYueFragment) fragments[index]).setBarTextColor();
+                                ((ShopFragment) fragments[index]).setBarTextColor();
                                 break;
                             case 3:
-                                ((OTCFragment) fragments[index]).setBarTextColor();
+                                ((ChatViewFragment) fragments[index]).setBarTextColor();
                                 break;
                             case 4:
                                 ((ZiChanFragment) fragments[index]).setBarTextColor();
@@ -778,6 +748,8 @@ public class MainActivity extends BasicActivity implements RequestView {
             mUpdateDialog.getProgressLay().setVisibility(View.GONE);
             DownloadService.mProgressBar = mUpdateDialog.getProgressBar();
             DownloadService.mTextView = mUpdateDialog.getPrgText();
+
+
         }
     }
 
@@ -810,16 +782,16 @@ public class MainActivity extends BasicActivity implements RequestView {
     }
 
     public void toBBFragment(String selectArea, String slectSymbol, String type) {
-        rlay4.performClick();
-        mRepaymentFragment.TYPE = 0;
-        mRepaymentFragment.selectSymbol = slectSymbol;
-        mRepaymentFragment.selectArea = selectArea;
-        mRepaymentFragment.buySell = type;
+        rlay2.performClick();
+        mTradeFragment.TYPE = 0;
+        mTradeFragment.selectSymbol = slectSymbol;
+        mTradeFragment.selectArea = selectArea;
+        mTradeFragment.buySell = type;
     }
 
     public void toFBFragment() {
-        rlay4.performClick();
-        mRepaymentFragment.TYPE = 1;
+        rlay2.performClick();
+        mTradeFragment.TYPE = 1;
     }
 
 

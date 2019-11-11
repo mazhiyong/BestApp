@@ -1,10 +1,9 @@
-package com.lr.best.ui.moudle2.adapter;
+package com.lr.best.ui.moudle4.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,23 +15,13 @@ import com.lr.best.listener.OnChildClickListener;
 import com.lr.best.ui.moudle.adapter.ListBaseAdapter;
 import com.lr.best.utils.imageload.GlideUtils;
 
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SelectContractListAdapter extends ListBaseAdapter {
+public class ChatNoticeListAdapter extends ListBaseAdapter {
 
-    private List<Map<String, Object>> mBooleanList;
-
-    public void setBooleanList(List<Map<String, Object>> booleanList) {
-        mBooleanList = booleanList;
-    }
-
-    public List<Map<String, Object>> getBooleanList() {
-        return mBooleanList;
-    }
 
     private LayoutInflater mLayoutInflater;
 
@@ -42,67 +31,67 @@ public class SelectContractListAdapter extends ListBaseAdapter {
         this.mListener = mListener;
     }
 
-    public SelectContractListAdapter(Context context) {
+    public ChatNoticeListAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
         mContext = context;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mLayoutInflater.inflate(R.layout.item_select_contract, parent, false));
+        return new ViewHolder(mLayoutInflater.inflate(R.layout.item_chat_notice, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Map<String, Object> item = mDataList.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
-        final Map<String,Object> bMap = mBooleanList.get(position);
-
-        boolean isSelect = (Boolean) bMap.get("selected");
-        viewHolder.mCheckBox.setChecked(isSelect);
         viewHolder.nameTv.setText(item.get("name") + "");
         GlideUtils.loadImage(mContext,item.get("portrait")+"",viewHolder.headIv);
+        switch (item.get("status")+""){
+            case "0": //待审核
+                viewHolder.agreeTv.setVisibility(View.VISIBLE);
+                viewHolder.refuseTv.setVisibility(View.VISIBLE);
+                viewHolder.addedTv.setVisibility(View.GONE);
+                break;
 
+            case "1"://同意
+                viewHolder.agreeTv.setVisibility(View.GONE);
+                viewHolder.refuseTv.setVisibility(View.GONE);
+                viewHolder.addedTv.setVisibility(View.VISIBLE);
+                viewHolder.addedTv.setText("已添加");
+                break;
 
-        viewHolder.mCheckBox.setOnClickListener(new View.OnClickListener() {
+            case "2"://拒绝
+                viewHolder.agreeTv.setVisibility(View.GONE);
+                viewHolder.refuseTv.setVisibility(View.GONE);
+                viewHolder.addedTv.setVisibility(View.VISIBLE);
+                viewHolder.addedTv.setText("已拒绝");
+                break;
+        }
+
+        viewHolder.agreeTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewHolder.tradeLay.performClick();
-            }
-        });
-
-        viewHolder.tradeLay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                for (Map map:mBooleanList){
-                    Map<String,Object> mSelectMap = (Map<String, Object>) map.get("value");
-                    if (mSelectMap ==  item){
-                        boolean b = (boolean) map.get("selected");
-                        if (b){
-                            map.put("selected",false);
-                        }else {
-                            map.put("selected",true);
-                        }
-                    }
-                }
-
                 if (mListener != null){
-                    mListener.onChildClickListener(viewHolder.tradeLay,position,item);
-                    notifyDataSetChanged();
+                    mListener.onChildClickListener(viewHolder.itemView,1,item);
                 }
             }
         });
 
-
+        viewHolder.refuseTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null){
+                    mListener.onChildClickListener(viewHolder.itemView,2,item);
+                }
+            }
+        });
 
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.check_box)
-        CheckBox mCheckBox;
         @BindView(R.id.head_iv)
         ImageView headIv;
         @BindView(R.id.name_tv)

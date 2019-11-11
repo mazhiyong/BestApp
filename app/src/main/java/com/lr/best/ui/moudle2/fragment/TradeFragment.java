@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle4.fragment;
+package com.lr.best.ui.moudle2.fragment;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -7,7 +7,7 @@ import com.androidkun.xtablayout.XTabLayout;
 import com.jaeger.library.StatusBarUtil;
 import com.lr.best.R;
 import com.lr.best.basic.BasicFragment;
-import com.lr.best.ui.moudle4.adapter.MyViewPagerAdapter;
+import com.lr.best.ui.moudle2.adapter.MyViewPagerAdapter;
 import com.lr.best.utils.tool.LogUtilDebug;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import butterknife.BindView;
 /**
  * OTC
  */
-public class OTCFragment extends BasicFragment {
+public class TradeFragment extends BasicFragment {
 
     @BindView(R.id.iv)
     ViewPager mViewPager;
@@ -39,7 +39,7 @@ public class OTCFragment extends BasicFragment {
     public String selectSymbol = "BTC";
     public String buySell = "1";
 
-    public OTCFragment() {
+    public TradeFragment() {
         // Required empty public constructor
     }
 

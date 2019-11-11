@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.lr.best.R;
 import com.lr.best.mywidget.dialog.SureOrNoDialog;
-import com.lr.best.ui.moudle2.activity.ChoseReasonTypeActivity;
+import com.lr.best.ui.moudle4.activity.ChoseReasonTypeActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;

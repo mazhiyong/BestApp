@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle4.fragment;
+package com.lr.best.ui.moudle2.fragment;
 
 import android.animation.Animator;
 import android.app.Activity;
@@ -56,9 +56,9 @@ import com.lr.best.ui.moudle3.activity.CoinInfoDetailActivity;
 import com.lr.best.ui.moudle3.adapter.BuyAdapter;
 import com.lr.best.ui.moudle3.adapter.SellAdapter;
 import com.lr.best.ui.moudle3.adapter.TypeSelectAdapter;
-import com.lr.best.ui.moudle4.activity.WeiTuoListActivity;
-import com.lr.best.ui.moudle4.adapter.EntrustListAdapter;
-import com.lr.best.ui.moudle4.adapter.WeiTuoListAdapter;
+import com.lr.best.ui.moudle2.activity.WeiTuoListActivity;
+import com.lr.best.ui.moudle2.adapter.EntrustListAdapter;
+import com.lr.best.ui.moudle2.adapter.WeiTuoListAdapter;
 import com.lr.best.utils.tool.AnimUtil;
 import com.lr.best.utils.tool.BigDecimalUtils;
 import com.lr.best.utils.tool.JSONUtil;
@@ -1738,7 +1738,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        ((OTCFragment)getParentFragment()).setUserVisibleHint(false);
+        ((TradeFragment)getParentFragment()).setUserVisibleHint(false);
         if (hidden){
             LogUtilDebug.i("show","BBfragment 可见");
             if (handler != null && cnyRunnable!= null){
@@ -1746,7 +1746,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             }
         }else {
             LogUtilDebug.i("show","BBfragment 不可见");
-            ((OTCFragment)getParentFragment()).setUserVisibleHint(true);
+            ((TradeFragment)getParentFragment()).setUserVisibleHint(true);
             if (handler != null && cnyRunnable!= null){
                 handler.post(cnyRunnable);
             }

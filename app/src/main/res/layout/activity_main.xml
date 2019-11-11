@@ -104,18 +104,6 @@
                     android:text="@string/bottom_chat"/>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/unread_address_number"
-                android:layout_marginTop="@dimen/dp_2"
-                android:layout_width="@dimen/dp_14"
-                android:layout_height="@dimen/dp_14"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/dp_10"
-                android:gravity="center"
-                android:visibility="gone"
-                android:textSize="@dimen/sp_8"
-                android:textColor="@color/white"
-                android:background="@drawable/em_unread_dot"/>
         </RelativeLayout>
 
 
@@ -186,6 +174,19 @@
                 android:textSize="@dimen/sp_12"
                 android:text="@string/bottom_otc"/>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/unread_address_number"
+                android:layout_marginTop="@dimen/dp_2"
+                android:layout_width="@dimen/dp_14"
+                android:layout_height="@dimen/dp_14"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textSize="@dimen/sp_8"
+                android:textColor="@color/white"
+                android:background="@drawable/em_unread_dot"/>
         </RelativeLayout>
 
         <RelativeLayout

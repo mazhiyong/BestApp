@@ -244,7 +244,7 @@
 
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:text="合约交易"
+                                android:text="法币交易"
                                 android:layout_marginLeft="@dimen/dp_10"
                                 android:layout_gravity="center_vertical"
                                 android:textSize="@dimen/sp_14"

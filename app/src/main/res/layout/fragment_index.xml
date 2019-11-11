@@ -25,8 +25,7 @@
                 android:id="@+id/layout_view_text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/yellow"
-                android:text="@string/eat_order"/>
+                android:textColor="@color/yellow" />
             <TextView
                 android:id="@+id/order_num_tv"
                 android:layout_width="wrap_content"
@@ -40,7 +39,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_marginBottom="@dimen/dp_5"
-            android:background="@color/black"></View>
+            android:background="@color/black"/>
 
         <LinearLayout
             android:id="@+id/layout_view2"
@@ -90,6 +89,6 @@
         android:id="@+id/index_manager_page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        ></androidx.viewpager.widget.ViewPager>
+        />
 
 </LinearLayout>

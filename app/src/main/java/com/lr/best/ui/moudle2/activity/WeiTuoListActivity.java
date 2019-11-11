@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle4.activity;
+package com.lr.best.ui.moudle2.activity;
 
 import android.animation.Animator;
 import android.content.Intent;
@@ -20,8 +20,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidkun.xtablayout.XTabLayout;
 import com.flyco.dialog.utils.CornerUtils;
-import com.github.jdsjlzx.interfaces.OnItemClickListener;
+import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnNetWorkErrorListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -32,15 +33,17 @@ import com.lr.best.R;
 import com.lr.best.api.MethodUrl;
 import com.lr.best.basic.BasicActivity;
 import com.lr.best.basic.MbsConstans;
+import com.lr.best.listener.OnChildClickListener;
 import com.lr.best.listener.OnMyItemClickListener;
 import com.lr.best.listener.ReLoadingData;
 import com.lr.best.listener.SelectBackListener;
 import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.dialog.DateSelectDialog;
+import com.lr.best.mywidget.dialog.SureOrNoDialog;
 import com.lr.best.mywidget.view.PageView;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle.adapter.TradeDialogAdapter;
-import com.lr.best.ui.moudle4.adapter.DingDanListAdapter;
+import com.lr.best.ui.moudle2.adapter.WeiTuoListAdapter;
 import com.lr.best.utils.tool.AnimUtil;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.SelectDataUtil;
@@ -56,9 +59,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 订单历史 界面
+ * 委托列表  界面
  */
-public class DingDanListActivity extends BasicActivity implements RequestView,ReLoadingData,SelectBackListener{
+public class WeiTuoListActivity extends BasicActivity implements RequestView, ReLoadingData, SelectBackListener {
 
     @BindView(R.id.back_img)
     ImageView mBackImg;
@@ -66,26 +69,18 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
     TextView mBackText;
     @BindView(R.id.left_back_lay)
     LinearLayout mLeftBackLay;
-    @BindView(R.id.title_text)
-    TextView mTitleText;
-    @BindView(R.id.right_img)
-    ImageView mRightImg;
-    @BindView(R.id.right_text_tv)
-    TextView mRightTextTv;
-    @BindView(R.id.top_layout)
-    LinearLayout mTitleBarView;
-    @BindView(R.id.right_lay)
-    LinearLayout mRightLay;
     @BindView(R.id.refresh_list_view)
     LRecyclerView mRefreshListView;
     @BindView(R.id.content)
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
+    @BindView(R.id.tab_layout)
+    XTabLayout tabLayout;
 
-    private String mRequestTag ="";
+    private String mRequestTag = "";
 
-    private String mStartTime="";
+    private String mStartTime = "";
     private String mEndTime = "";
     private String mBusiType = "";
 
@@ -93,17 +88,21 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
     private String mSelectEndTime = "";
     private String mSelectType = "";
 
-
-    private DingDanListAdapter mListAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
+    private WeiTuoListAdapter mListAdapter;
+
+    private LRecyclerViewAdapter mLRecyclerViewAdapter1 = null;
+    private WeiTuoListAdapter mListAdapter1;
+
     private List<Map<String, Object>> mDataList = new ArrayList<>();
     private int mPage = 1;
 
     private AnimUtil mAnimUtil;
+    private String status = "1";
 
     @Override
     public int getContentView() {
-        return R.layout.activity_huazhuan_list;
+        return R.layout.activity_weituo_list;
     }
 
     @Override
@@ -114,19 +113,11 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
 
         mAnimUtil = new AnimUtil();
 
-        mTitleText.setText("订单历史");
-        mTitleText.setCompoundDrawables(null,null,null,null);
-
-        mRightImg.setVisibility(View.GONE);
-        mRightImg.setImageResource(R.drawable.shuaixuan);
-        mRightTextTv.setVisibility(View.GONE);
-        mRightTextTv.setText("筛选");
-        mRightTextTv.setTextColor(ContextCompat.getColor(this,R.color.btn_login_normal));
 
         String sTime = UtilTools.getFirstDayOfMonthByDate(new Date());
 
 
-        String eTime = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
+        String eTime = UtilTools.getStringFromDate(new Date(), "yyyyMMdd");
 
         mSelectStartTime = sTime;
         mSelectEndTime = eTime;
@@ -136,16 +127,17 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
 
         initView();
         showProgressDialog();
-        traderListAction();
+        trustdListAction(status);
 
     }
+
 
 
     private void initView() {
         mPageView.setContentView(mContent);
         mPageView.setReLoadingData(this);
         mPageView.showLoading();
-        LinearLayoutManager manager = new LinearLayoutManager(DingDanListActivity.this);
+        LinearLayoutManager manager = new LinearLayoutManager(WeiTuoListActivity.this);
         manager.setOrientation(RecyclerView.VERTICAL);
         mRefreshListView.setLayoutManager(manager);
 
@@ -153,35 +145,71 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
             @Override
             public void onRefresh() {
                 mPage = 1;
-                traderListAction();
+                trustdListAction(status);
             }
         });
 
-       /* mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-               // traderListAction();
+                trustdListAction(status);
             }
-        });*/
-    }
-    private void traderListAction(){
+        });
 
-        mRequestTag = MethodUrl.HISTORY_DINGDAN;
+
+        tabLayout.addTab(tabLayout.newTab().setText("全部委托"));
+        tabLayout.addTab(tabLayout.newTab().setText("历史记录"));
+
+        tabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(XTabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0 :
+                        status = "1";
+                        trustdListAction(status);
+                        break;
+
+                    case 1 :
+                        status = "2";
+                        trustdListAction(status);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(XTabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(XTabLayout.Tab tab) {
+
+            }
+        });
+
+    }
+
+
+
+
+    private void trustdListAction(String status) {
+        mRequestTag = MethodUrl.ENTRUST_LIST;
         Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(DingDanListActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(WeiTuoListActivity.this,MbsConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("area","");
+        map.put("symbol","");
+        map.put("status",status);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.HISTORY_DINGDAN, map);
-
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ENTRUST_LIST, map);
     }
-
 
 
     private void responseData() {
         if (mListAdapter == null) {
-            mListAdapter = new DingDanListAdapter(DingDanListActivity.this);
+            mListAdapter = new WeiTuoListAdapter(WeiTuoListActivity.this);
             mListAdapter.addAll(mDataList);
 
             /*AnimationAdapter adapter = new ScaleInAnimationAdapter(mDataAdapter);
@@ -203,28 +231,19 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
             mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
 
             mRefreshListView.setPullRefreshEnabled(true);
-            mRefreshListView.setLoadMoreEnabled(false);
-
-
-            mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    Map<String, Object> item = mListAdapter.getDataList().get(position);
-                   /* Intent intent = new Intent(getActivity(), ShowDetailPictrue.class);
-                    intent.putExtra("jsonData",item.get("url")+"");
-                    startActivity(intent);*/
-                }
-
-            });
+            mRefreshListView.setLoadMoreEnabled(true);
 
 
         } else {
-            if (mPage == 1) {
-                mListAdapter.clear();
-            }
+//            if (mPage == 1) {
+//                mListAdapter.clear();
+//            }
+//            mListAdapter.addAll(mDataList);
+//            mListAdapter.notifyDataSetChanged();
+//            mLRecyclerViewAdapter.notifyDataSetChanged();//必须调用此方法
+            mListAdapter.clear();
             mListAdapter.addAll(mDataList);
-            mListAdapter.notifyDataSetChanged();
-            mLRecyclerViewAdapter.notifyDataSetChanged();//必须调用此方法
+            mRefreshListView.setAdapter(mLRecyclerViewAdapter);
         }
      /*   //设置底部加载颜色
         mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.black, android.R.color.white);
@@ -246,13 +265,122 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
 
         mRefreshListView.refreshComplete(10);
         mListAdapter.notifyDataSetChanged();
-        if (mListAdapter.getDataList().size() <= 0){
+        if (mListAdapter.getDataList().size() <= 0) {
             mPageView.showEmpty();
-        }else {
+        } else {
+            mPageView.showContent();
+        }
+
+
+        mListAdapter.setmCallBack(new OnChildClickListener() {
+            @Override
+            public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
+                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(WeiTuoListActivity.this, true);
+                sureOrNoDialog.initValue("提示", "是否撤销当前委托？");
+                sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.cancel:
+                                sureOrNoDialog.dismiss();
+                                break;
+                            case R.id.confirm:
+                                sureOrNoDialog.dismiss();
+                                //撤销委托
+                                cancelWeituoAction(mParentMap);
+                                break;
+                        }
+                    }
+                });
+                sureOrNoDialog.show();
+                sureOrNoDialog.setCanceledOnTouchOutside(false);
+                sureOrNoDialog.setCancelable(true);
+
+
+
+            }
+        });
+    }
+
+
+    private void cancelWeituoAction(Map<String, Object> mParentMap) {
+        mRequestTag = MethodUrl.CANCEL_WEITUO;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(WeiTuoListActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("id", mParentMap.get("id") + "");
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CANCEL_WEITUO, map);
+    }
+
+    private void responseData1() {
+        if (mListAdapter1 == null) {
+            mListAdapter1 = new WeiTuoListAdapter(WeiTuoListActivity.this);
+            mListAdapter1.addAll(mDataList);
+
+            /*AnimationAdapter adapter = new ScaleInAnimationAdapter(mDataAdapter);
+            adapter.setFirstOnly(false);
+            adapter.setDuration(500);
+            adapter.setInterpolator(new OvershootInterpolator(.5f));*/
+
+            mLRecyclerViewAdapter1 = new LRecyclerViewAdapter(mListAdapter1);
+
+//            SampleHeader headerView = new SampleHeader(BankCardActivity.this, R.layout.item_bank_bind);
+//            mLRecyclerViewAdapter.addHeaderView(headerView);
+
+            mRefreshListView.setAdapter(mLRecyclerViewAdapter1);
+            mRefreshListView.setItemAnimator(new DefaultItemAnimator());
+            mRefreshListView.setHasFixedSize(true);
+            mRefreshListView.setNestedScrollingEnabled(false);
+
+            mRefreshListView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+            mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
+
+            mRefreshListView.setPullRefreshEnabled(true);
+            mRefreshListView.setLoadMoreEnabled(true);
+
+
+        } else {
+//            if (mPage == 1) {
+//                mListAdapter.clear();
+//            }
+//            mListAdapter.addAll(mDataList);
+//            mListAdapter.notifyDataSetChanged();
+//            mLRecyclerViewAdapter.notifyDataSetChanged();//必须调用此方法
+            mListAdapter1.clear();
+            mListAdapter1.addAll(mDataList);
+            mRefreshListView.setAdapter(mLRecyclerViewAdapter1);
+        }
+     /*   //设置底部加载颜色
+        mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.black, android.R.color.white);
+
+        mRecyclerView.setRefreshProgressStyle(ProgressStyle.LineScalePulseOut); //设置下拉刷新Progress的样式
+        //mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);  //设置下拉刷新箭头
+        //设置头部加载颜色
+        mRecyclerView.setHeaderViewColor(R.color.colorAccent, R.color.red ,android.R.color.white);
+//设置底部加载颜色
+        mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.red ,android.R.color.white);*/
+
+        mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
+        if (mDataList.size() < 10) {
+            mRefreshListView.setNoMore(true);
+        } else {
+            mRefreshListView.setNoMore(false);
+            mPage++;
+        }
+
+        mRefreshListView.refreshComplete(10);
+        mListAdapter1.notifyDataSetChanged();
+        if (mListAdapter1.getDataList().size() <= 0) {
+            mPageView.showEmpty();
+        } else {
             mPageView.showContent();
         }
 
     }
+
     private RecyclerView mTypeRecyclerView;
     private TradeDialogAdapter mTradeDialogAdapter;
     private TextView mOneTv;
@@ -262,8 +390,8 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
     private TextView mEndTimeTv;
     private Button mResetBut;
     private Button mSureBut;
-    private  DateSelectDialog mySelectDialog;
-    private  DateSelectDialog mySelectDialog2;
+    private DateSelectDialog mySelectDialog;
+    private DateSelectDialog mySelectDialog2;
 
 
     private View popView;
@@ -274,10 +402,10 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
         initPopupWindow();
     }
 
-    private void initPopupWindow(){
+    private void initPopupWindow() {
 
-        int nH = UtilTools.getNavigationBarHeight(DingDanListActivity.this);
-        LinearLayout mNagView ;
+        int nH = UtilTools.getNavigationBarHeight(WeiTuoListActivity.this);
+        LinearLayout mNagView;
 
         if (mConditionDialog == null) {
             mySelectDialog = new DateSelectDialog(this, true, "选择日期", 21);
@@ -285,24 +413,24 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
             mySelectDialog2 = new DateSelectDialog(this, true, "选择日期", 22);
             mySelectDialog2.setSelectBackListener(this);
 
-            popView = LayoutInflater.from(DingDanListActivity.this).inflate(R.layout.dialog_trade_condition,null);
+            popView = LayoutInflater.from(WeiTuoListActivity.this).inflate(R.layout.dialog_trade_condition, null);
             mConditionDialog = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             mConditionDialog.setClippingEnabled(false);
             initConditionDialog(popView);
 
             mNagView = popView.findViewById(R.id.navigation_b_view);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,nH);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, nH);
             mNagView.setLayoutParams(layoutParams);
 
 
-            int screenWidth=UtilTools.getScreenWidth(DingDanListActivity.this);
-            int screenHeight=UtilTools.getScreenHeight(DingDanListActivity.this);
-            mConditionDialog.setWidth((int)(screenWidth*0.8));
+            int screenWidth = UtilTools.getScreenWidth(WeiTuoListActivity.this);
+            int screenHeight = UtilTools.getScreenHeight(WeiTuoListActivity.this);
+            mConditionDialog.setWidth((int) (screenWidth * 0.8));
             mConditionDialog.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
 
             //设置background后在外点击才会消失
-            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(DingDanListActivity.this,5)));
-            //mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
+            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(WeiTuoListActivity.this, 5)));
+            mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
             //自定义动画
             mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
 //            mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画
@@ -311,7 +439,7 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
             mConditionDialog.setFocusable(true);
             //popView.requestFocus();//pop设置不setBackgroundDrawable情况，把焦点给popView，添加popView.setOnKeyListener。可实现点击外部不消失，点击反键才消失
             //			mConditionDialog.showAtLocation(mCityTv, Gravity.TOP|Gravity.RIGHT, 0, 0); //设置layout在PopupWindow中显示的位置
-            mConditionDialog.showAtLocation(DingDanListActivity.this.getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
+            mConditionDialog.showAtLocation(WeiTuoListActivity.this.getWindow().getDecorView(), Gravity.TOP | Gravity.RIGHT, 0, 0);
             toggleBright();
             mConditionDialog.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -319,16 +447,15 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
                     toggleBright();
                 }
             });
-        }else {
+        } else {
             mNagView = popView.findViewById(R.id.navigation_b_view);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,nH);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, nH);
             mNagView.setLayoutParams(layoutParams);
 
-            mConditionDialog.showAtLocation(DingDanListActivity.this.getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
+            mConditionDialog.showAtLocation(WeiTuoListActivity.this.getWindow().getDecorView(), Gravity.TOP | Gravity.RIGHT, 0, 0);
             toggleBright();
         }
     }
-
 
 
     private void toggleBright() {
@@ -360,8 +487,7 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
     }
 
 
-
-    private void initConditionDialog(View view){
+    private void initConditionDialog(View view) {
 
         mTypeRecyclerView = view.findViewById(R.id.type_recycleview);
 
@@ -376,20 +502,20 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
         final View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.one_month_tv:
                         mOneTv.setSelected(true);
                         mThreeTv.setSelected(false);
                         mSetTimeTv.setSelected(false);
 
-                        String startOne = UtilTools.getMonthAgo(new Date(),-1);
-                        String endOne = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
+                        String startOne = UtilTools.getMonthAgo(new Date(), -1);
+                        String endOne = UtilTools.getStringFromDate(new Date(), "yyyyMMdd");
 
                         mSelectStartTime = startOne;
                         mSelectEndTime = endOne;
 
-                        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM-dd"));
-                        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM-dd"));
+                        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime, "yyyyMMdd", "yyyy-MM-dd"));
+                        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime, "yyyyMMdd", "yyyy-MM-dd"));
 
                         break;
                     case R.id.three_month_tv:
@@ -397,14 +523,14 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
                         mThreeTv.setSelected(true);
                         mSetTimeTv.setSelected(false);
 
-                        String startThree = UtilTools.getMonthAgo(new Date(),-3);
-                        String endThree = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
+                        String startThree = UtilTools.getMonthAgo(new Date(), -3);
+                        String endThree = UtilTools.getStringFromDate(new Date(), "yyyyMMdd");
 
                         mSelectStartTime = startThree;
                         mSelectEndTime = endThree;
 
-                        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM-dd"));
-                        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM-dd"));
+                        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime, "yyyyMMdd", "yyyy-MM-dd"));
+                        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime, "yyyyMMdd", "yyyy-MM-dd"));
 
                         break;
                     case R.id.set_time_tv:
@@ -439,30 +565,30 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
         mEndTimeTv.setOnClickListener(onClickListener);
 
 
-        List<Map<String,Object>> maps = SelectDataUtil.getCondition();
+        List<Map<String, Object>> maps = SelectDataUtil.getCondition();
 
-        GridLayoutManager linearLayoutManager = new GridLayoutManager(DingDanListActivity.this,3);
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(WeiTuoListActivity.this, 3);
         mTypeRecyclerView.setLayoutManager(linearLayoutManager);
-        mTradeDialogAdapter = new TradeDialogAdapter(DingDanListActivity.this,maps);
+        mTradeDialogAdapter = new TradeDialogAdapter(WeiTuoListActivity.this, maps);
         //第一次设置默认值
         mSelectType = "borrow";
         mTradeDialogAdapter.setSelectItme(0);
 
         mOneTv.setSelected(true);
 
-        String startOne = UtilTools.getMonthAgo(new Date(),-1);
-        String endOne = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
+        String startOne = UtilTools.getMonthAgo(new Date(), -1);
+        String endOne = UtilTools.getStringFromDate(new Date(), "yyyyMMdd");
         mSelectStartTime = startOne;
         mSelectEndTime = endOne;
 
-        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM-dd"));
-        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM-dd"));
+        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime, "yyyyMMdd", "yyyy-MM-dd"));
+        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime, "yyyyMMdd", "yyyy-MM-dd"));
 
         mTradeDialogAdapter.setOnItemClickListener(new OnMyItemClickListener() {
             @Override
             public void OnMyItemClickListener(View view, int position) {
-                Map<String,Object> itemMap =  mTradeDialogAdapter.getDatas().get(position);
-                mSelectType = itemMap.get("code")+"";
+                Map<String, Object> itemMap = mTradeDialogAdapter.getDatas().get(position);
+                mSelectType = itemMap.get("code") + "";
             }
         });
         mTypeRecyclerView.setAdapter(mTradeDialogAdapter);
@@ -471,20 +597,21 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
     private void showDateDialog() {
         mySelectDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
     }
+
     private void showDateDialog2() {
         mySelectDialog2.showAtLocation(Gravity.BOTTOM, 0, 0);
     }
 
 
-
-    private void getSelectCondition(){
+    private void getSelectCondition() {
         mStartTime = mSelectStartTime;
         mEndTime = mSelectEndTime;
         mBusiType = mSelectType;
         mPage = 1;
-        traderListAction();
+        //traderListAction();
     }
-    private void resetCondition(){
+
+    private void resetCondition() {
         mOneTv.setSelected(true);
         mThreeTv.setSelected(false);
         mSetTimeTv.setSelected(false);
@@ -494,21 +621,18 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
         mTradeDialogAdapter.setSelectItme(0);
         mTradeDialogAdapter.notifyDataSetChanged();
 
-        String startOne = UtilTools.getMonthAgo(new Date(),-1);
-        String endOne = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
+        String startOne = UtilTools.getMonthAgo(new Date(), -1);
+        String endOne = UtilTools.getStringFromDate(new Date(), "yyyyMMdd");
         mSelectStartTime = startOne;
         mSelectEndTime = endOne;
 
-        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM-dd"));
-        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM-dd"));
+        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime, "yyyyMMdd", "yyyy-MM-dd"));
+        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime, "yyyyMMdd", "yyyy-MM-dd"));
 
     }
 
 
-
-
-
-    @OnClick({R.id.back_img,R.id.right_lay,R.id.left_back_lay})
+    @OnClick({R.id.back_img, R.id.left_back_lay})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -518,15 +642,12 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
             case R.id.left_back_lay:
                 finish();
                 break;
-            case R.id.right_lay:
-                showDialog();
-                break;
         }
     }
 
     @Override
     public void showProgress() {
-        //showProgressDialog();
+        showProgressDialog();
     }
 
     @Override
@@ -537,28 +658,49 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
 
-        Intent intent ;
-        switch (mType){
-            case MethodUrl.HISTORY_DINGDAN://
-                switch ((tData.get("code") + "")) {
+        Intent intent;
+        switch (mType) {
+            case MethodUrl.ENTRUST_LIST:
+                switch (tData.get("code") + ""){
                     case "0":
-                            mDataList = (List<Map<String, Object>>) tData.get("data");
-                            if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
-                                mPageView.showContent();
-                                responseData();
-                                mRefreshListView.refreshComplete(10);
-                            } else {
-                                mPageView.showEmpty();
+                        mDataList = (List<Map<String, Object>>) tData.get("data");
+                        if (mDataList != null && mDataList.size()>0){
+                            for (Map<String,Object> map :mDataList){
+                                map.put("status",status);
                             }
+
+                            mPageView.showContent();
+                            responseData();
+                        }else {
+                            mPageView.showEmpty();
+                        }
                         break;
                     case "1":
-                        closeAllActivity();
-                        intent = new Intent(DingDanListActivity.this, LoginActivity.class);
+                        closeActivity();
+                        intent = new Intent(WeiTuoListActivity.this, LoginActivity.class);
                         startActivity(intent);
                         break;
-
                     case "-1":
                         mPageView.showNetworkError();
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+                }
+                //结束下拉刷新
+                //mRefreshListView.refreshComplete(10);
+                break;
+
+            case MethodUrl.CANCEL_WEITUO:
+                switch (tData.get("code") + ""){
+                    case "0":
+                        showToastMsg(tData.get("msg")+"");
+                        trustdListAction(status);
+                        break;
+                    case "1":
+                        closeActivity();
+                        intent = new Intent(WeiTuoListActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
                         showToastMsg(tData.get("msg")+"");
                         break;
                 }
@@ -568,7 +710,7 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
                 mIsRefreshToken = false;
                 switch (mRequestTag) {
                     case MethodUrl.tradeList:
-                        traderListAction();
+
                         break;
                 }
                 break;
@@ -576,52 +718,54 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
     }
 
     @Override
-    public void loadDataError(Map<String, Object> map,String mType) {
+    public void loadDataError(Map<String, Object> map, String mType) {
 
         switch (mType) {
             case MethodUrl.tradeList://
-                if (mListAdapter != null){
-                    if (mListAdapter.getDataList().size() <= 0){
+                if (mListAdapter != null) {
+                    if (mListAdapter.getDataList().size() <= 0) {
                         mPageView.showNetworkError();
-                    }else {
+                    } else {
                         mPageView.showContent();
                     }
                     mRefreshListView.refreshComplete(10);
                     mRefreshListView.setOnNetWorkErrorListener(new OnNetWorkErrorListener() {
                         @Override
                         public void reload() {
-                            traderListAction();
+                           trustdListAction(status);
                         }
                     });
-                }else {
+                } else {
                     mPageView.showNetworkError();
                 }
                 break;
         }
 
-        dealFailInfo(map,mType);
+        dealFailInfo(map, mType);
     }
 
     @Override
     public void reLoadingData() {
         showProgressDialog();
-        traderListAction();
+        trustdListAction(status);
     }
 
     @Override
     public void onSelectBackListener(Map<String, Object> map, int type) {
-        switch (type){
+        switch (type) {
             case 21:
-                mSelectStartTime = map.get("date")+"";
+                mSelectStartTime = map.get("date") + "";
                 mStartTimeTv.setText(mSelectStartTime);
-                mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM-dd"));
+                mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime, "yyyyMMdd", "yyyy-MM-dd"));
                 break;
             case 22:
-                mSelectEndTime = map.get("date")+"";
+                mSelectEndTime = map.get("date") + "";
                 mEndTimeTv.setText(mSelectEndTime);
-                mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM-dd"));
+                mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime, "yyyyMMdd", "yyyy-MM-dd"));
                 break;
         }
 
     }
+
+
 }

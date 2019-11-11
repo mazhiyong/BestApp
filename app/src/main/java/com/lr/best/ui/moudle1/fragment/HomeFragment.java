@@ -48,7 +48,7 @@ import com.lr.best.ui.moudle1.activity.UserInfoActivity;
 import com.lr.best.ui.moudle1.activity.YaoQingActivity;
 import com.lr.best.ui.moudle1.adapter.MainCoinAdapter;
 import com.lr.best.ui.moudle1.adapter.MoreTypeAdapter;
-import com.lr.best.ui.moudle2.activity.RedRecordListActivity;
+import com.lr.best.ui.moudle4.activity.RedRecordListActivity;
 import com.lr.best.ui.moudle3.activity.CoinInfoDetailActivity;
 import com.lr.best.ui.moudle5.activity.ChoseBiTypeActivity;
 import com.lr.best.ui.moudle5.activity.HuaZhuanActivity;
@@ -409,32 +409,16 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                         if (!UtilTools.empty(mapData)) {
                             List<Map<String, Object>> rankList = new ArrayList<>();
                             Map<String, Object> mapMarket = null;
+                            if (UtilTools.empty(mapData.get("market_tickers")+"")){
+                                return;
+                            }
                             switch (biType) {
                                 case "1":
-                                    if (!UtilTools.empty(mapData.get("market_tickers")+"")){
-                                        rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
-                                    }
-                                    break;
                                 case "USDT":
-                                    if (!UtilTools.empty(mapData.get("market_tickers")+"")){
-                                        rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
-                                    }
-                                    break;
                                 case "BTC":
-                                    if (!UtilTools.empty(mapData.get("market_tickers")+"")){
-                                        rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
-                                    }
-
-                                    break;
                                 case "ETH":
-                                    if (!UtilTools.empty(mapData.get("market_tickers")+"")){
-                                        rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
-                                    }
-                                    break;
                                 case "2":
-                                    if (!UtilTools.empty(mapData.get("market_tickers")+"")){
-                                        rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
-                                    }
+                                    rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
                                     break;
                             }
 
@@ -551,9 +535,9 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                 intent = new Intent(getActivity(), NoticeListActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.to_hy_lay: //合约交易
+            case R.id.to_hy_lay: //法币交易
                 if (activity != null){
-                    activity.toHeYueFragment();
+                    activity.toFBFragment();
                 }
                 break;
             case R.id.to_bb_lay: //币币交易
@@ -561,10 +545,8 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                     activity.toBBFragment("USDT","BTC","1");
                 }
                 break;
-            case R.id.fast_buy_lay: //快捷购买
-                if (activity != null){
-                    activity.toFBFragment();
-                }
+            case R.id.fast_buy_lay: //闪兑
+
                 break;
         }
     }

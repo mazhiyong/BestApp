@@ -15,12 +15,10 @@
     <string name="shuzi_dian">0123456789.</string>
 
 
-    <string name="biaoge_title">营收表格</string>
-    <string name="eat_order">堂食订单</string>
     <string name="bottom_index">首页</string>
-    <string name="bottom_chat">聊天</string>
-    <string name="bottom_heyue">合约</string>
-    <string name="bottom_otc">OTC</string>
+    <string name="bottom_chat">交易</string>
+    <string name="bottom_heyue">商城</string>
+    <string name="bottom_otc">聊天</string>
     <string name="bottom_zichan">资产</string>
 
     <string name="phone_number">登录账号</string>
@@ -66,7 +64,7 @@
     <string name="login_pass">修改密码</string>
     <string name="hint_business_name">知青局</string>
     <string name="defaule_bus_num">A001</string>
-    <string name="hint_business_add">中工北苑食堂3L店</string>
+    <string name="hint_business_add">中</string>
     <string name="hint_business_info">请填写店铺介绍</string>
 
     <!-- page view -->
@@ -210,7 +208,7 @@
     <string name="safe_num">安全证书</string>
     <string name="dianzi_zhang">电子印章</string>
     <string name="recevie_msg">接受消息通知</string>
-    <string name="clear_cache">@dimen/dp_70</string>
+    <string name="clear_cache">清除缓存</string>
     <string name="about_my">关于币友</string>
     <string name="has_open">已开启</string>
     <string name="no_open">未开启</string>

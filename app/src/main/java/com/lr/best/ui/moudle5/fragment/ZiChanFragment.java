@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,16 +47,13 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.AnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 public class ZiChanFragment extends BasicFragment implements ReLoadingData, RequestView {
 
-//    View headView;
-//    View zoomView;
-//    View contentView;
+
 
     @BindView(R.id.person_scroll_view)
     PullToZoomScrollViewEx mPersonScrollView;
@@ -97,38 +93,14 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
     TextView huazhuanTv;
 
     private LoadingWindow mLoadingWindow;
-
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
-    private LRecyclerViewAdapter mLRecyclerViewAdapter1;
-    private LRecyclerViewAdapter mLRecyclerViewAdapter2;
-    private LRecyclerViewAdapter mLRecyclerViewAdapter3;
     private ZiChanListAdapter mAdapter;
-    private ZiChanListAdapter mAdapter1;
-    private ZiChanListAdapter mAdapter2;
-    private ZiChanListAdapter mAdapter3;
-
-    private ImageView mZoomImage;
-    private CircleImageView mRoundImageView;
-    private TextView mUserName;
-    private TextView mBankMoneyTv;
-    private TextView mBankCardTv;
-    private RelativeLayout mShowYueLay;
-
-    private ToggleButton mToggleButton;
-    private TextView mShowMoneyTv;
 
 
     private String mRequestTag = "";
-
-
-    private Map<String, Object> mBankInfo;
-    private Map<String, Object> mMoneyInfo;
-    private Map<String, Object> mShareMap;
-
     private List<Map<String, Object>> mDataList = new ArrayList<>();
 
-
-    //1币币，2合约，3场外，4奖励
+    //1币币，2发布，3奖励
     private String mType = "1";
 
 
@@ -155,7 +127,6 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
 
 
         tabLayout.addTab(tabLayout.newTab().setText("币币账户"));
-        tabLayout.addTab(tabLayout.newTab().setText("合约账户"));
         tabLayout.addTab(tabLayout.newTab().setText("法币账户"));
         tabLayout.addTab(tabLayout.newTab().setText("奖励金"));
         tabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
@@ -167,16 +138,12 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
                         mType ="1";
                         getAccountDataAction();
                         break;
-                    case 1: //合约账户
+                    case 1: //法币账户
                         mType ="2";
                         getAccountDataAction();
                         break;
-                    case 2: //法币账户
+                    case 2: //奖励金
                         mType ="3";
-                        getAccountDataAction();
-                        break;
-                    case 3: //奖励金
-                        mType ="4";
                         getAccountDataAction();
                         break;
                 }

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.lr.best.R;
-import com.lr.best.ui.moudle2.activity.TransferMoneyActivity;
+import com.lr.best.ui.moudle4.activity.TransferMoneyActivity;
 import com.lr.best.utils.tool.LogUtilDebug;
 
 import cn.wildfire.chat.kit.annotation.ExtContextMenuItem;

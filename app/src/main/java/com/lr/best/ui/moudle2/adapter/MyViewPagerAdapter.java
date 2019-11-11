@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle4.adapter;
+package com.lr.best.ui.moudle2.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

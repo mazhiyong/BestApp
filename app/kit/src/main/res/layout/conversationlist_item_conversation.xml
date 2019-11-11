@@ -95,7 +95,7 @@
                     android:layout_marginRight="@dimen/dp_5"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="@string/draft"
+                    android:text="w"
                     android:textColor="@color/red7"
                     android:textSize="@dimen/sp_13"
                     android:visibility="gone"

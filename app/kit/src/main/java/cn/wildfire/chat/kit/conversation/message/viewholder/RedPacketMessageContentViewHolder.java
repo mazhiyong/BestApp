@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lqr.emoji.MoonUtils;
 import com.lr.best.R;
-import com.lr.best.ui.moudle2.activity.RedListActivity;
+import com.lr.best.ui.moudle4.activity.RedListActivity;
 import com.lr.best.utils.tool.LogUtilDebug;
 
 import butterknife.BindView;

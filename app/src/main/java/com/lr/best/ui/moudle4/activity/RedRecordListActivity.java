@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle2.activity;
+package com.lr.best.ui.moudle4.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ import com.lr.best.listener.SelectBackListener;
 import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.view.PageView;
 import com.lr.best.ui.moudle.activity.LoginActivity;
-import com.lr.best.ui.moudle2.adapter.RedRecordListAdapter;
+import com.lr.best.ui.moudle4.adapter.RedRecordListAdapter;
 import com.lr.best.utils.tool.LogUtilDebug;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;

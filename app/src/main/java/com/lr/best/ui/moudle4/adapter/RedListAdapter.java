@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle2.adapter;
+package com.lr.best.ui.moudle4.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,13 +14,14 @@ import com.lr.best.R;
 import com.lr.best.listener.OnChildClickListener;
 import com.lr.best.ui.moudle.adapter.ListBaseAdapter;
 import com.lr.best.utils.imageload.GlideUtils;
+import com.lr.best.utils.tool.LogUtilDebug;
 
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RedRecordListAdapter extends ListBaseAdapter {
+public class RedListAdapter extends ListBaseAdapter {
 
 
     private LayoutInflater mLayoutInflater;
@@ -31,25 +32,29 @@ public class RedRecordListAdapter extends ListBaseAdapter {
         this.mListener = mListener;
     }
 
-    public RedRecordListAdapter(Context context) {
+    public RedListAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
         mContext = context;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mLayoutInflater.inflate(R.layout.item_red_record_list, parent, false));
+        return new ViewHolder(mLayoutInflater.inflate(R.layout.item_red_list, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Map<String, Object> item = mDataList.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
-
+        LogUtilDebug.i("show","integer:"+item.get("account")+"");
+        if ((item.get("type")+"").equals("0")){
+            viewHolder.shouqiTv.setVisibility(View.GONE);
+        }else {
+            viewHolder.shouqiTv.setVisibility(View.VISIBLE);
+        }
         viewHolder.nameTv.setText(item.get("name") + "");
         viewHolder.contentTv.setText(item.get("time")+"");
-        viewHolder.moneyTv.setText(item.get("money")+" ");
-        viewHolder.shouqiTv.setText(item.get("symbol")+"");
+        viewHolder.moneyTv.setText(item.get("money")+" "+item.get("symbol"));
         GlideUtils.loadImage(mContext,item.get("portrait")+"",viewHolder.headIv);
         viewHolder.tradeLay.setOnClickListener(new View.OnClickListener() {
             @Override

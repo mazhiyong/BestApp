@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle4.adapter;
+package com.lr.best.ui.moudle2.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

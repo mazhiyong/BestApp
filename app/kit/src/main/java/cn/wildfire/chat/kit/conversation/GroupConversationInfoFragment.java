@@ -41,7 +41,7 @@ import com.lr.best.R;
 import com.lr.best.basic.MbsConstans;
 import com.lr.best.mywidget.dialog.SureOrNoDialog;
 import com.lr.best.ui.moudle.activity.MainActivity;
-import com.lr.best.ui.moudle2.activity.ChoseReasonTypeActivity;
+import com.lr.best.ui.moudle4.activity.ChoseReasonTypeActivity;
 import com.lr.best.utils.imageload.GlideUtils;
 import com.lr.best.utils.permission.PermissionsUtils;
 import com.lr.best.utils.permission.RePermissionResultBack;

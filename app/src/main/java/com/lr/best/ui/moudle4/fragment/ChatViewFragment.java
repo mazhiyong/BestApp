@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle2.fragment;
+package com.lr.best.ui.moudle4.fragment;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
@@ -42,14 +42,13 @@ import com.king.zxing.Intents;
 import com.lr.best.R;
 import com.lr.best.basic.BasicFragment;
 import com.lr.best.basic.MbsConstans;
-
 import com.lr.best.listener.ReLoadingData;
 import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.view.PageView;
-import com.lr.best.ui.moudle2.activity.ChatNoticeListActivity;
-import com.lr.best.ui.moudle2.adapter.MyFriendListAdapter;
-import com.lr.best.ui.moudle2.adapter.MyRecentChatListAdapter;
-import com.lr.best.ui.moudle4.adapter.MyViewPagerAdapter;
+import com.lr.best.ui.moudle2.adapter.MyViewPagerAdapter;
+import com.lr.best.ui.moudle4.activity.ChatNoticeListActivity;
+import com.lr.best.ui.moudle4.adapter.MyFriendListAdapter;
+import com.lr.best.ui.moudle4.adapter.MyRecentChatListAdapter;
 import com.lr.best.utils.permission.PermissionsUtils;
 import com.lr.best.utils.permission.RePermissionResultBack;
 import com.lr.best.utils.tool.AnimUtil;
@@ -180,6 +179,9 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     private SearchViewModel searchViewModel;
     private Observer<SearchResult> searchResultObserver = this::onSearchResult;
 
+    private SearchableModule module0;
+    private SearchableModule module1;
+    private SearchableModule module2;
 
 
     //未读消息
@@ -226,17 +228,13 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         searchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
         searchViewModel.getResultLiveData().observeForever(searchResultObserver);
 
-        //搜索联系人Module
-        SearchableModule module = new ContactSearchModule();
-        modules.add(module);
-
-        //搜索群组Module
-        module = new GroupSearchViewModule();
-        modules.add(module);
-
         //搜索会话列表Module
-        module = new ConversationSearchModule();
-        modules.add(module);
+        module0 = new ConversationSearchModule();
+        //搜索联系人Module
+        module1 = new ContactSearchModule();
+        //搜索群组Module
+        module2 = new GroupSearchViewModule();
+
     }
 
     @Override
@@ -347,6 +345,23 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                     if (adapter != null) {
                         adapter.reset();
                     }
+                    modules.clear();
+                    switch (viewPager.getCurrentItem()){
+                        case 0://近期聊天
+                            modules.add(module0);
+                            break;
+                        case 1: //我的好友
+                            modules.add(module1);
+                            break;
+                        case 2: //我的群组
+                            modules.add(module2);
+                            break;
+                        default:
+                            modules.add(module0);
+                            modules.add(module1);
+                            modules.add(module2);
+                    }
+
                     searchViewModel.search(sequence.toString(), modules);
                 }else {
                     mPageView.setVisibility(View.GONE);
