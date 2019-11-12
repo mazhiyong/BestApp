@@ -14,7 +14,7 @@ import cn.wildfirechat.remote.ChatManager;
 import static cn.wildfirechat.message.core.MessageContentType.ContentType_CHANGE_GROUP_NAME;
 
 /**
- * Created by heavyrainlee on 20/12/2017.
+
  */
 
 @ContentTag(type = ContentType_CHANGE_GROUP_NAME, flag = PersistFlag.Persist)

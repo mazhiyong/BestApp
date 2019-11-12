@@ -15,15 +15,16 @@ public interface Config {
     //String IM_SERVER_HOST = "wildfirechat.cn";
     //String IM_SERVER_HOST = "8y2cdj.natappfree.cc";
     //String IM_SERVER_HOST = "39.97.238.99";
-    String IM_SERVER_HOST = "47.75.185.156";
+    //String IM_SERVER_HOST = "47.75.185.156";
+    String IM_SERVER_HOST = "47.52.155.199";
     //int IM_SERVER_PORT = 80;
     int IM_SERVER_PORT = 88;
 
     //正式商用时，建议用https，确保token安全
     //String APP_SERVER_ADDRESS = "http://wildfirechat.cn:8888";
     //String APP_SERVER_ADDRESS = "http://39.97.238.99:8888";
-    String APP_SERVER_ADDRESS = "http://47.75.185.156:8888";
-    //String APP_SERVER_ADDRESS = "http://47.52.155.199:88";
+    //String APP_SERVER_ADDRESS = "http://47.75.185.156:8888";
+    String APP_SERVER_ADDRESS = "http://47.52.155.199:8888";
 
     String ICE_ADDRESS = "turn:turn.wildfirechat.cn:3478";
     String ICE_USERNAME = "wfchat";

@@ -8,11 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import cn.wildfirechat.message.MessageContentMediaType;
-import cn.wildfirechat.message.RedPacketMessageContent;
 import cn.wildfirechat.model.ProtoMessageContent;
 
 /**
- * Created by heavyrain lee on 2017/12/6.
  */
 
 public class MessagePayload implements Parcelable {

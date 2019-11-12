@@ -21,7 +21,6 @@ import com.lr.best.basic.MbsConstans;
 import com.lr.best.mvp.view.RequestView;
 import com.lr.best.utils.tool.UtilTools;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,6 +58,11 @@ public class ResetLoginPassActivity extends BasicActivity implements RequestView
     Button btNext;
     @BindView(R.id.divide_line)
     View divideLine;
+    @BindView(R.id.et_password)
+    EditText etPassword;
+    @BindView(R.id.et_password_again)
+    EditText etPasswordAgain;
+
 
     private String mAccount = "";
 
@@ -92,7 +96,10 @@ public class ResetLoginPassActivity extends BasicActivity implements RequestView
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().length()>0 && !UtilTools.empty(etCode.getText()+"")){
+                if (s.toString().length()>0
+                        && !UtilTools.empty(etCode.getText()+"")
+                        && !UtilTools.empty(etPassword.getText()+"")
+                        && !UtilTools.empty(etPasswordAgain.getText()+"")){
                     btNext.setEnabled(true);
                 }else {
                     btNext.setEnabled(false);
@@ -114,7 +121,9 @@ public class ResetLoginPassActivity extends BasicActivity implements RequestView
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().length()>0 && !UtilTools.empty(etPhone.getText()+"")){
+                if (s.toString().length()>0  && !UtilTools.empty(etPassword.getText()+"")
+                        && !UtilTools.empty(etPasswordAgain.getText()+"")
+                        && !UtilTools.empty(etPhone.getText()+"")){
                     btNext.setEnabled(true);
                 }else {
                     btNext.setEnabled(false);
@@ -127,6 +136,56 @@ public class ResetLoginPassActivity extends BasicActivity implements RequestView
             }
         });
 
+
+        etPasswordAgain.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0
+                        && !UtilTools.empty(etPassword.getText()+"")
+                        && !UtilTools.empty(etPhone.getText()+"")
+                        && !UtilTools.empty(etCode.getText()+"")){
+                    btNext.setEnabled(true);
+                }else {
+                    btNext.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0
+                        && !UtilTools.empty(etPhone.getText()+"")
+                        && !UtilTools.empty(etPasswordAgain.getText()+"")
+                        && !UtilTools.empty(etCode.getText()+"")){
+
+                    btNext.setEnabled(true);
+                }else {
+                    btNext.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
 
     }
@@ -153,32 +212,21 @@ public class ResetLoginPassActivity extends BasicActivity implements RequestView
                 finish();
                 break;
             case R.id.bt_next:
+                if (!(etPasswordAgain.getText().toString()).equals(etPassword.getText().toString())) {
+                    showToastMsg("两次密码输入不一致");
+                    return;
+                }
+                btNext.setEnabled(false);
                 mAccount = etPhone.getText() + "";
-                if (UtilTools.empty(mAccount)) {
-                    showToastMsg("手机号或邮箱地址不能为空");
-                    return;
-                }
-                if (UtilTools.empty(etCode.getText().toString())) {
-                    showToastMsg("请输入验证码");
-                    return;
-                }
 
-                intent = new Intent(ResetLoginPassActivity.this, ResetLoginPassButActivity.class);
-                Map<String,Object> map = new HashMap<>();
-                map.put("account",mAccount);
-                map.put("code",etCode.getText().toString());
-                map.put("invitation_code","");
-                map.put("type","1");
-                intent.putExtra("DATA",(Serializable) map);
-                startActivity(intent);
-//                if (!RegexUtil.isPhone(mAccount)) {
-//                    showToastMsg("手机号码格式不正确");
-//                    return;
-//                }
-//                if (!RegexUtil.isEmail(mAccount)) {
-//                    showToastMsg("邮箱格式格式不正确");
-//                    return;
-//                }
+                Map<String, Object> map = new HashMap<>();
+                map.put("account", etPhone.getText()+"");
+                map.put("code", etCode.getText()+"");
+                map.put("password", etPassword.getText()+"");
+                map.put("repassword",etPassword.getText()+"");
+                Map<String, String> mHeaderMap = new HashMap<String, String>();
+                mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.RESET_PASSWORD, map);
+
                 break;
             case R.id.tv_code:
                 if (UtilTools.empty(etPhone.getText().toString())) {
@@ -205,6 +253,7 @@ public class ResetLoginPassActivity extends BasicActivity implements RequestView
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         Intent intent;
         switch (mType) {
+
             case MethodUrl.REGIST_SMSCODE:
                 switch (tData.get("code")+""){
                     case "0":
@@ -228,6 +277,29 @@ public class ResetLoginPassActivity extends BasicActivity implements RequestView
 //                intent.putExtra("showPhone", UtilTools.getPhoneXing(mAccount));
 //                startActivity(intent);
                 break;
+            case MethodUrl.RESET_PASSWORD:
+                switch (tData.get("code")+""){
+                    case "0":
+                        btNext.setEnabled(true);
+                        showToastMsg("重置密码成功");
+                        //backTo(LoginActivity.class, false);
+                        closeAllActivity();
+
+                        intent = new Intent(ResetLoginPassActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+
+                    case "1":
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+
+                    case "-1":
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+
+                }
+
+                break;
             case MethodUrl.REFRESH_TOKEN:
                 MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
                 mIsRefreshToken = false;
@@ -242,6 +314,7 @@ public class ResetLoginPassActivity extends BasicActivity implements RequestView
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
+        btNext.setEnabled(true);
         dealFailInfo(map, mType);
     }
 

@@ -477,12 +477,22 @@
             android:name=".ui.moudle5.activity.TibiAddressActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 提币  添加地址 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!-- 提币  添加地址 -->
         <activity
             android:name=".ui.moudle5.activity.AddAddressActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 划转 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!-- 兑换 -->
+
+        <activity
+            android:name=".ui.moudle5.activity.DuiHuanActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!-- 划转 -->
+
         <activity
             android:name=".ui.moudle5.activity.HuaZhuanActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"

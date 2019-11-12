@@ -14,7 +14,7 @@ import cn.wildfirechat.remote.ChatManager;
 import static cn.wildfirechat.message.core.MessageContentType.ContentType_QUIT_GROUP;
 
 /**
- * Created by heavyrainlee on 20/12/2017.
+
  */
 
 @ContentTag(type = ContentType_QUIT_GROUP, flag = PersistFlag.Persist)

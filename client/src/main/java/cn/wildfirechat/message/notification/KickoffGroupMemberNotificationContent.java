@@ -18,7 +18,6 @@ import cn.wildfirechat.remote.ChatManager;
 import static cn.wildfirechat.message.core.MessageContentType.ContentType_KICKOF_GROUP_MEMBER;
 
 /**
- * Created by heavyrainlee on 20/12/2017.
  */
 
 @ContentTag(type = ContentType_KICKOF_GROUP_MEMBER, flag = PersistFlag.Persist)

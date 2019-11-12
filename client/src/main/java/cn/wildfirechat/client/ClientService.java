@@ -115,7 +115,6 @@ import static com.tencent.mars.comm.PlatformComm.context;
 
 
 /**
- * Created by heavyrain lee on 2017/11/19.
  */
 
 public class ClientService extends Service implements SdtLogic.ICallBack,

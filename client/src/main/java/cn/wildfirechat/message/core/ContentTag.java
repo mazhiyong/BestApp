@@ -7,7 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by heavyrain lee on 2017/12/6.
  */
 
 @Documented

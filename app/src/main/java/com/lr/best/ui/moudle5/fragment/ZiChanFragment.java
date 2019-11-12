@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
@@ -28,15 +29,19 @@ import com.lr.best.api.MethodUrl;
 import com.lr.best.basic.BasicFragment;
 import com.lr.best.basic.MbsConstans;
 import com.lr.best.listener.ReLoadingData;
+import com.lr.best.listener.SelectBackListener;
 import com.lr.best.mvp.view.RequestView;
+import com.lr.best.mywidget.dialog.KindSelectDialog;
 import com.lr.best.mywidget.pulltozoomview.PullToZoomScrollViewEx;
 import com.lr.best.mywidget.view.LoadingWindow;
 import com.lr.best.mywidget.view.PageView;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle5.activity.ChoseBiTypeActivity;
+import com.lr.best.ui.moudle5.activity.DuiHuanActivity;
 import com.lr.best.ui.moudle5.activity.HuaZhuanActivity;
 import com.lr.best.ui.moudle5.adapter.ZiChanListAdapter;
 import com.lr.best.utils.tool.SPUtils;
+import com.lr.best.utils.tool.SelectDataUtil;
 import com.lr.best.utils.tool.UtilTools;
 
 import java.util.ArrayList;
@@ -51,8 +56,7 @@ import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.AnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
-public class ZiChanFragment extends BasicFragment implements ReLoadingData, RequestView {
-
+public class ZiChanFragment extends BasicFragment implements ReLoadingData, RequestView , SelectBackListener {
 
 
     @BindView(R.id.person_scroll_view)
@@ -91,6 +95,19 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
     TextView tibiTv;
     @BindView(R.id.huazhuan_tv)
     TextView huazhuanTv;
+    @BindView(R.id.zichanAcccountLay)
+    LinearLayout zichanAcccountLay;
+    @BindView(R.id.duihuanAcountlay)
+    LinearLayout duihuanAcountlay;
+    @BindView(R.id.duihuanLay)
+    LinearLayout duihuanLay;
+    @BindView(R.id.tv)
+    TextView mTextView;
+    @BindView(R.id.from_tv)
+    TextView fromTv;
+    @BindView(R.id.to_tv)
+    TextView toTv;
+
 
     private LoadingWindow mLoadingWindow;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
@@ -102,6 +119,8 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
 
     //1币币，2发布，3奖励
     private String mType = "1";
+
+    private KindSelectDialog mDialog;
 
 
     public ZiChanFragment() {
@@ -125,6 +144,9 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
         mTitleText.setVisibility(View.GONE);
 
 
+        mTextView.setText("温馨提示：\n" +
+                "任意币种兑换best实行1：3兑换\n" +
+                "兑换一次消耗1奖励金");
 
         tabLayout.addTab(tabLayout.newTab().setText("币币账户"));
         tabLayout.addTab(tabLayout.newTab().setText("法币账户"));
@@ -135,16 +157,31 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
                 //mViewPager.setCurrentItem(tab.getPosition());
                 switch (tab.getPosition()) {
                     case 0: //币币账户
-                        mType ="1";
+                        mType = "1";
+                        pageView.setVisibility(View.VISIBLE);
+                        zichanAcccountLay.setVisibility(View.VISIBLE);
+                        duihuanLay.setVisibility(View.GONE);
+                        duihuanAcountlay.setVisibility(View.GONE);
+
                         getAccountDataAction();
                         break;
                     case 1: //法币账户
-                        mType ="2";
+                        mType = "2";
+                        pageView.setVisibility(View.VISIBLE);
+                        zichanAcccountLay.setVisibility(View.VISIBLE);
+                        duihuanLay.setVisibility(View.GONE);
+                        duihuanAcountlay.setVisibility(View.GONE);
+
                         getAccountDataAction();
                         break;
                     case 2: //奖励金
-                        mType ="3";
-                        getAccountDataAction();
+                        mType = "3";
+                        pageView.setVisibility(View.GONE);
+                        zichanAcccountLay.setVisibility(View.GONE);
+                        duihuanLay.setVisibility(View.VISIBLE);
+                        duihuanAcountlay.setVisibility(View.VISIBLE);
+
+                        //getAccountDataAction();
                         break;
                 }
 
@@ -198,23 +235,39 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
     }
 
 
-    @OnClick({R.id.chongbi_tv, R.id.tibi_tv, R.id.huazhuan_tv})
+    @OnClick({R.id.chongbi_tv, R.id.tibi_tv, R.id.huazhuan_tv, R.id.duihuan_tv,R.id.from_tv,R.id.to_tv})
     public void onViewClicked(View view) {
-        Intent intent ;
+        Intent intent;
         switch (view.getId()) {
             case R.id.chongbi_tv: //充币
                 intent = new Intent(getActivity(), ChoseBiTypeActivity.class);
-                intent.putExtra("TYPE","1");
+                intent.putExtra("TYPE", "1");
                 startActivity(intent);
                 break;
             case R.id.tibi_tv:   //提币
                 intent = new Intent(getActivity(), ChoseBiTypeActivity.class);
-                intent.putExtra("TYPE","2");
+                intent.putExtra("TYPE", "2");
                 startActivity(intent);
                 break;
             case R.id.huazhuan_tv://划转
                 intent = new Intent(getActivity(), HuaZhuanActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.duihuan_tv:
+                intent = new Intent(getActivity(), DuiHuanActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.from_tv:
+                List<Map<String,Object>> mDataList = SelectDataUtil.getAccoutType();
+                mDialog=new KindSelectDialog(getActivity(),true,mDataList,10);
+                mDialog.setSelectBackListener(this);
+                mDialog.showAtLocation(Gravity.BOTTOM,0,0);
+                break;
+            case R.id.to_tv:
+                List<Map<String,Object>> mDataList1 = SelectDataUtil.getAccoutType();
+                mDialog=new KindSelectDialog(getActivity(),true,mDataList1,20);
+                mDialog.setSelectBackListener(this);
+                mDialog.showAtLocation(Gravity.BOTTOM,0,0);
                 break;
         }
     }
@@ -244,7 +297,7 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
             MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("type",mType);
+        map.put("type", mType);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ZICHAN_ACCOUNT, map);
     }
@@ -280,9 +333,9 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data") + "")) {
-                            Map<String,Object> map = (Map<String, Object>) tData.get("data");
-                            bankMoneyTv.setText(UtilTools.getNormalMoney(map.get("total")+""));
-                            bankCardTv.setText("≈"+UtilTools.getNormalMoney(map.get("cny")+"")+"CNY");
+                            Map<String, Object> map = (Map<String, Object>) tData.get("data");
+                            bankMoneyTv.setText(UtilTools.getNormalMoney(map.get("total") + ""));
+                            bankCardTv.setText("≈" + UtilTools.getNormalMoney(map.get("cny") + "") + "CNY");
                         }
                         break;
                     case "-1": //请求失败
@@ -306,10 +359,10 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
                         } else {
                             Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
                             if (!UtilTools.empty(mapData)) {
-                                Map<String,Object> moneyMap = (Map<String, Object>) mapData.get("account");
-                                if (!UtilTools.empty(moneyMap)){
-                                    moneyTv.setText(UtilTools.getNormalMoney(moneyMap.get("btc")+""));
-                                    moneyTv2.setText("≈"+UtilTools.getNormalMoney(moneyMap.get("cny")+"")+"CNY");
+                                Map<String, Object> moneyMap = (Map<String, Object>) mapData.get("account");
+                                if (!UtilTools.empty(moneyMap)) {
+                                    moneyTv.setText(UtilTools.getNormalMoney(moneyMap.get("btc") + ""));
+                                    moneyTv2.setText("≈" + UtilTools.getNormalMoney(moneyMap.get("cny") + "") + "CNY");
                                 }
 
                                 if (UtilTools.empty(mapData.get("coin") + "")) {
@@ -461,4 +514,18 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
     }
 
 
+    @Override
+    public void onSelectBackListener(Map<String, Object> map, int type) {
+        switch (type){
+            case 10:
+                String s= (String) map.get("name"); //选择账户
+                fromTv.setText(s);
+               // huzhuanTv.setEnabled(true);
+                break;
+            case 20: //选择币种
+                String str= (String) map.get("name"); //选择账户
+                toTv.setText(str);
+                break;
+        }
+    }
 }

@@ -106,8 +106,6 @@ public class YaoQingActivity extends BasicActivity implements RequestView {
                 if (!UtilTools.empty(imgUrl)){
                     GlideUtils.downloadImage(YaoQingActivity.this,imgUrl);
                 }
-
-
                 return true;
             }
         });

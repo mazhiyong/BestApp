@@ -1,7 +1,6 @@
 package cn.wildfirechat.message.core;
 
 /**
- * Created by heavyrain lee on 2017/12/6.
  */
 
 

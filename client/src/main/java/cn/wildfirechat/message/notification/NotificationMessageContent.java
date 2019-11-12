@@ -6,7 +6,6 @@ import cn.wildfirechat.message.Message;
 import cn.wildfirechat.message.MessageContent;
 
 /**
- * Created by heavyrainlee on 19/12/2017.
  */
 
 

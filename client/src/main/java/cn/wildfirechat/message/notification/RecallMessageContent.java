@@ -12,7 +12,7 @@ import cn.wildfirechat.remote.ChatManager;
 import static cn.wildfirechat.message.core.MessageContentType.ContentType_Recall;
 
 /**
- * Created by heavyrain lee on 2017/12/6.
+
  */
 
 @ContentTag(type = ContentType_Recall, flag = PersistFlag.Persist)
