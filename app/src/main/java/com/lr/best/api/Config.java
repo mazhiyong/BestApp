@@ -23,6 +23,7 @@ public interface Config {
     //String APP_SERVER_ADDRESS = "http://wildfirechat.cn:8888";
     //String APP_SERVER_ADDRESS = "http://39.97.238.99:8888";
     String APP_SERVER_ADDRESS = "http://47.75.185.156:8888";
+    //String APP_SERVER_ADDRESS = "http://47.52.155.199:88";
 
     String ICE_ADDRESS = "turn:turn.wildfirechat.cn:3478";
     String ICE_USERNAME = "wfchat";
@@ -43,8 +44,7 @@ public interface Config {
                 || IM_SERVER_HOST.equals("192.168.0.1")
                 || IM_SERVER_HOST.equals("127.0.0.1")
                 || APP_SERVER_ADDRESS.contains("192.168.0.1")
-                || APP_SERVER_ADDRESS.contains("127.0.0.1")
-        ) {
+                || APP_SERVER_ADDRESS.contains("127.0.0.1")) {
             throw new IllegalStateException("im server host config error");
         }
 

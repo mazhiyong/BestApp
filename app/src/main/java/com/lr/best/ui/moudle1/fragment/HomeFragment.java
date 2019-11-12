@@ -596,8 +596,9 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
             mConditionDialog.setFocusable(true);
             //popView.requestFocus();//pop设置不setBackgroundDrawable情况，把焦点给popView，添加popView.setOnKeyListener。可实现点击外部不消失，点击反键才消失
             //			mConditionDialog.showAtLocation(mCityTv, Gravity.TOP|Gravity.RIGHT, 0, 0); //设置layout在PopupWindow中显示的位置
+            //mConditionDialog.showAsDropDown(divideLine, 0,  -leftBackLay.getHeight(), Gravity.BOTTOM);
             mConditionDialog.showAtLocation(getActivity().getWindow().getDecorView(),
-                    Gravity.TOP | Gravity.LEFT, 0, 0);
+                    Gravity.TOP | Gravity.LEFT, 0, leftBackLay.getHeight()+UtilTools.getStatusHeight2(getActivity()));
             toggleBright();
             mConditionDialog.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -607,7 +608,8 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
             });
         } else {
             mConditionDialog.showAtLocation(getActivity().getWindow().getDecorView(),
-                    Gravity.TOP | Gravity.LEFT, 0, 0);
+                    Gravity.TOP | Gravity.LEFT, 0, leftBackLay.getHeight()+UtilTools.getStatusHeight2(getActivity()));
+            //mConditionDialog.showAsDropDown(divideLine, 0, leftBackLay.getHeight(), Gravity.BOTTOM);
             toggleBright();
         }
     }
@@ -665,13 +667,10 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         if (UtilTools.empty(MbsConstans.USER_MAP)) {
             String s = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.LOGIN_INFO, "").toString();
             MbsConstans.USER_MAP = JSONUtil.getInstance().jsonMap(s);
-
         }
 
         tvPhone.setText(MbsConstans.USER_MAP.get("account") + "");
         tvUID.setText("UID: "+MbsConstans.USER_MAP.get("id") );
-
-
 
         final View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -704,7 +703,6 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                     case R.id.lay_shiming:
                         //是否实名认证
                         getIsIdentityAction();
-
                         break;
                     case R.id.lay_yaoqing:
                         intent = new Intent(getActivity(), YaoQingActivity.class);
@@ -729,6 +727,9 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                     case R.id.lay_shezhi:
                         intent = new Intent(getActivity(), SettingActivity.class);
                         startActivity(intent);
+                        break;
+                    case R.id.lay_mytream:
+
                         break;
                 }
             }
@@ -795,7 +796,6 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                     }
 
                 }
-
             }
     }
 

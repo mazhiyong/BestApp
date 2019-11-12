@@ -23,7 +23,6 @@ import com.lr.best.api.MethodUrl;
 import com.lr.best.basic.BasicActivity;
 import com.lr.best.basic.MbsConstans;
 import com.lr.best.mvp.view.RequestView;
-import com.lr.best.utils.tool.RegexUtil;
 import com.lr.best.utils.tool.UtilTools;
 
 import java.util.HashMap;
@@ -201,6 +200,16 @@ public class ResetLoginPassButActivity extends BasicActivity implements RequestV
         String password = etPassword.getText() + "";
         String passwordAgain = etPasswordAgain.getText() + "";
 
+        if (password.length() < 6){
+            showToastMsg("密码长度过短,请重新设置");
+            btSure.setEnabled(true);
+            return;
+        }
+
+        if (password.length()> 12){
+            btSure.setEnabled(true);
+            showToastMsg("密码长度过长,请重新设置");
+        }
 
        /* if (UtilTools.empty(password)) {
             showToastMsg("请设置密码");
@@ -217,7 +226,8 @@ public class ResetLoginPassButActivity extends BasicActivity implements RequestV
             return;
         }
 
-        int s = RegexUtil.isLetterDigit(password);
+
+       /* int s = RegexUtil.isLetterDigit(password);
         switch (s) {
             case 0:
                 break;
@@ -233,7 +243,7 @@ public class ResetLoginPassButActivity extends BasicActivity implements RequestV
                 btSure.setEnabled(true);
                 showToastMsg(getResources().getString(R.string.set_new_pass_tip));
                 return;
-        }
+        }*/
         btSure.setEnabled(false);
         // String pass = AESHelper.encrypt(password, AESHelper.password);
         //String pass = RSAUtils.encryptContent(password, RSAUtils.publicKey);

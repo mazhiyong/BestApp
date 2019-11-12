@@ -19,6 +19,7 @@ import com.lr.best.basic.MbsConstans;
 import com.lr.best.listener.SelectBackListener;
 import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.dialog.KindSelectDialog;
+import com.lr.best.mywidget.dialog.SureOrNoDialog;
 import com.lr.best.mywidget.dialog.UpdateDialog;
 import com.lr.best.service.DownloadService;
 import com.lr.best.utils.permission.PermissionsUtils;
@@ -39,9 +40,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 关于我们  界面
+ * 设置 界面
  */
-public class SettingActivity extends BasicActivity implements RequestView , SelectBackListener {
+public class SettingActivity extends BasicActivity implements RequestView, SelectBackListener {
     @BindView(R.id.back_img)
     ImageView mBackImg;
     @BindView(R.id.title_text)
@@ -74,6 +75,10 @@ public class SettingActivity extends BasicActivity implements RequestView , Sele
     View divideLine;
     @BindView(R.id.type_tv)
     TextView typeTv;
+    @BindView(R.id.help_lay)
+    LinearLayout helpLay;
+    @BindView(R.id.exit_tv)
+    TextView exitTv;
 
     private String mRequestTag = "";
     private String mTempToken = "";
@@ -84,6 +89,8 @@ public class SettingActivity extends BasicActivity implements RequestView , Sele
     private Map<String, Object> mShareMap;
 
     private KindSelectDialog mDialog;
+
+    private SureOrNoDialog sureOrNoDialog;
 
     @Override
     public int getContentView() {
@@ -104,31 +111,31 @@ public class SettingActivity extends BasicActivity implements RequestView , Sele
         mVersionTv.setText(MbsConstans.UpdateAppConstans.VERSION_APP_NAME);
         //getTempToken();
 
-        List<Map<String,Object>> mDataList2 = SelectDataUtil.getSetType();
-        mDialog=new KindSelectDialog(SettingActivity.this,true,mDataList2,30);
+        List<Map<String, Object>> mDataList2 = SelectDataUtil.getSetType();
+        mDialog = new KindSelectDialog(SettingActivity.this, true, mDataList2, 30);
         mDialog.setSelectBackListener(this);
         //getZiChanDataAction();
 
 
         //0 红跌绿涨   1红涨绿跌
-       String colorType =  SPUtils.get(SettingActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0").toString();
-       if (colorType.equals("0")){
-           MbsConstans.COLOR_LOW = MbsConstans.COLOR_RED;
-           MbsConstans.COLOR_TOP = MbsConstans.COLOR_GREEN;
-           typeTv.setText("红跌绿涨");
+        String colorType = SPUtils.get(SettingActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE, "0").toString();
+        if (colorType.equals("0")) {
+            MbsConstans.COLOR_LOW = MbsConstans.COLOR_RED;
+            MbsConstans.COLOR_TOP = MbsConstans.COLOR_GREEN;
+            typeTv.setText("红跌绿涨");
 
-       }else {
-           MbsConstans.COLOR_LOW = MbsConstans.COLOR_GREEN;
-           MbsConstans.COLOR_TOP = MbsConstans.COLOR_RED;
+        } else {
+            MbsConstans.COLOR_LOW = MbsConstans.COLOR_GREEN;
+            MbsConstans.COLOR_TOP = MbsConstans.COLOR_RED;
 
-           typeTv.setText("红涨绿跌");
-       }
+            typeTv.setText("红涨绿跌");
+        }
 
     }
 
 
     @OnClick({R.id.back_img, R.id.version_check_lay, R.id.iv_about_pihuibao, R.id.welcome_lay, R.id.tv_phone_coutomer,
-            R.id.left_back_lay, R.id.head_image, R.id.puhuibao_jieshao_lay, R.id.shared_lay,R.id.about_us_lay})
+            R.id.left_back_lay, R.id.head_image, R.id.puhuibao_jieshao_lay, R.id.shared_lay, R.id.about_us_lay,R.id.help_lay,R.id.exit_tv})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -139,7 +146,7 @@ public class SettingActivity extends BasicActivity implements RequestView , Sele
                 finish();
                 break;
             case R.id.puhuibao_jieshao_lay:
-                mDialog.showAtLocation(Gravity.BOTTOM,0,0);
+                mDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.welcome_lay:
                 //checkImageCode();
@@ -167,8 +174,46 @@ public class SettingActivity extends BasicActivity implements RequestView , Sele
                 }
                 break;
             case R.id.about_us_lay:
-                intent = new Intent(SettingActivity.this,AboutActivity.class);
+                intent = new Intent(SettingActivity.this, AboutActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.help_lay:
+                intent = new Intent(SettingActivity.this, AboutActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.exit_tv:
+                sureOrNoDialog = new SureOrNoDialog(SettingActivity.this, true);
+                sureOrNoDialog.initValue("提示", "确定要退出登录吗？");
+                sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.cancel:
+                                sureOrNoDialog.dismiss();
+                                break;
+                            case R.id.confirm:
+                                /*ChatManagerHolder.gChatManager.disconnect(true);
+                                SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
+                                sp.edit().clear().apply();*/
+
+
+                                closeAllActivity();
+                                MbsConstans.USER_MAP = null;
+                                MbsConstans.RONGYUN_MAP = null;
+                                MbsConstans.ACCESS_TOKEN = "";
+                                SPUtils.put(SettingActivity.this, MbsConstans.SharedInfoConstans.LOGIN_OUT, true);
+                                SPUtils.put(SettingActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "");
+                                SPUtils.put(SettingActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE, "0");
+                                Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                                startActivity(intent);
+
+                                break;
+                        }
+                    }
+                });
+                sureOrNoDialog.show();
+                sureOrNoDialog.setCanceledOnTouchOutside(false);
+                sureOrNoDialog.setCancelable(true);
                 break;
         }
     }
@@ -419,14 +464,14 @@ public class SettingActivity extends BasicActivity implements RequestView , Sele
     public void onSelectBackListener(Map<String, Object> map, int type) {
         switch (type) {
             case 30:
-                String str= (String) map.get("name");
+                String str = (String) map.get("name");
                 typeTv.setText(str);
-                SPUtils.put(SettingActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,map.get("code")+"");
+                SPUtils.put(SettingActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE, map.get("code") + "");
 
-                if ((map.get("code")+"").equals("0")){
+                if ((map.get("code") + "").equals("0")) {
                     MbsConstans.COLOR_LOW = MbsConstans.COLOR_RED;
                     MbsConstans.COLOR_TOP = MbsConstans.COLOR_GREEN;
-                }else {
+                } else {
                     MbsConstans.COLOR_LOW = MbsConstans.COLOR_GREEN;
                     MbsConstans.COLOR_TOP = MbsConstans.COLOR_RED;
                 }

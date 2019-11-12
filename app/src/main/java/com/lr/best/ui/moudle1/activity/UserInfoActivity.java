@@ -47,7 +47,6 @@ import com.lr.best.utils.permission.PermissionsUtils;
 import com.lr.best.utils.permission.RePermissionResultBack;
 import com.lr.best.utils.tool.AppUtil;
 import com.lr.best.utils.tool.JSONUtil;
-import com.lr.best.utils.tool.LogUtilDebug;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;
 import com.yanzhenjie.permission.Permission;
@@ -57,7 +56,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,12 +65,7 @@ import butterknife.OnClick;
 import cn.wildfire.chat.kit.WfcScheme;
 import cn.wildfire.chat.kit.common.OperateResult;
 import cn.wildfire.chat.kit.user.UserViewModel;
-import cn.wildfirechat.message.MessageContentMediaType;
-import cn.wildfirechat.model.ModifyGroupInfoType;
 import cn.wildfirechat.model.UserInfo;
-import cn.wildfirechat.remote.ChatManager;
-import cn.wildfirechat.remote.GeneralCallback;
-import cn.wildfirechat.remote.UploadMediaCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -255,38 +248,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                 break;
             case R.id.exit_tv:
 
-                sureOrNoDialog = new SureOrNoDialog(UserInfoActivity.this, true);
-                sureOrNoDialog.initValue("提示", "确定要退出登录吗？");
-                sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        switch (v.getId()) {
-                            case R.id.cancel:
-                                sureOrNoDialog.dismiss();
-                                break;
-                            case R.id.confirm:
-                                /*ChatManagerHolder.gChatManager.disconnect(true);
-                                SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
-                                sp.edit().clear().apply();*/
 
-
-                                closeAllActivity();
-                                MbsConstans.USER_MAP = null;
-                                MbsConstans.RONGYUN_MAP = null;
-                                MbsConstans.ACCESS_TOKEN = "";
-                                SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.LOGIN_OUT, true);
-                                SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "");
-                                SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE, "0");
-                                Intent intent = new Intent(UserInfoActivity.this, LoginActivity.class);
-                                startActivity(intent);
-
-                                break;
-                        }
-                    }
-                });
-                sureOrNoDialog.show();
-                sureOrNoDialog.setCanceledOnTouchOutside(false);
-                sureOrNoDialog.setCancelable(true);
                 break;
         }
     }
