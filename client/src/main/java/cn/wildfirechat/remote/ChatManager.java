@@ -2443,7 +2443,11 @@ public class ChatManager {
         if (userSource != null) {
             userInfo = userSource.getUser(userId);
             if (userInfo == null) {
-                userInfo = new NullUserInfo(userId);
+                try {
+                    userInfo = mClient.getUserInfo(userId, groupId, refresh);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
             return userInfo;
         }

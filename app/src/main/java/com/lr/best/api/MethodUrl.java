@@ -62,6 +62,9 @@ public class MethodUrl {
     public static final String INVIAT_ATION = "Personal/invitation";//邀请链接
     public static final String EDIT_ACCOUNT = "Personal/editAccount";//修改账户手机号
     public static final String SAFE_CENTER = "Personal/safetyCenter";//安全中心
+    public static final String USER_GVRP = "Register/gvrp";//用户协议
+    public static final String MY_TREAM = "Personal/myTeam";//我的团队
+
 
 
 

@@ -31,12 +31,13 @@ import com.lr.best.basic.MbsConstans;
 import com.lr.best.bean.MessageEvent;
 import com.lr.best.db.IndexData;
 import com.lr.best.mvp.view.RequestView;
+import com.lr.best.mywidget.dialog.AppDialog;
 import com.lr.best.mywidget.dialog.UpdateDialog;
 import com.lr.best.service.DownloadService;
 import com.lr.best.ui.moudle1.fragment.HomeFragment;
-import com.lr.best.ui.moudle4.fragment.ChatViewFragment;
-import com.lr.best.ui.moudle3.fragment.ShopFragment;
 import com.lr.best.ui.moudle2.fragment.TradeFragment;
+import com.lr.best.ui.moudle3.fragment.ShopFragment;
+import com.lr.best.ui.moudle4.fragment.ChatViewFragment;
 import com.lr.best.ui.moudle5.fragment.ZiChanFragment;
 import com.lr.best.utils.permission.PermissionsUtils;
 import com.lr.best.utils.permission.RePermissionResultBack;
@@ -209,6 +210,33 @@ public class MainActivity extends BasicActivity implements RequestView {
             SPUtils.put(MainActivity.this, MbsConstans.SharedInfoConstans.IS_FIRST_START, MbsConstans.UpdateAppConstans.VERSION_APP_CODE+"");
         }*/
 
+         //首次安装启动
+        String code = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.IS_FIRST_START, "") + "";
+        if (!code.equals(MbsConstans.UpdateAppConstans.VERSION_APP_CODE + "")) {
+            AppDialog dialog = new AppDialog(this);
+            dialog.initValue("温馨提示","亲爱的玩家，欢迎您来到BEST数字资产现货交易所！\n\n"+"风险提示：数字货币是一种高风险的投资方式，请投资者谨慎购买，并注意投资风险。BEST会遴选优质币种，但不对您投资行为承担担保、赔偿等责任。您是否同意","不同意","同意");
+            dialog.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (v.getId()){
+                        case R.id.cancel:
+                            dialog.dismiss();
+                            closeAllActivity();
+                            Process.killProcess(Process.myPid());
+                            System.exit(0);
+                            break;
+                        case R.id.confirm:
+                            dialog.dismiss();
+                            SPUtils.put(MainActivity.this, MbsConstans.SharedInfoConstans.IS_FIRST_START, MbsConstans.UpdateAppConstans.VERSION_APP_CODE+"");
+                            break;
+                    }
+                }
+            });
+            dialog.show();
+
+
+        }
+
 
 
         SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
@@ -305,10 +333,10 @@ public class MainActivity extends BasicActivity implements RequestView {
                 }
 
             } else {
+                requestUnReadCount = count;
                 if (newsUnReadCount == 0 && requestUnReadCount == 0) {
                     unreadNewLable.setVisibility(View.GONE);
                 } else {
-                    requestUnReadCount = count;
                     unreadNewLable.setVisibility(View.VISIBLE);
                     if ((newsUnReadCount + requestUnReadCount) < 100) {
                         unreadNewLable.setText(newsUnReadCount + requestUnReadCount + "");

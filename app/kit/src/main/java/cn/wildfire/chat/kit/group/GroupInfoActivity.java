@@ -155,6 +155,9 @@ public class GroupInfoActivity extends WfcBaseActivity {
                 ToastUtils.showToast("申请加群失败");
             }else {
                 ToastUtils.showToast("成功加群");
+                Intent intent = ConversationActivity.buildConversationIntent(this, Conversation.ConversationType.Group, groupId, 0);
+                startActivity(intent);
+                finish();
             }
            /* if (result.equals(true)){
                 ToastUtils.showToast("成功加群");

@@ -56,7 +56,7 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
     @BindView(R.id.to_tv)
     TextView toTv;
     @BindView(R.id.change_iv)
-    ImageView changeIv;
+    TextView changeIv;
     @BindView(R.id.type_tv)
     TextView typeTv;
     @BindView(R.id.type_lay)
@@ -312,7 +312,7 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             avaiableNumber = tData.get("data")+"";
-                            aviableTv.setText("可用 "+UtilTools.getNormalNumber(avaiableNumber)+" "+typeTv.getText().toString());
+                            aviableTv.setText("可用 "+UtilTools.getNormalMoney(avaiableNumber)+" "+typeTv.getText().toString());
                         }
                         break;
                     case "-1": //请求失败

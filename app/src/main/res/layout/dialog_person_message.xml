@@ -201,7 +201,7 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             android:scaleType="centerInside"
-            android:src="@drawable/icon1_yaoqing" />
+            android:src="@drawable/icon_yaoqing" />
 
         <TextView
             android:layout_width="0dip"
@@ -231,7 +231,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
-            android:src="@drawable/icon1_shoukuanway"
+            android:src="@drawable/icon_mytream"
             android:scaleType="centerInside"
             />
 
@@ -264,7 +264,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
-            android:src="@drawable/icon1_shoukuanway"
+            android:src="@drawable/icon_shoukuan"
             android:scaleType="centerInside"
             />
 
@@ -397,7 +397,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
-            android:src="@drawable/icon1_guanyu"
+            android:src="@drawable/setting"
             android:scaleType="centerInside"
             />
 

@@ -48,6 +48,7 @@ public class AppDialog extends BaseDialog {
         BaseAnimatorSet bas_out;
         bas_in = new BounceEnter();
         bas_out = new ZoomOutExit();
+        mCancel = false;
         showAnim(bas_in);
         dismissAnim(bas_out);//
         widthScale(0.85f);

@@ -22,6 +22,7 @@ import com.lr.best.mywidget.dialog.KindSelectDialog;
 import com.lr.best.mywidget.dialog.SureOrNoDialog;
 import com.lr.best.mywidget.dialog.UpdateDialog;
 import com.lr.best.service.DownloadService;
+import com.lr.best.ui.moudle1.activity.HelpListActivity;
 import com.lr.best.utils.permission.PermissionsUtils;
 import com.lr.best.utils.permission.RePermissionResultBack;
 import com.lr.best.utils.share.ShareUtil;
@@ -178,7 +179,7 @@ public class SettingActivity extends BasicActivity implements RequestView, Selec
                 startActivity(intent);
                 break;
             case R.id.help_lay:
-                intent = new Intent(SettingActivity.this, AboutActivity.class);
+                intent = new Intent(SettingActivity.this, HelpListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.exit_tv:

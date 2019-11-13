@@ -338,6 +338,7 @@
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/sp_15"
                 android:text="查看兑换记录"
+                android:textColor="@color/blue2"
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -490,16 +491,23 @@
                 </LinearLayout>
 
 
-                <ImageView
-                    android:id="@+id/change_iv"
+                <RelativeLayout
                     android:layout_margin="@dimen/dp_1_5"
                     android:background="@color/gray_light2"
-                    android:layout_width="wrap_content"
-                    android:paddingLeft="@dimen/dp_10"
-                    android:paddingRight="@dimen/dp_10"
-                    android:src="@drawable/icon5_hz2"
+                    android:layout_width="@dimen/dp_50"
+                    android:gravity="center"
                     android:layout_gravity="center_vertical"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent" >
+                    <TextView
+                        android:background="@drawable/circle_background"
+                        android:layout_width="@dimen/dp_28"
+                        android:text="兑"
+                        android:gravity="center"
+                        android:layout_centerInParent="true"
+                        android:textSize="@dimen/sp_14"
+                        android:layout_height="@dimen/dp_28" />
+                </RelativeLayout>
+
             </LinearLayout>
 
             <TextView
@@ -587,7 +595,7 @@
                 android:layout_marginLeft="@dimen/dp_15"
                 android:layout_marginRight="@dimen/dp_15"
                 android:lineSpacingExtra="@dimen/dp_5"
-                android:textColor="@color/red"
+                android:textColor="@color/gray"
                 android:textSize="@dimen/sp_11"
                 />
         </LinearLayout>

@@ -37,6 +37,7 @@ import com.lr.best.ui.moudle.activity.ContactKefuActivity;
 import com.lr.best.ui.moudle.activity.IdCardEditActivity;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle.activity.MainActivity;
+import com.lr.best.ui.moudle.activity.MyTreamActivity;
 import com.lr.best.ui.moudle.activity.SecurityActivity;
 import com.lr.best.ui.moudle.activity.SettingActivity;
 import com.lr.best.ui.moudle1.activity.HelpListActivity;
@@ -209,10 +210,11 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         backImg.setImageResource(R.drawable.icon1_touxiang);
         backText.setVisibility(View.GONE);
 
-        titleText.setText("MFEX Global");
-//        Resources resources = getActivity().getResources();
-//        Drawable drawable = resources.getDrawable(R.drawable.icon0_logo);
-//        titleText.setCompoundDrawables(drawable,null,null,null);
+        titleText.setText("首页");
+
+//      Resources resources = getActivity().getResources();
+//      Drawable drawable = resources.getDrawable(R.drawable.icon0_logo);
+//      titleText.setCompoundDrawables(drawable,null,null,null);
 
 
         mPageView.setContentView(mContent);
@@ -409,17 +411,16 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                         if (!UtilTools.empty(mapData)) {
                             List<Map<String, Object>> rankList = new ArrayList<>();
                             Map<String, Object> mapMarket = null;
-                            if (UtilTools.empty(mapData.get("market_tickers")+"")){
-                                return;
-                            }
-                            switch (biType) {
-                                case "1":
-                                case "USDT":
-                                case "BTC":
-                                case "ETH":
-                                case "2":
-                                    rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
-                                    break;
+                            if (!UtilTools.empty(mapData.get("market_tickers")+"")){
+                                switch (biType) {
+                                    case "1":
+                                    case "USDT":
+                                    case "BTC":
+                                    case "ETH":
+                                    case "2":
+                                        rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
+                                        break;
+                                }
                             }
 
                             //设置数据
@@ -570,6 +571,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
     private LinearLayout layKefu;
     private LinearLayout layBangzhu;
     private LinearLayout layShezhi;
+    private LinearLayout layMyTream;
 
 
     private void initPopupWindow() {
@@ -663,6 +665,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         layKefu = view.findViewById(R.id.lay_kefu);
         layBangzhu = view.findViewById(R.id.lay_bangzhu);
         layShezhi = view.findViewById(R.id.lay_shezhi);
+        layMyTream = view.findViewById(R.id.lay_mytream);
 
         if (UtilTools.empty(MbsConstans.USER_MAP)) {
             String s = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.LOGIN_INFO, "").toString();
@@ -729,7 +732,8 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                         startActivity(intent);
                         break;
                     case R.id.lay_mytream:
-
+                        intent = new Intent(getActivity(), MyTreamActivity.class);
+                        startActivity(intent);
                         break;
                 }
             }
@@ -747,6 +751,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         layKefu.setOnClickListener(onClickListener);
         layBangzhu.setOnClickListener(onClickListener);
         layShezhi.setOnClickListener(onClickListener);
+        layMyTream.setOnClickListener(onClickListener);
     }
 
     private void getIsIdentityAction() {
@@ -787,7 +792,6 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == QUEST_CODE) {
-                LogUtilDebug.i("show","HomeFragment onActivityResult()");
                 Bundle bundle = data.getExtras();
                 if (bundle != null){
                     String buySell = bundle.getString("buySell");

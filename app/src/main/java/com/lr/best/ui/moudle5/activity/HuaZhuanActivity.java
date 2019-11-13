@@ -135,6 +135,11 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
                 toStr = toTv.getText().toString()+"";
                 fromTv.setText(toStr);
                 toTv.setText(fromStr);
+
+                if (!typeTv.getText().toString().equals("请选择")){
+                    getAviableMoneyAction(typeTv.getText()+"");
+                }
+
                 break;
             case R.id.type_lay:
                 String type = "";
@@ -145,13 +150,13 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
                 if ((fromTv.getText().toString().equals("币币账户") && (toTv.getText().toString().equals("法币账户")))){
                     type = "1";
                 }
-                if ((fromTv.getText().toString().equals("币币账户") && (toTv.getText().toString().equals("合约账户")))){
+               /* if ((fromTv.getText().toString().equals("币币账户") && (toTv.getText().toString().equals("合约账户")))){
                     type = "2";
-                }
+                }*/
                 if ((fromTv.getText().toString().equals("法币账户") && (toTv.getText().toString().equals("币币账户")))){
                     type = "3";
                 }
-                if ((fromTv.getText().toString().equals("法币账户") && (toTv.getText().toString().equals("合约账户")))){
+            /*    if ((fromTv.getText().toString().equals("法币账户") && (toTv.getText().toString().equals("合约账户")))){
                     type = "4";
                 }
                 if ((fromTv.getText().toString().equals("合约账户") && (toTv.getText().toString().equals("币币账户")))){
@@ -166,7 +171,7 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
                 if ((fromTv.getText().toString().equals("奖励金") && (!toTv.getText().toString().equals("奖励金")))){
                     type = "7";
                 }
-
+*/
                 getTypeListAction(type);
                 break;
             case R.id.selectall_tv:
@@ -199,22 +204,22 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
             huzhuanTv.setEnabled(true);
             return;
         }
-        if (fromTv.getText().toString().equals(toTv.getText().toString())){
+      /*  if (fromTv.getText().toString().equals(toTv.getText().toString())){
             showToastMsg("不能向相同账户类型划转");
             huzhuanTv.setEnabled(true);
             return;
-        }
+        }*/
 
         if ((fromTv.getText().toString().equals("币币账户") && (toTv.getText().toString().equals("法币账户")))){
             map.put("type", "1");
         }
-        if ((fromTv.getText().toString().equals("币币账户") && (toTv.getText().toString().equals("合约账户")))){
+     /*   if ((fromTv.getText().toString().equals("币币账户") && (toTv.getText().toString().equals("合约账户")))){
             map.put("type", "2");
-        }
+        }*/
         if ((fromTv.getText().toString().equals("法币账户") && (toTv.getText().toString().equals("币币账户")))){
             map.put("type", "3");
         }
-        if ((fromTv.getText().toString().equals("法币账户") && (toTv.getText().toString().equals("合约账户")))){
+        /*if ((fromTv.getText().toString().equals("法币账户") && (toTv.getText().toString().equals("合约账户")))){
             map.put("type", "4");
         }
         if ((fromTv.getText().toString().equals("合约账户") && (toTv.getText().toString().equals("币币账户")))){
@@ -240,7 +245,7 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
         }
         if ((fromTv.getText().toString().equals("奖励金") && (toTv.getText().toString().equals("合约账户")))){
             map.put("type", "12");
-        }
+        }*/
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.HUAZHUAN_DEAL, map);
 
@@ -312,7 +317,7 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             avaiableNumber = tData.get("data")+"";
-                            aviableTv.setText("可用 "+UtilTools.getNormalNumber(avaiableNumber)+" "+typeTv.getText().toString());
+                            aviableTv.setText("可用 "+UtilTools.getNormalMoney(avaiableNumber)+" "+typeTv.getText().toString());
                         }
                         break;
                     case "-1": //请求失败
@@ -361,9 +366,20 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
                 String s= (String) map.get("name"); //选择账户
                 fromTv.setText(s);
                 huzhuanTv.setEnabled(true);
+                if (!UtilTools.empty(s)){
+                    if ( s.equals("币币账户")){
+                        toTv.setText("法币账户");
+                    }else {
+                        toTv.setText("币币账户");
+                    }
+                }
+                if (!typeTv.getText().toString().equals("请选择")){
+                    getAviableMoneyAction(typeTv.getText()+"");
+                }
+
                 break;
-            case 30: //选择币种
-                String str= (String) map.get("name"); //选择账户
+            case 30:
+                String str= (String) map.get("name"); //选择币种
                 typeTv.setText(str);
                 type2Tv.setText(str);
                 getAviableMoneyAction(str);
@@ -386,12 +402,12 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
         if (fromTv.getText().toString().equals("法币账户")){
             map.put("type", "2");
         }
-        if (fromTv.getText().toString().equals("合约账户")){
+       /* if (fromTv.getText().toString().equals("合约账户")){
             map.put("type", "3");
         }
         if (fromTv.getText().toString().equals("奖励金")){
             map.put("type", "4");
-        }
+        }*/
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ACCOUNT_AVAIABLE_MONEY, map);
     }

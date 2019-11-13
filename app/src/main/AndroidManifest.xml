@@ -484,6 +484,15 @@
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
+
+        <!--我的团队 -->
+
+        <activity
+            android:name=".ui.moudle.activity.MyTreamActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
         <!-- 兑换 -->
 
         <activity

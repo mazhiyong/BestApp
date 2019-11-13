@@ -117,7 +117,7 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
             public void onTextChanged(CharSequence sequence, int i, int i1, int i2) {
                 if (sequence.toString().length() > 0 && mAdapter != null) {
                     mAdapter.setBackTotal(ChoseBiTypeActivity.this);
-                    mAdapter.getFilter().filter(sequence.toString());
+                    mAdapter.getFilter().filter(sequence.toString().toUpperCase());
                 } else {
                     if (mDataList != null && mDataList.size() > 0) {
                         responseData();

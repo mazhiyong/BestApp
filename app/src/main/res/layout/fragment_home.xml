@@ -173,7 +173,7 @@
                             android:layout_height="wrap_content">
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:text="快捷买币"
+                                android:text="闪兑BEST"
                                 android:layout_gravity="center_vertical"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/sp_22"
@@ -182,7 +182,7 @@
                             <TextView
                                 android:layout_marginTop="@dimen/dp_10"
                                 android:layout_width="wrap_content"
-                                android:text="支持BTC、ETH、USDT购买"
+                                android:text="任意币种轻松兑"
                                 android:layout_gravity="center_vertical"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/sp_12"
@@ -192,6 +192,7 @@
                         <ImageView
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/icon_pay"
+                            android:layout_marginLeft="@dimen/dp_25"
                             android:layout_width="@dimen/dp_45"
                             android:layout_height="@dimen/dp_45" />
                     </LinearLayout>

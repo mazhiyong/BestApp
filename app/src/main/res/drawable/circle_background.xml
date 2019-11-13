@@ -4,10 +4,10 @@
         <shape
             android:shape="oval"
             android:useLevel= "false">
-            <solid android:color="@color/white70" />
+            <solid android:color="@color/white" />
             <stroke
                 android:width="@dimen/dp_1"
-                android:color="#fcfcfc" />
+                android:color="@color/white" />
             <size
                 android:width="@dimen/dp_10"
                 android:height="@dimen/dp_10" />
@@ -17,10 +17,10 @@
         <shape
             android:shape="oval"
             android:useLevel="false">
-            <solid android:color="@color/white70" />
+            <solid android:color="@color/white" />
             <stroke
                 android:width="@dimen/dp_1"
-                android:color="#fcfcfc" />
+                android:color="@color/white" />
             <size
                 android:width="@dimen/dp_10"
                 android:height="@dimen/dp_10" />
@@ -30,10 +30,10 @@
         <shape
             android:shape="oval"
             android:useLevel= "false">
-            <solid android:color="@color/white70" />
+            <solid android:color="@color/white" />
             <stroke
                 android:width="@dimen/dp_1"
-                android:color="#fcfcfc" />
+                android:color="@color/white" />
             <size
                 android:width="@dimen/dp_10"
                 android:height="@dimen/dp_10" />

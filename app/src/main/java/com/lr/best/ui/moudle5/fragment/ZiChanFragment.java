@@ -117,7 +117,7 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
     private String mRequestTag = "";
     private List<Map<String, Object>> mDataList = new ArrayList<>();
 
-    //1币币，2发布，3奖励
+    //1币币，3发布，4奖励
     private String mType = "1";
 
     private KindSelectDialog mDialog;
@@ -166,7 +166,7 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
                         getAccountDataAction();
                         break;
                     case 1: //法币账户
-                        mType = "2";
+                        mType = "3";
                         pageView.setVisibility(View.VISIBLE);
                         zichanAcccountLay.setVisibility(View.VISIBLE);
                         duihuanLay.setVisibility(View.GONE);
@@ -175,7 +175,7 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
                         getAccountDataAction();
                         break;
                     case 2: //奖励金
-                        mType = "3";
+                        mType = "4";
                         pageView.setVisibility(View.GONE);
                         zichanAcccountLay.setVisibility(View.GONE);
                         duihuanLay.setVisibility(View.VISIBLE);

@@ -858,7 +858,7 @@ public class SelectDataUtil {
         map1.put("code","1");
         mDataList.add(map1);
 
-        map1=new HashMap<>();
+       /* map1=new HashMap<>();
         map1.put("name","合约账户");
         map1.put("code","2");
         mDataList.add(map1);
@@ -867,7 +867,7 @@ public class SelectDataUtil {
         map1.put("name","奖励金");
         map1.put("code","3");
         mDataList.add(map1);
-
+*/
 
         return mDataList;
     }

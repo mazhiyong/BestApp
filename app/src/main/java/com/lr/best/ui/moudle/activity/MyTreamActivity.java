@@ -2,8 +2,6 @@ package com.lr.best.ui.moudle.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,18 +16,19 @@ import com.lr.best.basic.BasicActivity;
 import com.lr.best.basic.MbsConstans;
 import com.lr.best.listener.SelectBackListener;
 import com.lr.best.mvp.view.RequestView;
+import com.lr.best.utils.tool.SPUtils;
+import com.lr.best.utils.tool.UtilTools;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 关于我们  界面
+ * 我的团队  界面
  */
-public class AboutActivity extends BasicActivity implements RequestView , SelectBackListener {
+public class MyTreamActivity extends BasicActivity implements RequestView , SelectBackListener {
     @BindView(R.id.back_img)
     ImageView mBackImg;
     @BindView(R.id.title_text)
@@ -48,7 +47,7 @@ public class AboutActivity extends BasicActivity implements RequestView , Select
 
     @Override
     public int getContentView() {
-        return R.layout.activity_about_us;
+        return R.layout.activity_my_tream;
     }
 
     @Override
@@ -61,7 +60,7 @@ public class AboutActivity extends BasicActivity implements RequestView , Select
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
 
-        getAboutInfoAction();
+        getMyTreamInfoAction();
 
 
     }
@@ -84,15 +83,15 @@ public class AboutActivity extends BasicActivity implements RequestView , Select
     }
 
 
-    private void getAboutInfoAction() {
-        mRequestTag = MethodUrl.USER_GVRP;
+    private void getMyTreamInfoAction() {
+        mRequestTag = MethodUrl.MY_TREAM;
         Map<String, Object> map = new HashMap<>();
-       /* if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(AboutActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(MyTreamActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);*/
+        map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_GVRP, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.MY_TREAM, map);
 
     }
 
@@ -109,12 +108,10 @@ public class AboutActivity extends BasicActivity implements RequestView , Select
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         switch (mType){
-            case MethodUrl.USER_GVRP:
+            case MethodUrl.MY_TREAM:
             switch (tData.get("code")+""){
                 case "0": //请求成功
                      String mapData = tData.get("data")+"";
-                     tvContent.setMovementMethod(LinkMovementMethod.getInstance());
-                     tvContent.setText(Html.fromHtml(mapData));
                     break;
                 case "-1": //请求失败
                     showToastMsg(tData.get("msg")+"");
@@ -122,7 +119,7 @@ public class AboutActivity extends BasicActivity implements RequestView , Select
 
                 case "1": //token过期
                     closeAllActivity();
-                    Intent intent = new Intent(AboutActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(MyTreamActivity.this, LoginActivity.class);
                     startActivity(intent);
                     break;
 
@@ -159,13 +156,6 @@ public class AboutActivity extends BasicActivity implements RequestView , Select
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.divide_line)
