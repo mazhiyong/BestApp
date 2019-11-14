@@ -40,7 +40,7 @@ import com.lr.best.ui.moudle.activity.MainActivity;
 import com.lr.best.ui.moudle.activity.MyTreamActivity;
 import com.lr.best.ui.moudle.activity.SecurityActivity;
 import com.lr.best.ui.moudle.activity.SettingActivity;
-import com.lr.best.ui.moudle1.activity.HelpListActivity;
+import com.lr.best.ui.moudle1.activity.HelpDetialActivity;
 import com.lr.best.ui.moudle1.activity.HtmlActivity;
 import com.lr.best.ui.moudle1.activity.NoticeDetialActivity;
 import com.lr.best.ui.moudle1.activity.NoticeListActivity;
@@ -49,8 +49,8 @@ import com.lr.best.ui.moudle1.activity.UserInfoActivity;
 import com.lr.best.ui.moudle1.activity.YaoQingActivity;
 import com.lr.best.ui.moudle1.adapter.MainCoinAdapter;
 import com.lr.best.ui.moudle1.adapter.MoreTypeAdapter;
-import com.lr.best.ui.moudle4.activity.RedRecordListActivity;
 import com.lr.best.ui.moudle3.activity.CoinInfoDetailActivity;
+import com.lr.best.ui.moudle4.activity.RedRecordListActivity;
 import com.lr.best.ui.moudle5.activity.ChoseBiTypeActivity;
 import com.lr.best.ui.moudle5.activity.HuaZhuanActivity;
 import com.lr.best.utils.imageload.GlideUtils;
@@ -724,7 +724,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                         startActivity(intent);
                         break;
                     case R.id.lay_bangzhu:
-                        intent = new Intent(getActivity(), HelpListActivity.class);
+                        intent = new Intent(getActivity(), HelpDetialActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.lay_shezhi:

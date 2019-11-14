@@ -66,16 +66,16 @@ public class HelpDetialActivity extends BasicActivity implements RequestView, Se
     public void init() {
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
-        Intent intent = getIntent();
+       /* Intent intent = getIntent();
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 mapData = (Map<String, Object>) bundle.getSerializable("DATA");
             }
-        }
+        }*/
 
 
-        mTitleText.setText("详情");
+        mTitleText.setText("帮助中心");
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
 
@@ -92,7 +92,7 @@ public class HelpDetialActivity extends BasicActivity implements RequestView, Se
             MbsConstans.ACCESS_TOKEN = SPUtils.get(HelpDetialActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("id", mapData.get("id") + "");
+        //map.put("id", mapData.get("id") + "");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.HELP_INFO, map);
     }
@@ -129,12 +129,10 @@ public class HelpDetialActivity extends BasicActivity implements RequestView, Se
             case MethodUrl.HELP_INFO:
                 switch (tData.get("code")+""){
                     case "0": //请求成功
-                        Map<String, Object> map = (Map<String, Object>) tData.get("data");
-                        if (!UtilTools.empty(map)) {
-                            tvTitle.setText(map.get("title")+"");
-                            tvTime.setText(map.get("time")+"");
+                       String data=  tData.get("data")+"";
+                        if (!UtilTools.empty(data)) {
                             tvContent.setMovementMethod(LinkMovementMethod.getInstance());
-                            tvContent.setText(Html.fromHtml(map.get("content")+""));
+                            tvContent.setText(Html.fromHtml(data));
                         }
                         break;
                     case "-1": //请求失败

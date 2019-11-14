@@ -79,7 +79,7 @@ public class WeiTuoListAdapter extends ListBaseAdapter {
             TextViewUtils textViewUtils = new TextViewUtils();
             String s = viewHolder.nameTv.getText().toString();
             textViewUtils.init(s, viewHolder.nameTv);
-            textViewUtils.setTextColor(0, 2, ContextCompat.getColor(mContext, R.color.red));
+            textViewUtils.setTextColor(0, 2, ContextCompat.getColor(mContext, R.color.red_btn));
             textViewUtils.build();
         } else {
             kind = "买入";
@@ -87,7 +87,7 @@ public class WeiTuoListAdapter extends ListBaseAdapter {
             TextViewUtils textViewUtils = new TextViewUtils();
             String s = viewHolder.nameTv.getText().toString();
             textViewUtils.init(s, viewHolder.nameTv);
-            textViewUtils.setTextColor(0, 2, ContextCompat.getColor(mContext, R.color.green));
+            textViewUtils.setTextColor(0, 2, ContextCompat.getColor(mContext, R.color.green_btn));
             textViewUtils.build();
         }
 

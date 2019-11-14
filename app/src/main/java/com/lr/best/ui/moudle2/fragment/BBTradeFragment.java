@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -25,17 +24,14 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidkun.xtablayout.XTabLayout;
 import com.flyco.dialog.utils.CornerUtils;
-import com.github.jdsjlzx.ItemDecoration.DividerDecoration;
 import com.github.jdsjlzx.ItemDecoration.GridItemDecoration;
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
-import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.jaeger.library.StatusBarUtil;
 import com.lr.best.R;
 import com.lr.best.api.MethodUrl;
@@ -52,13 +48,13 @@ import com.lr.best.mywidget.dialog.SureOrNoDialog;
 import com.lr.best.mywidget.view.LoadingWindow;
 import com.lr.best.mywidget.view.PageView;
 import com.lr.best.ui.moudle.activity.LoginActivity;
+import com.lr.best.ui.moudle2.activity.WeiTuoListActivity;
+import com.lr.best.ui.moudle2.adapter.EntrustListAdapter;
+import com.lr.best.ui.moudle2.adapter.WeiTuoListAdapter;
 import com.lr.best.ui.moudle3.activity.CoinInfoDetailActivity;
 import com.lr.best.ui.moudle3.adapter.BuyAdapter;
 import com.lr.best.ui.moudle3.adapter.SellAdapter;
 import com.lr.best.ui.moudle3.adapter.TypeSelectAdapter;
-import com.lr.best.ui.moudle2.activity.WeiTuoListActivity;
-import com.lr.best.ui.moudle2.adapter.EntrustListAdapter;
-import com.lr.best.ui.moudle2.adapter.WeiTuoListAdapter;
 import com.lr.best.utils.tool.AnimUtil;
 import com.lr.best.utils.tool.BigDecimalUtils;
 import com.lr.best.utils.tool.JSONUtil;
@@ -66,6 +62,8 @@ import com.lr.best.utils.tool.LogUtilDebug;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.SelectDataUtil;
 import com.lr.best.utils.tool.UtilTools;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.wanou.framelibrary.okgoutil.websocket.listener.WsStatusListener;
 import com.xw.repo.BubbleSeekBar;
 
@@ -78,8 +76,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import jp.wasabeef.recyclerview.adapters.AnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -171,8 +167,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     ImageView ivEmptyContent;
     @BindView(R.id.tvEmptyContent)
     TextView tvEmptyContent;
-    @BindView(R.id.clView)
-    ConstraintLayout clView;
     @BindView(R.id.select_iv)
     ImageView selectIv;
     @BindView(R.id.select_tv)
@@ -190,13 +184,18 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     @BindView(R.id.tv_all)
     TextView tvAll;
     @BindView(R.id.rcv)
-    LRecyclerView mRefreshListView;
+    RecyclerView mRefreshListView;
     @BindView(R.id.content)
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.bundle_seekBar)
     BubbleSeekBar bundleSeekBar;
+    @BindView(R.id.tlTradeList)
+    XTabLayout tlTradeList;
+
 
 
     public LoadingWindow mLoadingWindow;
@@ -226,6 +225,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     public String symbol ="BTC";
     public String buysell = "1";
     private String buysell2 = "0";
+    private String status ="1";
 
 
 
@@ -236,6 +236,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private DecimalFormat decimalFormat3 = new DecimalFormat();
 
     private int mPage = 1;
+    private int maxPage = 1;
+
     private AnimUtil mAnimUtil;
 
     //private WsManager wsManager;
@@ -291,6 +293,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CURRENT_PRICE, map);
     }
+
+
 
     public BBTradeFragment() {
         // Required empty public constructor
@@ -428,7 +432,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     case R.id.rbSell:
                         mKindType = "1";
                         //bundleSeekBar.setProgress(0);
-                        tvOperateCoin.setText("卖出 BTC");
+                        tvOperateCoin.setText("卖出");
+                        bundleSeekBar.setSecondTrackColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.red_btn));
+                        bundleSeekBar.setThumbColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.red_btn));
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
                         rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);
                         rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house3);
@@ -450,7 +456,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     case R.id.rbBuy:
                         mKindType = "0";
                         //bundleSeekBar.setProgress(0);
-                        tvOperateCoin.setText("买入 BTC");
+                        tvOperateCoin.setText("买入");
+                        bundleSeekBar.setSecondTrackColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.green_btn));
+                        bundleSeekBar.setThumbColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.green_btn));
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
                         rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
                         rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house2);
@@ -486,7 +494,32 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().length()>0){
-                    if (rbNumber1.isChecked()){
+                    if (bundleSeekBar.getProgress() > 0) {
+                        if (mKindType.equals("0")){ //买入
+                            if (mSelectType.equals("0")){ //限价
+                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                int number = (int) (maxNumber*bundleSeekBar.getProgress()/100);
+                                etNumber.setText(number+"");
+                            }else { //市价
+                                etNumber.setText(bundleSeekBar.getProgress()+"");
+                            }
+
+                        }else { //卖出
+                            LogUtilDebug.i("show","BTC_Account:"+BTC_Account);
+                            int number = (int) (Float.parseFloat(BTC_Account)*bundleSeekBar.getProgress()/100);
+                            etNumber.setText(number+"");
+                        }
+
+                   /* if ( number > 0 ){
+                        etHand.setEnabled(false);
+                    }else {
+                        etHand.setEnabled(true);
+                    }*/
+                    }else {
+                        etNumber.setText("0");
+                    }
+
+                  /*  if (rbNumber1.isChecked()){
                         if (mKindType.equals("0")){ //买入
                             if (mSelectType.equals("0")){ //限价
                                 float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
@@ -537,7 +570,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                         }
                     }
-
+*/
 
                 }else {
                     etNumber.setText("");
@@ -664,7 +697,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 }
 
                 if (progress > 0) {
-
                     if (mKindType.equals("0")){ //买入
                         if (mSelectType.equals("0")){ //限价
                             float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
@@ -688,6 +720,34 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 }else {
                     etNumber.setText("0");
                 }
+            }
+        });
+
+        tlTradeList.addTab(tlTradeList.newTab().setText("未完成委托"));
+        tlTradeList.addTab(tlTradeList.newTab().setText("已完成委托"));
+        tlTradeList.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(XTabLayout.Tab tab) {
+                switch (tlTradeList.getSelectedTabPosition()){
+                    case 0:
+                        status = "1";
+                        getEntrustListAction();
+                        break;
+                    case 1:
+                        status = "2";
+                        getEntrustListAction();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(XTabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(XTabLayout.Tab tab) {
+
             }
         });
 
@@ -746,8 +806,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             }
         });
 
-        //sellAdapter.setSellTradeInfos(mDataListSell,precision);
-
         rvBuy.setHasFixedSize(true);
         rvBuy.setNestedScrollingEnabled(false);
         buyAdapter = new BuyAdapter(getActivity());
@@ -765,31 +823,28 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             }
         });
 
-        // buyAdapter.setBuyTradeInfo(mDataListBuy,precision);
 
+        //下拉刷新
+        refreshLayout.setOnRefreshListener(new com.scwang.smartrefresh.layout.listener.OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                //mPage = 1;
+                getEntrustListAction();
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+               /* if (mDataList == null || mDataList.size() < 10) {
+                    //refreshLayout.finishLoadMore();
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                } else {
+                    getEntrustListAction();
+                }*/
+                refreshLayout.finishLoadMoreWithNoMoreData();
+            }
+        });
 
-//        List<Map<String, Object>> tabs = SelectDataUtil.getTabValues3();
-//        for (Map<String, Object> map : tabs) {
-//            tlEntrust.addTab(tlEntrust.newTab().setText(map.get("name") + ""));
-//        }
-//        tlEntrust.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                // 委托信息
-//                // getEntrustInfo(tab.getPosition());
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//                // 委托信息
-//                //getEntrustInfo(tab.getPosition());
-//            }
-//        });
 
     }
 
@@ -834,8 +889,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         map.put("direction",mKindType);
         map.put("type",mSelectType);
         if (mSelectType.equals("1") && mKindType.equals("0")){
-            map.put("number","");
-            map.put("total",etNumber.getText()+""); //市价买
+            map.put("number","");//与数量无关
+            //市价买  金额
+            map.put("total",etNumber.getText()+"");
         }else {
             map.put("price",etPrice.getText()+"");
         }
@@ -854,7 +910,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("area",area);
         map.put("symbol",symbol);
-        map.put("status","1");
+        map.put("status",status);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ENTRUST_LIST, map);
 
@@ -1051,7 +1107,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             mWeiTuoListAdapter = new WeiTuoListAdapter(getActivity());
             mWeiTuoListAdapter.addAll(mDataList);
 
-            AnimationAdapter adapter = new ScaleInAnimationAdapter(mWeiTuoListAdapter);
+           /* AnimationAdapter adapter = new ScaleInAnimationAdapter(mWeiTuoListAdapter);
             adapter.setFirstOnly(false);
             adapter.setDuration(500);
             adapter.setInterpolator(new OvershootInterpolator(.5f));
@@ -1070,7 +1126,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
             mRefreshListView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
             mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
-
+*/
             //int spacing = getResources().getDimensionPixelSize(R.dimen.divide_hight);
             //mRefreshListView.addItemDecoration(SpacesItemDecoration.newInstance(spacing, spacing, gridLayoutManager.getSpanCount(), Color.GRAY));
             //根据需要选择使用GridItemDecoration还是SpacesItemDecoration
@@ -1079,14 +1135,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     .setVertical(R.dimen.divide_hight)
                     .setColorResource(R.color.divide_line)
                     .build();
-            //mRefreshListView.addItemDecoration(divider);
-
-            DividerDecoration divider2 = new DividerDecoration.Builder(getActivity())
-                    .setHeight(R.dimen.dp_10)
-                    .setPadding(R.dimen.dp_10)
-                    .setColorResource(R.color.body_bg)
-                    .build();
-            mRefreshListView.addItemDecoration(divider2);
 
 
         } else {
@@ -1097,24 +1145,25 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             mWeiTuoListAdapter.clear();
             mWeiTuoListAdapter.addAll(mDataList);
             mWeiTuoListAdapter.notifyDataSetChanged();
-            mLRecyclerViewAdapter.notifyDataSetChanged();//必须调用此方法
         }
 
-        mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-
-        if (mDataList.size() < 10) {
-            mRefreshListView.setNoMore(true);
+       /* if (mDataList==null  || mDataList.size() < 10) {
+            refreshLayout.finishLoadMoreWithNoMoreData();
         } else {
-            mRefreshListView.setNoMore(false);
-            mPage++;
-        }
-        mRefreshListView.refreshComplete(10);
-        mWeiTuoListAdapter.notifyDataSetChanged();
+            if (mPage < maxPage ){
+                mPage++;
+            }
+        }*/
+
+        mRefreshListView.setAdapter(mWeiTuoListAdapter);
 
         if (mWeiTuoListAdapter.getDataList().size() <= 0) {
             mPageView.showEmpty();
+            LogUtilDebug.i("show","******************** mPageView.showEmpty()");
+
         } else {
             mPageView.showContent();
+            LogUtilDebug.i("show","******************** mPageView.showContent()");
         }
 
         mWeiTuoListAdapter.setmCallBack(new OnChildClickListener() {
@@ -1212,15 +1261,12 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         mDataList = (List<Map<String, Object>>) tData.get("data");
                         if (mDataList != null && mDataList.size()>0){
                             for (Map<String,Object> map :mDataList){
-                                map.put("status","1");
+                                map.put("status",status);
                             }
                             mPageView.showContent();
-                            mapOneList.clear();
-                            mapOneList.add(mDataList.get(0));
-                            mDataList.clear();
-                            mDataList.addAll(mapOneList);
                             responseData();
-
+                            refreshLayout.finishRefresh();
+                            refreshLayout.finishLoadMore();
                         }else {
                             mPageView.showEmpty();
                         }
@@ -1478,10 +1524,12 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         clPrice.setVisibility(View.VISIBLE);
                         tvCnyPrice.setVisibility(View.GONE);
                         etPrice.setHint("价格");
+                        etNumber.setHint("数量");
                     }else { //卖出
                         clPrice.setVisibility(View.VISIBLE);
                         tvCnyPrice.setVisibility(View.GONE);
                         etPrice.setHint("价格");
+                        etNumber.setHint("数量");
                     }
 
 
@@ -1678,7 +1726,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         if (buysell.equals("1")){ //买入
             rbBuy.setChecked(true);
             mKindType = "0";
-            tvOperateCoin.setText("买入 BTC");
+            tvOperateCoin.setText("买入");
+            bundleSeekBar.setSecondTrackColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.green_btn));
+            bundleSeekBar.setThumbColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.green_btn));
             tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
             rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
             rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house2);
@@ -1703,7 +1753,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             rbSell.setChecked(true);
 
             mKindType = "1";
-            tvOperateCoin.setText("卖出 BTC");
+            tvOperateCoin.setText("卖出");
+            bundleSeekBar.setSecondTrackColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.red_btn));
+            bundleSeekBar.setThumbColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.red_btn));
             tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
             rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);
             rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house3);

@@ -18,6 +18,7 @@ import com.lr.best.basic.BasicActivity;
 import com.lr.best.basic.MbsConstans;
 import com.lr.best.listener.SelectBackListener;
 import com.lr.best.mvp.view.RequestView;
+import com.lr.best.utils.tool.UtilTools;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -113,8 +114,10 @@ public class AboutActivity extends BasicActivity implements RequestView , Select
             switch (tData.get("code")+""){
                 case "0": //请求成功
                      String mapData = tData.get("data")+"";
-                     tvContent.setMovementMethod(LinkMovementMethod.getInstance());
-                     tvContent.setText(Html.fromHtml(mapData));
+                     if (!UtilTools.empty(mapData)){
+                         tvContent.setMovementMethod(LinkMovementMethod.getInstance());
+                         tvContent.setText(Html.fromHtml(mapData));
+                     }
                     break;
                 case "-1": //请求失败
                     showToastMsg(tData.get("msg")+"");
