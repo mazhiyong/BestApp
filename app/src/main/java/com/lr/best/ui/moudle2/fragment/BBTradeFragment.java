@@ -64,6 +64,8 @@ import com.lr.best.utils.tool.SelectDataUtil;
 import com.lr.best.utils.tool.UtilTools;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wanou.framelibrary.okgoutil.websocket.listener.WsStatusListener;
 import com.xw.repo.BubbleSeekBar;
 
@@ -197,8 +199,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     XTabLayout tlTradeList;
 
 
-
     public LoadingWindow mLoadingWindow;
+    @BindView(R.id.areaTv)
+    TextView areaTv;
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     private WeiTuoListAdapter mWeiTuoListAdapter;
@@ -216,19 +219,16 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private List<Map<String, Object>> mtabsData = new ArrayList<>();
     private int precision = 2;
 
-    List<Map<String,Object>> mapOneList = new ArrayList<>();
+    List<Map<String, Object>> mapOneList = new ArrayList<>();
 
     private KindSelectDialog mDialog;
 
     private String mRequestTag = "";
-    public String area ="USDT";
-    public String symbol ="BTC";
+    public String area = "USDT";
+    public String symbol = "BTC";
     public String buysell = "1";
     private String buysell2 = "0";
-    private String status ="1";
-
-
-
+    private String status = "1";
 
 
     private DecimalFormat decimalFormat = new DecimalFormat();
@@ -288,12 +288,11 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             MbsConstans.ACCESS_TOKEN = SPUtils.get(CoinInfoDetailActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);*/
-        map.put("area",area);
-        map.put("symbol",symbol);
+        map.put("area", area);
+        map.put("symbol", symbol);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CURRENT_PRICE, map);
     }
-
 
 
     public BBTradeFragment() {
@@ -395,7 +394,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             handler.postDelayed(this, MbsConstans.SECOND_TIME_500);
         }
     };*/
-
     @Override
     public void init() {
 //        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) getActivity().getResources().getDimension(R.dimen.title_item_height) + UtilTools.getStatusHeight2(getActivity()));
@@ -433,19 +431,19 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         mKindType = "1";
                         //bundleSeekBar.setProgress(0);
                         tvOperateCoin.setText("卖出");
-                        bundleSeekBar.setSecondTrackColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.red_btn));
-                        bundleSeekBar.setThumbColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.red_btn));
+                        bundleSeekBar.setSecondTrackColor(ContextCompat.getColor(getParentFragment().getActivity(), R.color.red_btn));
+                        bundleSeekBar.setThumbColor(ContextCompat.getColor(getParentFragment().getActivity(), R.color.red_btn));
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
                         rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);
                         rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house3);
                         rbNumber3.setBackgroundResource(R.drawable.selector_open_close_house3);
                         rbNumber4.setBackgroundResource(R.drawable.selector_open_close_house3);
 
-                        if (mSelectType.equals("0")){ //限价
+                        if (mSelectType.equals("0")) { //限价
                             clPrice.setVisibility(View.VISIBLE);
                             tvCnyPrice.setVisibility(View.GONE);
                             etPrice.setHint("价格");
-                        }else { //市价 卖
+                        } else { //市价 卖
                             etNumber.setHint("数量");
                             clPrice.setVisibility(View.GONE);
                             tvCnyPrice.setVisibility(View.VISIBLE);
@@ -457,19 +455,19 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         mKindType = "0";
                         //bundleSeekBar.setProgress(0);
                         tvOperateCoin.setText("买入");
-                        bundleSeekBar.setSecondTrackColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.green_btn));
-                        bundleSeekBar.setThumbColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.green_btn));
+                        bundleSeekBar.setSecondTrackColor(ContextCompat.getColor(getParentFragment().getActivity(), R.color.green_btn));
+                        bundleSeekBar.setThumbColor(ContextCompat.getColor(getParentFragment().getActivity(), R.color.green_btn));
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
                         rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
                         rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house2);
                         rbNumber3.setBackgroundResource(R.drawable.selector_open_close_house2);
                         rbNumber4.setBackgroundResource(R.drawable.selector_open_close_house2);
 
-                        if (mSelectType.equals("0")){ //限价
+                        if (mSelectType.equals("0")) { //限价
                             clPrice.setVisibility(View.VISIBLE);
                             tvCnyPrice.setVisibility(View.GONE);
                             etPrice.setHint("价格");
-                        }else { //市价买
+                        } else { //市价买
                            /* clPrice.setVisibility(View.VISIBLE);
                             tvCnyPrice.setVisibility(View.GONE);
                             etPrice.setHint("金额");*/
@@ -484,6 +482,24 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             }
         });
 
+        etNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()> 0 && mSelectType.equals("0") && !UtilTools.empty(etPrice.getText().toString())) {//限价
+                    tvTransactionAmount.setText(UtilTools.getNormalMoney(Double.parseDouble(s.toString()) * Double.parseDouble(s.toString())+"")+ "  "+ area);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         etPrice.addTextChangedListener(new TextWatcher() {
             @Override
@@ -493,21 +509,28 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().length()>0){
+                if (s.toString().length() > 0) {
                     if (bundleSeekBar.getProgress() > 0) {
-                        if (mKindType.equals("0")){ //买入
-                            if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
-                                int number = (int) (maxNumber*bundleSeekBar.getProgress()/100);
-                                etNumber.setText(number+"");
-                            }else { //市价
-                                etNumber.setText(bundleSeekBar.getProgress()+"");
+                        if (mKindType.equals("0")) { //买入
+                            if (mSelectType.equals("0")) { //限价
+                                float maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString().replaceAll(",", "").trim());
+                                int number = (int) (maxNumber * bundleSeekBar.getProgress() / 100);
+                                etNumber.setText(number + "");
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(s.toString())+"")+ "  "+ area);
+
+                            } else { //市价
+                                etNumber.setText(bundleSeekBar.getProgress() + "");
+                                tvTransactionAmount.setText("--");
                             }
 
-                        }else { //卖出
-                            LogUtilDebug.i("show","BTC_Account:"+BTC_Account);
-                            int number = (int) (Float.parseFloat(BTC_Account)*bundleSeekBar.getProgress()/100);
-                            etNumber.setText(number+"");
+                        } else { //卖出
+                            int number = (int) (Float.parseFloat(BTC_Account) * bundleSeekBar.getProgress() / 100);
+                            etNumber.setText(number + "");
+                            if (mSelectType.equals("0")) { //限价
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(s.toString())+"")+ "  "+ area);
+                            } else {
+                                tvTransactionAmount.setText("--");
+                            }
                         }
 
                    /* if ( number > 0 ){
@@ -515,7 +538,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     }else {
                         etHand.setEnabled(true);
                     }*/
-                    }else {
+                    } else {
                         etNumber.setText("0");
                     }
 
@@ -572,7 +595,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     }
 */
 
-                }else {
+                } else {
                     etNumber.setText("");
                 }
             }
@@ -585,10 +608,10 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         coinCoinSeekBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (mSelectType){
+                switch (mSelectType) {
                     case "0": //限价
-                        if (mKindType.equals("0")){ //买入
-                            if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",","").trim())){
+                        if (mKindType.equals("0")) { //买入
+                            if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",", "").trim())) {
                                 showToastMsg("请输入价格");
                                 etNumber.setText("");
                                 return;
@@ -601,66 +624,66 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         break;
                 }
 
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.rb_number1: //10
-                        if (mKindType.equals("0")){ //买入
-                            if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
-                                int number = (int) (maxNumber*0.1f);
-                                etNumber.setText(number+"");
-                            }else { //市价
+                        if (mKindType.equals("0")) { //买入
+                            if (mSelectType.equals("0")) { //限价
+                                float maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString().replaceAll(",", "").trim());
+                                int number = (int) (maxNumber * 0.1f);
+                                etNumber.setText(number + "");
+                            } else { //市价
                                 etNumber.setText("10");
                             }
 
-                        }else { //卖出
-                            LogUtilDebug.i("show","BTC_Account:"+BTC_Account);
-                            int number = (int) (Float.parseFloat(BTC_Account)*0.1f);
-                            etNumber.setText(number+"");
+                        } else { //卖出
+                            LogUtilDebug.i("show", "BTC_Account:" + BTC_Account);
+                            int number = (int) (Float.parseFloat(BTC_Account) * 0.1f);
+                            etNumber.setText(number + "");
                         }
                         break;
                     case R.id.rb_number2: //20
-                        if (mKindType.equals("0")){ //买入
-                            if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
-                                int number = (int) (maxNumber*0.2f);
-                                etNumber.setText(number+"");
-                            }else { //市价
+                        if (mKindType.equals("0")) { //买入
+                            if (mSelectType.equals("0")) { //限价
+                                float maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString().replaceAll(",", "").trim());
+                                int number = (int) (maxNumber * 0.2f);
+                                etNumber.setText(number + "");
+                            } else { //市价
                                 etNumber.setText("20");
                             }
-                        }else { //卖出
-                            int number = (int) (Float.parseFloat(BTC_Account)*0.2f);
-                            etNumber.setText(number+"");
+                        } else { //卖出
+                            int number = (int) (Float.parseFloat(BTC_Account) * 0.2f);
+                            etNumber.setText(number + "");
                         }
                         break;
 
                     case R.id.rb_number3: //50
-                        if (mKindType.equals("0")){ //买入
-                            if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
-                                int number = (int) (maxNumber*0.5f);
-                                etNumber.setText(number+"");
-                            }else { //市价
+                        if (mKindType.equals("0")) { //买入
+                            if (mSelectType.equals("0")) { //限价
+                                float maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString().replaceAll(",", "").trim());
+                                int number = (int) (maxNumber * 0.5f);
+                                etNumber.setText(number + "");
+                            } else { //市价
                                 etNumber.setText("50");
                             }
-                        }else { //卖出
-                            int number = (int) (Float.parseFloat(BTC_Account)*0.5f);
-                            etNumber.setText(number+"");
+                        } else { //卖出
+                            int number = (int) (Float.parseFloat(BTC_Account) * 0.5f);
+                            etNumber.setText(number + "");
                         }
                         break;
 
                     case R.id.rb_number4: //100
-                        if (mKindType.equals("0")){ //买入
-                            if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
-                                int number = (int) (maxNumber*1.0f);
-                                etNumber.setText(number+"");
-                            }else { //市价
+                        if (mKindType.equals("0")) { //买入
+                            if (mSelectType.equals("0")) { //限价
+                                float maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString().replaceAll(",", "").trim());
+                                int number = (int) (maxNumber * 1.0f);
+                                etNumber.setText(number + "");
+                            } else { //市价
                                 etNumber.setText("100");
                             }
 
-                        }else { //卖出
-                            int number = (int) (Float.parseFloat(BTC_Account)*1.0f);
-                            etNumber.setText(number+"");
+                        } else { //卖出
+                            int number = (int) (Float.parseFloat(BTC_Account) * 1.0f);
+                            etNumber.setText(number + "");
                         }
                         break;
                 }
@@ -681,10 +704,10 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
             @Override
             public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-                switch (mSelectType){
+                switch (mSelectType) {
                     case "0": //限价
-                        if (mKindType.equals("0")){ //买入
-                            if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",","").trim())){
+                        if (mKindType.equals("0")) { //买入
+                            if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",", "").trim())) {
                                 showToastMsg("请输入价格");
                                 return;
                             }
@@ -697,19 +720,25 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 }
 
                 if (progress > 0) {
-                    if (mKindType.equals("0")){ //买入
-                        if (mSelectType.equals("0")){ //限价
-                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
-                            int number = (int) (maxNumber*progress/100);
-                            etNumber.setText(number+"");
-                        }else { //市价
-                            etNumber.setText(progress+"");
+                    if (mKindType.equals("0")) { //买入
+                        if (mSelectType.equals("0")) { //限价
+                            float maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString().replaceAll(",", "").trim());
+                            int number = (int) (maxNumber * progress / 100);
+                            etNumber.setText(number + "");
+                            tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString())+"")+ "  "+area);
+                        } else { //市价
+                            etNumber.setText(progress + "");
+                            tvTransactionAmount.setText("--");
                         }
 
-                    }else { //卖出
-                        LogUtilDebug.i("show","BTC_Account:"+BTC_Account);
-                        int number = (int) (Float.parseFloat(BTC_Account)*progress/100);
-                        etNumber.setText(number+"");
+                    } else { //卖出
+                        int number = (int) (Float.parseFloat(BTC_Account) * progress / 100);
+                        etNumber.setText(number + "");
+                        if (mSelectType.equals("0")) { //限价
+                            tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString())+"")+ "  "+ area);
+                        } else {
+                            tvTransactionAmount.setText("--");
+                        }
                     }
 
                    /* if ( number > 0 ){
@@ -717,7 +746,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     }else {
                         etHand.setEnabled(true);
                     }*/
-                }else {
+                } else {
                     etNumber.setText("0");
                 }
             }
@@ -728,7 +757,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         tlTradeList.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(XTabLayout.Tab tab) {
-                switch (tlTradeList.getSelectedTabPosition()){
+                switch (tlTradeList.getSelectedTabPosition()) {
                     case 0:
                         status = "1";
                         getEntrustListAction();
@@ -825,14 +854,14 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
 
         //下拉刷新
-        refreshLayout.setOnRefreshListener(new com.scwang.smartrefresh.layout.listener.OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
                 //mPage = 1;
                 getEntrustListAction();
             }
         });
-        refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
                /* if (mDataList == null || mDataList.size() < 10) {
@@ -848,7 +877,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
     }
 
-    @OnClick({R.id.select_iv, R.id.select_tv, R.id.iv_toCoinInfo,R.id.tv_all,R.id.tvLimitPrice,R.id.tvOperateCoin})
+    @OnClick({R.id.select_iv, R.id.select_tv, R.id.iv_toCoinInfo, R.id.tv_all, R.id.tvLimitPrice, R.id.tvOperateCoin})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -860,8 +889,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 Intent intent1 = new Intent(getActivity(), CoinInfoDetailActivity.class);
                 intent1.putExtra("symbol", symbol);
                 intent1.putExtra("area", area);
-                intent1.putExtra("from","2");
-                startActivityForResult(intent1,QUEST_CODE);
+                intent1.putExtra("from", "2");
+                startActivityForResult(intent1, QUEST_CODE);
                 break;
             case R.id.tv_all:
                 intent = new Intent(getParentFragment().getActivity(), WeiTuoListActivity.class);
@@ -876,24 +905,24 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         }
     }
 
-    private void  buyAndSellAction() {
+    private void buyAndSellAction() {
         mRequestTag = MethodUrl.GUADAN_TRADE;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
-        map.put("area",area);
-        map.put("symbol",symbol);
-        map.put("number",etNumber.getText()+"");
-        map.put("direction",mKindType);
-        map.put("type",mSelectType);
-        if (mSelectType.equals("1") && mKindType.equals("0")){
-            map.put("number","");//与数量无关
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("area", area);
+        map.put("symbol", symbol);
+        map.put("number", etNumber.getText() + "");
+        map.put("direction", mKindType);
+        map.put("type", mSelectType);
+        if (mSelectType.equals("1") && mKindType.equals("0")) {
+            map.put("number", "");//与数量无关
             //市价买  金额
-            map.put("total",etNumber.getText()+"");
-        }else {
-            map.put("price",etPrice.getText()+"");
+            map.put("total", etNumber.getText() + "");
+        } else {
+            map.put("price", etPrice.getText() + "");
         }
 
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -904,39 +933,38 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private void getEntrustListAction() {
         mRequestTag = MethodUrl.ENTRUST_LIST;
         Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(),MbsConstans.ACCESS_TOKEN,"").toString();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
-        map.put("area",area);
-        map.put("symbol",symbol);
-        map.put("status",status);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("area", area);
+        map.put("symbol", symbol);
+        map.put("status", status);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ENTRUST_LIST, map);
 
     }
 
-    private void  getCurAreaAccountAction() {
+    private void getCurAreaAccountAction() {
         mRequestTag = MethodUrl.AREA_COIN_ACCOUNT;
         Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(),MbsConstans.ACCESS_TOKEN,"").toString();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
-        map.put("area",area);
-        map.put("symbol",symbol);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("area", area);
+        map.put("symbol", symbol);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.AREA_COIN_ACCOUNT, map);
 
     }
 
 
-
     private void getAreaListAction() {
         mRequestTag = MethodUrl.COIN_AREAALL;
         Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(),MbsConstans.ACCESS_TOKEN,"").toString();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
         }
         //map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -944,21 +972,18 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
     }
 
-    private void  getAreaListItemAction() {
+    private void getAreaListItemAction() {
         mRequestTag = MethodUrl.AREA_ITEM;
         Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(),MbsConstans.ACCESS_TOKEN,"").toString();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
-        map.put("area",area);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("area", area);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.AREA_ITEM, map);
 
     }
-
-
-
 
 
     private View popView;
@@ -982,7 +1007,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             mConditionDialog.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
 
             //设置background后在外点击才会消失
-            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(getActivity(),5)));
+            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(getActivity(), 5)));
             mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
             //自定义动画
             mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
@@ -1045,9 +1070,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         LinearLayoutManager manager = new LinearLayoutManager(getParentFragment().getActivity());
         manager.setOrientation(RecyclerView.VERTICAL);
         rcv.setLayoutManager(manager);
-        if (mtabsData != null && mDatas != null ){
-            for (Map<String,Object> map: mtabsData){
-                tabLayout.addTab(tabLayout.newTab().setText(map.get("name")+""));
+        if (mtabsData != null && mDatas != null) {
+            for (Map<String, Object> map : mtabsData) {
+                tabLayout.addTab(tabLayout.newTab().setText(map.get("name") + ""));
             }
 
             mAdapter = new TypeSelectAdapter(getParentFragment().getActivity(), mDatas, 10);
@@ -1059,8 +1084,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             @Override
             public void onTabSelected(XTabLayout.Tab tab) {
                 tabPostion = tab.getPosition();
-                if (mtabsData != null && mtabsData.size()>0){
-                    area = mtabsData.get(tabPostion).get("name")+"";
+                if (mtabsData != null && mtabsData.size() > 0) {
+                    area = mtabsData.get(tabPostion).get("name") + "";
 
                     getAreaListItemAction();
                 }
@@ -1079,18 +1104,21 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         });
 
 
-
         mAdapter.setOnMyItemClickListener(new OnMyItemClickListener() {
             @Override
             public void OnMyItemClickListener(View view, int position) {
                 mConditionDialog.dismiss();
-                symbol = mDatas.get(position).get("name")+"";
-                selectTv.setText(area + "/" + symbol);
-
+                symbol = mDatas.get(position).get("name") + "";
+                selectTv.setText(symbol + "/" + area);
+                areaTv.setText(symbol);
+                if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())){
+                    tvTransactionAmount.setText(UtilTools.getNormalMoney( Double.parseDouble(etNumber.getText().toString())* Double.parseDouble(etPrice.getText().toString())+"")+ "  "+ area);
+                }else {
+                    tvTransactionAmount.setText("--");
+                }
                 getEntrustListAction();
             }
         });
-
 
 
     }
@@ -1099,7 +1127,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     public void setBarTextColor() {
         StatusBarUtil.setLightMode(getActivity());
     }
-
 
 
     private void responseData() {
@@ -1159,11 +1186,11 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
         if (mWeiTuoListAdapter.getDataList().size() <= 0) {
             mPageView.showEmpty();
-            LogUtilDebug.i("show","******************** mPageView.showEmpty()");
+            LogUtilDebug.i("show", "******************** mPageView.showEmpty()");
 
         } else {
             mPageView.showContent();
-            LogUtilDebug.i("show","******************** mPageView.showContent()");
+            LogUtilDebug.i("show", "******************** mPageView.showContent()");
         }
 
         mWeiTuoListAdapter.setmCallBack(new OnChildClickListener() {
@@ -1195,23 +1222,19 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         });
 
 
-
-
     }
 
     private void cancelWeituoAction(Map<String, Object> mParentMap) {
         mRequestTag = MethodUrl.CANCEL_WEITUO;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("id", mParentMap.get("id") + "");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CANCEL_WEITUO, map);
     }
-
-
 
 
     @Override
@@ -1231,23 +1254,23 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         Intent intent;
         switch (mType) {
             case MethodUrl.CURRENT_PRICE:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0": //请求成功
-                        if (!UtilTools.empty(tData.get("data")+"")){
-                            Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
-                            if (!UtilTools.empty(mapData)){
-                                tvCurrentPrice.setText(mapData.get("price")+"");
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
+                            if (!UtilTools.empty(mapData)) {
+                                tvCurrentPrice.setText(mapData.get("price") + "");
                                 //tvCnyPrice.setText("≈"+mapData.get("cny_number")+"CNY");
-                                tvCurrentCny.setText(getResources().getString(R.string.defaultCny).replace("%S", UtilTools.formatNumber(mapData.get("cny_number")+"", "#.##")));
+                                tvCurrentCny.setText(getResources().getString(R.string.defaultCny).replace("%S", UtilTools.formatNumber(mapData.get("cny_number") + "", "#.##")));
                             }
                         }
                         break;
                     case "-1": //请求失败
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
 
                     case "1": //token过期
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
@@ -1256,23 +1279,23 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 }
                 break;
             case MethodUrl.ENTRUST_LIST:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
                         mDataList = (List<Map<String, Object>>) tData.get("data");
-                        if (mDataList != null && mDataList.size()>0){
-                            for (Map<String,Object> map :mDataList){
-                                map.put("status",status);
+                        if (mDataList != null && mDataList.size() > 0) {
+                            for (Map<String, Object> map : mDataList) {
+                                map.put("status", status);
                             }
                             mPageView.showContent();
                             responseData();
                             refreshLayout.finishRefresh();
                             refreshLayout.finishLoadMore();
-                        }else {
+                        } else {
                             mPageView.showEmpty();
                         }
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
@@ -1280,46 +1303,46 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         break;
                     case "-1":
                         mPageView.showNetworkError();
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
                 break;
             case MethodUrl.COIN_AREAALL:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
                         mtabsData = (List<Map<String, Object>>) tData.get("data");
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
                 break;
 
             case MethodUrl.AREA_ITEM:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
                         mDatas = (List<Map<String, Object>>) tData.get("data");
-                        if (mAdapter != null && mDatas != null && rcv!= null){
+                        if (mAdapter != null && mDatas != null && rcv != null) {
                             mAdapter.setDatas(mDatas);
                             rcv.setAdapter(mAdapter);
                         }
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
                 break;
@@ -1327,42 +1350,42 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             case MethodUrl.AREA_COIN_ACCOUNT:
                 switch ((tData.get("code") + "")) {
                     case "0":
-                        Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
-                        if (!UtilTools.empty(mapData)){
-                            BTC_Account = mapData.get("symbol")+"";
-                            USDT_Account = mapData.get("area")+"";
+                        Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
+                        if (!UtilTools.empty(mapData)) {
+                            BTC_Account = mapData.get("symbol") + "";
+                            USDT_Account = mapData.get("area") + "";
                         }
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
                 break;
-                    //mRefreshListView.refreshComplete(10);
+            //mRefreshListView.refreshComplete(10);
 
             case MethodUrl.GUADAN_TRADE:
                 switch ((tData.get("code") + "")) {
                     case "0":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         //查询委托单
                         getEntrustListAction();
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
 
@@ -1371,9 +1394,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             case MethodUrl.COIN_DEPTH:
                 switch ((tData.get("code") + "")) {
                     case "0":
-                        if (!UtilTools.empty(tData.get("data")+"")) {
+                        if (!UtilTools.empty(tData.get("data") + "")) {
                             Map<String, Object> map1 = JSONUtil.getInstance().jsonMap(tData.get("data") + "");
-                            if (!UtilTools.empty(map1)){
+                            if (!UtilTools.empty(map1)) {
                                 List<List<String>> mListBuy = JSONUtil.getInstance().jsonToListStr2(map1.get("buy") + "");
                                 List<List<String>> mListSell = JSONUtil.getInstance().jsonToListStr2(map1.get("sell") + "");
 
@@ -1457,34 +1480,34 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
 
                 break;
             case MethodUrl.CANCEL_WEITUO:
-                switch (tData.get("code") + ""){
+                switch (tData.get("code") + "") {
                     case "0":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         //查询委托单
                         getEntrustListAction();
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
 
@@ -1520,12 +1543,17 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 tvLimitPrice.setText(map.get("name") + "");
                 if ((map.get("name") + "").equals("限价")) {
                     mSelectType = "0";
-                    if(mKindType.equals("0")){ //买入
+                    if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())){
+                        tvTransactionAmount.setText(UtilTools.getNormalMoney( Double.parseDouble(etNumber.getText().toString())* Double.parseDouble(etPrice.getText().toString())+"")+ "  "+ area);
+                    }else {
+                        tvTransactionAmount.setText("--");
+                    }
+                    if (mKindType.equals("0")) { //买入
                         clPrice.setVisibility(View.VISIBLE);
                         tvCnyPrice.setVisibility(View.GONE);
                         etPrice.setHint("价格");
                         etNumber.setHint("数量");
-                    }else { //卖出
+                    } else { //卖出
                         clPrice.setVisibility(View.VISIBLE);
                         tvCnyPrice.setVisibility(View.GONE);
                         etPrice.setHint("价格");
@@ -1535,8 +1563,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                 } else {
                     mSelectType = "1"; //市价
-
-                    if (mKindType.equals("0")){ //买入
+                    tvTransactionAmount.setText("--");
+                    if (mKindType.equals("0")) { //买入
                        /* clPrice.setVisibility(View.VISIBLE);
                         tvCnyPrice.setVisibility(View.GONE);
                         etPrice.setHint("金额");*/
@@ -1544,7 +1572,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         clPrice.setVisibility(View.GONE);
                         tvCnyPrice.setVisibility(View.VISIBLE);
 
-                    }else { //卖出
+                    } else { //卖出
                         etNumber.setHint("数量");
                         clPrice.setVisibility(View.GONE);
                         tvCnyPrice.setVisibility(View.VISIBLE);
@@ -1659,8 +1687,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     };
 
 
-
-    public void restartWs(String selectArea,String selectSymbol,String buySell) {
+    public void restartWs(String selectArea, String selectSymbol, String buySell) {
        /* handler.removeCallbacks(runnable);
         setWebsocketListener();
         handler.post(runnable);*/
@@ -1683,12 +1710,10 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         //账户当前交易区交易币可用
         getCurAreaAccountAction();*/
 
-       if (handler != null && cnyRunnable!= null){
-           handler.post(cnyRunnable);
-       }
+        if (handler != null && cnyRunnable != null) {
+            handler.post(cnyRunnable);
+        }
         LogUtilDebug.i("show", "BB轮询数据,每次一进入界面开始轮询");
-
-
 
 
     }
@@ -1704,7 +1729,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         }
         */
 
-        if (handler != null && cnyRunnable!= null){
+        if (handler != null && cnyRunnable != null) {
             handler.removeCallbacks(cnyRunnable);
         }
 
@@ -1715,31 +1740,30 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         super.onResume();
         LogUtilDebug.i("show", "刷新查询委托单");
 
-        if (!buysell2.equals("0")){
+        if (!buysell2.equals("0")) {
             buysell = buysell2;
         }
 
         //查询委托单
         getEntrustListAction();
 
-        LogUtilDebug.i("show","buysell&&&&&&&&&&&:"+buysell);
-        if (buysell.equals("1")){ //买入
+        if (buysell.equals("1")) { //买入
             rbBuy.setChecked(true);
             mKindType = "0";
             tvOperateCoin.setText("买入");
-            bundleSeekBar.setSecondTrackColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.green_btn));
-            bundleSeekBar.setThumbColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.green_btn));
+            bundleSeekBar.setSecondTrackColor(ContextCompat.getColor(getParentFragment().getActivity(), R.color.green_btn));
+            bundleSeekBar.setThumbColor(ContextCompat.getColor(getParentFragment().getActivity(), R.color.green_btn));
             tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
             rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
             rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house2);
             rbNumber3.setBackgroundResource(R.drawable.selector_open_close_house2);
             rbNumber4.setBackgroundResource(R.drawable.selector_open_close_house2);
 
-            if (mSelectType.equals("0")){ //限价
+            if (mSelectType.equals("0")) { //限价
                 clPrice.setVisibility(View.VISIBLE);
                 tvCnyPrice.setVisibility(View.GONE);
                 etPrice.setHint("价格");
-            }else { //市价买
+            } else { //市价买
                            /* clPrice.setVisibility(View.VISIBLE);
                             tvCnyPrice.setVisibility(View.GONE);
                             etPrice.setHint("金额");*/
@@ -1749,31 +1773,37 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
             }
 
-        }else {  //卖出
+        } else {  //卖出
             rbSell.setChecked(true);
 
             mKindType = "1";
             tvOperateCoin.setText("卖出");
-            bundleSeekBar.setSecondTrackColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.red_btn));
-            bundleSeekBar.setThumbColor(ContextCompat.getColor(getParentFragment().getActivity(),R.color.red_btn));
+            bundleSeekBar.setSecondTrackColor(ContextCompat.getColor(getParentFragment().getActivity(), R.color.red_btn));
+            bundleSeekBar.setThumbColor(ContextCompat.getColor(getParentFragment().getActivity(), R.color.red_btn));
             tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
             rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);
             rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house3);
             rbNumber3.setBackgroundResource(R.drawable.selector_open_close_house3);
             rbNumber4.setBackgroundResource(R.drawable.selector_open_close_house3);
 
-            if (mSelectType.equals("0")){ //限价
+            if (mSelectType.equals("0")) { //限价
                 clPrice.setVisibility(View.VISIBLE);
                 tvCnyPrice.setVisibility(View.GONE);
                 etPrice.setHint("价格");
-            }else { //市价 卖
+            } else { //市价 卖
                 etNumber.setHint("数量");
                 clPrice.setVisibility(View.GONE);
                 tvCnyPrice.setVisibility(View.VISIBLE);
             }
         }
 
-        selectTv.setText(area + "/" + symbol);
+        selectTv.setText(symbol + "/" + area);
+        areaTv.setText(symbol);
+        if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())){
+            tvTransactionAmount.setText(UtilTools.getNormalMoney( Double.parseDouble(etNumber.getText().toString())* Double.parseDouble(etPrice.getText().toString())+"")+ "  "+ area);
+        }else {
+            tvTransactionAmount.setText("--");
+        }
 
         buysell2 = "0";
     }
@@ -1790,16 +1820,16 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        ((TradeFragment)getParentFragment()).setUserVisibleHint(false);
-        if (hidden){
-            LogUtilDebug.i("show","BBfragment 可见");
-            if (handler != null && cnyRunnable!= null){
+        ((TradeFragment) getParentFragment()).setUserVisibleHint(false);
+        if (hidden) {
+            LogUtilDebug.i("show", "BBfragment 可见");
+            if (handler != null && cnyRunnable != null) {
                 handler.removeCallbacks(cnyRunnable);
             }
-        }else {
-            LogUtilDebug.i("show","BBfragment 不可见");
-            ((TradeFragment)getParentFragment()).setUserVisibleHint(true);
-            if (handler != null && cnyRunnable!= null){
+        } else {
+            LogUtilDebug.i("show", "BBfragment 不可见");
+            ((TradeFragment) getParentFragment()).setUserVisibleHint(true);
+            if (handler != null && cnyRunnable != null) {
                 handler.post(cnyRunnable);
             }
         }
@@ -1825,11 +1855,11 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == QUEST_CODE) {
-                LogUtilDebug.i("show","BBTradeFragment onActivityResult()");
+                LogUtilDebug.i("show", "BBTradeFragment onActivityResult()");
                 Bundle bundle = data.getExtras();
-                if (bundle != null){
+                if (bundle != null) {
                     buysell2 = bundle.getString("buySell");
-                    LogUtilDebug.i("show","buysell2>>>"+buysell2);
+                    LogUtilDebug.i("show", "buysell2>>>" + buysell2);
                     //buysell = buySell2;
                   /*  if (buySell2.equals("1")){ //买入
                         rbBuy.setChecked(true);
@@ -1841,7 +1871,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             }
         }
     }
-
 
 
 }
