@@ -129,7 +129,7 @@
     <string name="regist_account_to_longin">已有账号 登录</string>
 
     <!--找回密码-->
-    <string name="forget_account_passwored">请输入手机号或邮箱地址</string>
+    <string name="forget_account_passwored">请输入注册手机号或邮箱地址</string>
     <string name="reset_passwored">设置密码</string>
     <string name="reset_passwored_again">再次输入密码</string>
     <!--首页-->
