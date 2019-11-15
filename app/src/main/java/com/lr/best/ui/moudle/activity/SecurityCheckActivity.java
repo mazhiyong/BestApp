@@ -82,7 +82,7 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
 
         mTimeCount = new TimeCount(1 * 60 * 1000, 1000);
 
-        mTitleText.setText("安全中心");
+        mTitleText.setText("更换账号");
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
 

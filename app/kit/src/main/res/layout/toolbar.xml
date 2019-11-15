@@ -31,6 +31,7 @@
         android:id="@+id/divide_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divide_hight"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:background="@color/divide_line" />
 

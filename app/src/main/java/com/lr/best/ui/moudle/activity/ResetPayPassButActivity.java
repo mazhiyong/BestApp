@@ -105,6 +105,15 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
 
+        if (UtilTools.empty(MbsConstans.USER_MAP)) {
+            String s = SPUtils.get(ResetPayPassButActivity.this, MbsConstans.SharedInfoConstans.LOGIN_INFO, "").toString();
+            MbsConstans.USER_MAP = JSONUtil.getInstance().jsonMap(s);
+
+        }
+        etPhone.setText(MbsConstans.USER_MAP.get("account") + "");
+        etPhone.setEnabled(false);
+
+
         if (!UtilTools.empty(MbsConstans.PAY_CODE)){
             paycode = MbsConstans.PAY_CODE;
         }else {
