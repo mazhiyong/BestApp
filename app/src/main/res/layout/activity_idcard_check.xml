@@ -32,8 +32,7 @@
                 android:textSize="20sp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_30"
-                android:textColor="@color/black"
-                android:text="@string/id_card_check_tip"/>
+                android:textColor="@color/black" />
 
             <ImageView
                 android:id="@+id/my_image"
@@ -52,7 +51,7 @@
                 android:layout_marginRight="@dimen/dp_18"
                 android:textSize="@dimen/sp_17"
                 android:background="@drawable/btn_next"
-                android:text="@string/start_check_id"
+                android:text="@string/default_4"
                 android:textColor="@color/btn_login_text"
                  />
 

@@ -229,7 +229,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_15"
                     android:textColor="@color/black"
-                    android:text="@string/qiye_ca_t"/>
+                    android:text="@string/default_4"/>
 
 
                     <RelativeLayout
@@ -285,7 +285,7 @@
                 android:layout_marginBottom="@dimen/dp_20"
                 android:textSize="@dimen/sp_17"
                 android:background="@drawable/btn_next"
-                android:text="@string/apply"
+                android:text="@string/default_4"
                 android:textColor="@color/btn_login_text"
                 />
         </LinearLayout>

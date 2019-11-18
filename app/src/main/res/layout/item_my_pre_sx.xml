@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:text="审核中"
+            android:text="@string/default_4"
             android:textColor="@color/black"
             android:layout_gravity="center"/>
     </LinearLayout>
@@ -58,7 +58,7 @@
             android:paddingTop="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_8"
             android:layout_weight="1"
-            android:text="@string/apply_amount"
+            android:text="@string/default_4"
             android:gravity="right"/>
 
         <TextView
@@ -86,7 +86,7 @@
             android:paddingTop="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_8"
             android:layout_weight="1"
-            android:text="@string/laon_time_litmit"
+            android:text="@string/default_4"
             android:gravity="right"/>
 
         <TextView
@@ -114,7 +114,7 @@
             android:paddingTop="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_8"
             android:layout_weight="1"
-            android:text="@string/daikuan_kind"
+            android:text="@string/default_4"
             android:gravity="right"/>
 
         <TextView
@@ -142,7 +142,7 @@
             android:paddingTop="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_14"
             android:layout_weight="1"
-            android:text="@string/shengqing_date"
+            android:text="@string/default_4"
             android:gravity="right"/>
 
         <TextView

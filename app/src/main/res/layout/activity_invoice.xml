@@ -42,7 +42,7 @@
                 android:background="@color/white"
                 android:lineSpacingExtra="@dimen/dp_3"
                 android:textColor="@color/black_middle"
-                android:text="@string/invoice_des"/>
+                android:text="@string/default_4"/>
 
             <View
                 android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                 android:layout_marginLeft="@dimen/dp_18"
                 android:layout_marginRight="@dimen/dp_18"
                 android:background="@drawable/btn_ok"
-                android:text="@string/invoice_sao"
+                android:text="@string/default_4"
                 android:textSize="@dimen/sp_17"
                 android:textColor="@color/btn_login_text"
                  />
@@ -91,7 +91,7 @@
                 android:layout_marginLeft="@dimen/dp_18"
                 android:layout_marginRight="@dimen/dp_18"
                 android:layout_gravity="center"
-                android:text="@string/invoice_fail"
+                android:text="@string/default_4"
                 />
         </LinearLayout>
     </ScrollView>

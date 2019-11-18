@@ -41,7 +41,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_15"
                 android:textColor="@color/black"
-                android:text="@string/check_fail"/>
+                android:text="@string/default_4"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
                 android:layout_marginRight="@dimen/dp_20"
                 android:textSize="@dimen/sp_15"
                 android:background="@drawable/btn_next"
-                android:text="@string/again_check"
+                android:text="@string/default_4"
                 android:textColor="@color/btn_login_text"
                 />
             <TextView
@@ -67,7 +67,7 @@
                 android:textSize="16sp"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/dp_20"
-                android:text="@string/no_install"/>
+                android:text="@string/default_4"/>
         </LinearLayout>
     </ScrollView>
 

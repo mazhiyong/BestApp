@@ -164,7 +164,7 @@
                                     android:paddingBottom="@dimen/dp_5"
                                     android:paddingLeft="@dimen/dp_10"
                                     android:paddingRight="@dimen/dp_10"
-                                    android:text="@string/bank_card_qianyue"
+                                    android:text="@string/default_4"
                                     android:textSize="@dimen/sp_12"
                                     android:textColor="@color/white"
                                     android:background="@drawable/change_card_corners"
@@ -178,9 +178,8 @@
                                     android:paddingBottom="@dimen/dp_5"
                                     android:paddingLeft="@dimen/dp_10"
                                     android:paddingRight="@dimen/dp_10"
-                                    android:text="@string/bank_card_change"
+                                    android:text="@string/default_4"
                                     android:textSize="@dimen/sp_12"
-
                                     android:textColor="@color/white"
                                     android:background="@drawable/change_card_corners"
                                     />
@@ -222,7 +221,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/bank_bind_info"
+                    android:text="@string/default_4"
                     android:textColor="#CCffffff"
                     android:layout_marginRight="@dimen/dp_5"/>
 

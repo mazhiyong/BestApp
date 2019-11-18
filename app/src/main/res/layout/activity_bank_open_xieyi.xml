@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/ju_text"
-                    android:text="@string/bank_open_top_tips"/>
+                    android:text="@string/default_4"/>
 
             </LinearLayout>
             <View
@@ -163,7 +163,7 @@
                 android:layout_marginTop="@dimen/item_padding"
                 android:lineSpacingExtra="@dimen/dp_3"
                 android:layout_marginBottom="@dimen/item_padding"
-                android:text="@string/bank_open_tips"/>
+                android:text="@string/default_4"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divide_hight"
@@ -186,7 +186,7 @@
                     android:layout_centerVertical="true"
                     android:textSize="@dimen/sp_15"
                     android:textColor="@color/black"
-                    android:text="@string/bank_pass"/>
+                    android:text="@string/default_4"/>
 
 
             </RelativeLayout>
@@ -215,7 +215,7 @@
                     android:layout_centerVertical="true"
                     android:textSize="@dimen/sp_15"
                     android:textColor="@color/black"
-                    android:text="@string/bank_again_pass"/>
+                    android:text="@string/default_4"/>
 
 
 
@@ -231,7 +231,7 @@
                 android:layout_height="@dimen/but_height"
                 android:layout_margin="@dimen/dp_18"
                 android:background="@drawable/btn_next"
-                android:text="@string/but_submit"
+                android:text="@string/default_4"
                 android:textSize="@dimen/sp_17"
                 android:textColor="@color/btn_login_text"
                 />

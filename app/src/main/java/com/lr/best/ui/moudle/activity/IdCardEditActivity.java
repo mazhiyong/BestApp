@@ -118,7 +118,7 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
         }
 
 
-        mTitleText.setText(getResources().getString(R.string.id_card_check2));
+        mTitleText.setText("身份认证");
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
         mBackText.setText("");

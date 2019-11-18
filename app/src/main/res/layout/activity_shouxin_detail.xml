@@ -48,7 +48,7 @@
                         android:gravity="left|center_vertical"
                         android:textSize="@dimen/sp_15"
                         android:textColor="@color/black"
-                        android:text="@string/sx_ed" />
+                        android:text="@string/default_4" />
                     <View
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_1"
@@ -92,7 +92,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1.1"
                         android:paddingRight="@dimen/dp_8"
-                        android:text="@string/sx_ht" />
+                        android:text="@string/default_4" />
                     <TextView
                         android:id="@+id/shouxin_hetong_tv"
                         android:layout_width="0dp"
@@ -130,7 +130,7 @@
                         android:layout_height="match_parent"
                         android:gravity="right|center_vertical"
                         android:textSize="@dimen/sp_14"
-                        android:text="@string/hetong_name" />
+                        android:text="@string/default_4" />
                     <TextView
                         android:id="@+id/hetong_name_tv"
                         android:layout_width="0dp"
@@ -167,7 +167,7 @@
                         android:layout_height="match_parent"
                         android:gravity="right|center_vertical"
                         android:textSize="@dimen/sp_14"
-                        android:text="@string/loaner" />
+                        android:text="@string/default_4"/>
                     <TextView
                         android:id="@+id/chujieren_tv"
                         android:layout_width="0dp"
@@ -205,7 +205,7 @@
                         android:layout_height="match_parent"
                         android:gravity="right|center_vertical"
                         android:textSize="@dimen/sp_14"
-                        android:text="@string/borrow_man" />
+                        android:text="@string/default_4"/>
                     <TextView
                         android:id="@+id/jiekuan_ren_tv"
                         android:layout_width="0dp"
@@ -241,7 +241,7 @@
                         android:layout_height="match_parent"
                         android:gravity="right|center_vertical"
                         android:textSize="@dimen/sp_14"
-                        android:text="@string/sx_left_money" />
+                        android:text="@string/default_4" />
                     <TextView
                         android:id="@+id/shouxin_yue_tv"
                         android:layout_width="0dp"
@@ -277,7 +277,7 @@
                         android:layout_height="match_parent"
                         android:gravity="right|center_vertical"
                         android:textSize="@dimen/sp_14"
-                        android:text="@string/nian_lilv" />
+                        android:text="@string/default_4"/>
                     <TextView
                         android:id="@+id/nian_lilv_tv"
                         android:layout_width="0dp"
@@ -320,7 +320,7 @@
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
                             android:textSize="@dimen/sp_14"
-                            android:text="@string/db_jiekaun_qx" />
+                            android:text="@string/default_4" />
                         <TextView
                             android:id="@+id/danbi_jiekuan_tv"
                             android:layout_width="0dp"
@@ -356,7 +356,7 @@
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
                             android:textSize="@dimen/sp_14"
-                            android:text="@string/pay_style" />
+                            android:text="@string/default_4" />
                         <TextView
                             android:id="@+id/huankuan_type_tv"
                             android:layout_width="0dp"
@@ -393,7 +393,7 @@
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
                             android:textSize="@dimen/sp_14"
-                            android:text="@string/danbao_type" />
+                            android:text="@string/default_4" />
                         <TextView
                             android:id="@+id/danbao_type_tv"
                             android:layout_width="0dp"
@@ -430,7 +430,7 @@
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
                             android:textSize="@dimen/sp_14"
-                            android:text="@string/danbao_ren" />
+                            android:text="@string/default_4" />
                         <TextView
                             android:id="@+id/danbao_ren_tv"
                             android:layout_width="0dp"
@@ -466,7 +466,7 @@
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
                             android:textSize="@dimen/sp_14"
-                            android:text="@string/youwu_zhuisuo" />
+                            android:text="@string/default_4" />
                         <TextView
                             android:id="@+id/hasno_zhuisuo_tv"
                             android:layout_width="0dp"
@@ -503,7 +503,7 @@
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
                             android:textSize="@dimen/sp_14"
-                            android:text="@string/baoli_yewu" />
+                            android:text="@string/default_4" />
                         <TextView
                             android:id="@+id/baoli_yewu_tv"
                             android:layout_width="0dp"
@@ -539,7 +539,7 @@
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
                             android:textSize="@dimen/sp_14"
-                            android:text="@string/chuzhang_type" />
+                            android:text="@string/default_4"/>
                         <TextView
                             android:id="@+id/chuzhuang_type_tv"
                             android:layout_width="0dp"
@@ -576,7 +576,7 @@
                             android:layout_height="match_parent"
                             android:gravity="right|center_vertical"
                             android:textSize="@dimen/sp_14"
-                            android:text="@string/shouxin_date" />
+                            android:text="@string/default_4" />
                         <TextView
                             android:id="@+id/shouxin_stop_tv"
                             android:layout_width="0dp"
@@ -635,7 +635,7 @@
                         android:gravity="left|center_vertical"
                         android:textSize="@dimen/sp_15"
                         android:textColor="@color/black"
-                        android:text="@string/borrow_info" />
+                        android:text="@string/default_4" />
 
                     <View
                         android:layout_width="0dp"
@@ -678,7 +678,7 @@
                         android:gravity="left|center_vertical"
                         android:textSize="@dimen/sp_15"
                         android:textColor="@color/black"
-                        android:text="@string/borrow_file" />
+                        android:text="@string/default_4" />
                     <View
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_1"
@@ -725,7 +725,7 @@
                         android:gravity="left|center_vertical"
                         android:textSize="@dimen/sp_15"
                         android:textColor="@color/black"
-                        android:text="@string/borrow_hetong_info" />
+                        android:text="@string/default_4"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_1"

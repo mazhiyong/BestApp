@@ -51,10 +51,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/qiye_name"
+                        android:text="@string/default_4"
                         android:textSize="@dimen/sp_15"
-                        android:textColor="@color/black"
-                        android:hint="@string/fading_card"/>
+                        android:textColor="@color/black" />
                     <EditText
                         android:id="@+id/qiye_name_edit"
                         android:layout_width="0dp"
@@ -62,7 +61,6 @@
                         android:layout_weight="1"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_gravity="center"
-                        android:hint="@string/hint_qiye_name"
                         android:textSize="@dimen/sp_15"
                         android:background="@null"/>
                 </LinearLayout>
@@ -83,8 +81,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/shehui_xy_daima"
-                        android:hint="@string/fading_card"
+                        android:text="@string/default_4"
                         android:textSize="@dimen/sp_15"
                         android:textColor="@color/black"
                        />
@@ -96,7 +93,6 @@
                         android:layout_gravity="center"
                         android:textSize="@dimen/sp_15"
                         android:layout_marginLeft="@dimen/dp_10"
-                        android:hint="@string/hint_shehui_xy_daima"
                         android:background="@null"/>
                 </LinearLayout>
                 <View
@@ -127,10 +123,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fading_name"
+                    android:text="@string/default_4"
                     android:textSize="@dimen/sp_15"
                     android:textColor="@color/black"
-                    android:hint="@string/fading_card"/>
+                    />
                 <EditText
                     android:id="@+id/user_name_edit"
                     android:layout_width="0dp"
@@ -138,7 +134,6 @@
                     android:layout_weight="1"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_gravity="center"
-                    android:hint="@string/hint_edit_name"
                     android:textSize="@dimen/sp_15"
                     android:textColor="@color/black"
                     android:background="@null"/>
@@ -161,10 +156,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fading_card"
+                    android:text="@string/default_4"
                     android:textSize="@dimen/sp_15"
-                    android:textColor="@color/black"
-                    android:hint="@string/fading_card"/>
+                    android:textColor="@color/black" />
                 <EditText
                     android:id="@+id/idcard_edit"
                     android:layout_width="0dp"
@@ -174,7 +168,6 @@
                     android:textSize="@dimen/sp_15"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:textColor="@color/black"
-                    android:hint="@string/id_card_edit_hint"
                     android:maxLength="18"
                     android:digits="@string/shuzi_zimu"
                     android:inputType="phone"
@@ -197,10 +190,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fading_phone"
+                    android:text="@string/default_4"
                     android:textSize="@dimen/sp_15"
-                    android:textColor="@color/black"
-                    android:hint="@string/fading_card"/>
+                    android:textColor="@color/black" />
                 <TextView
                     android:id="@+id/phone_edit"
                     android:layout_width="0dp"

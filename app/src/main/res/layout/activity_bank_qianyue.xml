@@ -120,7 +120,7 @@
                 android:layout_marginLeft="@dimen/dp_30"
                 android:layout_marginRight="@dimen/dp_30"
                 android:background="@drawable/btn_next"
-                android:text="@string/but_open_wy"
+                android:text="@string/default_4"
                 android:textSize="@dimen/sp_17"
                 android:textColor="@color/btn_login_text"
                 />
@@ -133,7 +133,7 @@
                 android:textSize="@dimen/sp_14"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/blue1"
-                android:text="@string/tiaoguo"/>
+                android:text="@string/default_4"/>
         </LinearLayout>
     </ScrollView>
 

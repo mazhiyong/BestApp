@@ -36,7 +36,7 @@
                     android:paddingBottom="@dimen/item_padding"
                     android:textColor="@color/grey"
                     android:lineSpacingExtra="@dimen/dp_3"
-                    android:text="@string/qiye_dakuan_tip"/>
+                    android:text="@string/default_4"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/divide_hight"
@@ -56,7 +56,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/qiye_check_money"
+                    android:text="@string/default_4"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_15"
                     />
@@ -66,7 +66,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:hint="@string/qiye_check_money_hint"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:textColor="@color/black"
                     android:inputType="numberDecimal"
@@ -100,7 +99,7 @@
                 android:layout_marginRight="@dimen/dp_18"
                 android:textColor="@color/grey"
                 android:visibility="gone"
-                android:text="@string/qiye_money_time"/>
+                android:text="@string/default_4"/>
 
             <TextView
                 android:id="@+id/qiye_modify_tv"
@@ -111,7 +110,7 @@
                 android:layout_marginLeft="@dimen/dp_18"
                 android:layout_marginRight="@dimen/dp_18"
                 android:textColor="@color/grey"
-                android:text="@string/qiye_modify_zhanghu"/>
+                android:text="@string/default_4"/>
         </LinearLayout>
     </ScrollView>
 

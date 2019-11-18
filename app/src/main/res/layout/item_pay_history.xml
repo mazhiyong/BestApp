@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_8"
             android:layout_weight="1"
-            android:text="@string/pay_benjin"
+            android:text="@string/default_4"
             android:gravity="right"/>
         <TextView
             android:id="@+id/pay_benjin"
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_8"
             android:layout_weight="1"
-            android:text="@string/pay_lixi"
+            android:text="@string/default_4"
             android:gravity="right"/>
         <TextView
             android:id="@+id/pay_lixi"
@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_8"
             android:layout_weight="1"
-            android:text="@string/pay_faxi"
+            android:text="@string/default_4"
             android:gravity="right"/>
         <TextView
             android:id="@+id/fa_xi"
@@ -154,7 +154,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_8"
             android:layout_weight="1"
-            android:text="@string/pay_type"
+            android:text="@string/default_4"
             android:gravity="right"/>
         <TextView
             android:id="@+id/pay_type"
@@ -176,7 +176,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_8"
             android:layout_weight="1"
-            android:text="@string/pay_bianhao"
+            android:text="@string/default_4"
             android:gravity="right"/>
         <TextView
             android:id="@+id/pay_num"
@@ -202,7 +202,7 @@
             android:padding="@dimen/dp_8"
             android:layout_gravity="right"
             android:textColor="@color/black"
-            android:text="@string/look_pay_book"
+            android:text="@string/default_4"
             android:gravity="left"/>
     </LinearLayout>
 

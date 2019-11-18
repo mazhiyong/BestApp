@@ -118,7 +118,7 @@
                     android:layout_margin="@dimen/dp_10"
                     android:background="@drawable/up_corners"
                     android:textColor="@color/font_c"
-                    android:text="@string/upload_daikuan_yongt"/>
+                    android:text="@string/default_4"/>
 
             </LinearLayout>
 

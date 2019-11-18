@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_10"
                         android:layout_weight="1"
-                        android:text="@string/trade_time"
+                        android:text="@string/default_4"
                         android:gravity="right"/>
                     <TextView
                         android:id="@+id/trade_time_value_tv"
@@ -103,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_10"
                         android:layout_weight="1"
-                        android:text="@string/trade_num"
+                        android:text="@string/default_4"
                         android:gravity="right"/>
                     <TextView
                         android:id="@+id/trade_num_value_tv"
@@ -125,7 +125,7 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_10"
                         android:layout_weight="1"
-                        android:text="@string/trade_des"
+                        android:text="@string/default_4"
                         android:gravity="right"/>
                     <TextView
                         android:id="@+id/trade_des_value_tv"
@@ -147,7 +147,7 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_10"
                         android:layout_weight="1"
-                        android:text="@string/trade_statu"
+                        android:text="@string/default_4"
                         android:gravity="right"/>
                     <TextView
                         android:id="@+id/trade_zhuangtai_value_tv"
@@ -169,7 +169,7 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_10"
                         android:layout_weight="1"
-                        android:text="@string/trade_fenqi"
+                        android:text="@string/default_4"
                         android:gravity="right"/>
                     <TextView
                         android:id="@+id/trade_fenqi_value_tv"

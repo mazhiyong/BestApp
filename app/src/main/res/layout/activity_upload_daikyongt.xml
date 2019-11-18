@@ -52,7 +52,7 @@
                         android:gravity="left|center_vertical"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
-                        android:text="@string/borrow_money" />
+                        android:text="@string/default_4"/>
 
                     <View
                         android:layout_width="0dp"
@@ -100,7 +100,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
 
-                        android:text="@string/loaner" />
+                        android:text="@string/default_4" />
                     <TextView
                         android:id="@+id/chujieren_tv"
                         android:layout_weight="1"
@@ -146,7 +146,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
 
-                        android:text="@string/borrow_limit" />
+                        android:text="@string/default_4"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_1"
@@ -192,7 +192,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
 
-                        android:text="@string/nian_lilv" />
+                        android:text="@string/default_4" />
                     <View
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_2"
@@ -236,7 +236,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
 
-                        android:text="@string/borrow_give_day" />
+                        android:text="@string/default_4"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_2"
@@ -272,7 +272,7 @@
                     android:paddingTop="@dimen/item_padding"
                     android:paddingBottom="@dimen/item_padding"
                     android:textSize="@dimen/sp_15"
-                    android:text="@string/upload_fuji" />
+                    android:text="@string/default_4"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/divide_hight"
@@ -305,7 +305,7 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/sp_15"
 
-                            android:text="@string/has_upload_fujian" />
+                            android:text="@string/default_4" />
                         <View
                             android:layout_width="0dp"
                             android:layout_height="@dimen/dp_2"
@@ -316,7 +316,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/sp_15"
                             android:textColor="@color/black"
-                            android:text="@string/add_fujian"
+                            android:text="@string/default_4"
                             />
                         <View
                             android:layout_width="0dp"
@@ -362,7 +362,7 @@
                     android:paddingBottom="@dimen/item_padding"
                     android:textSize="@dimen/sp_15"
 
-                    android:text="@string/add_bulu" />
+                    android:text="@string/default_4" />
 
                 <View
                     android:layout_width="match_parent"
@@ -397,7 +397,7 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/sp_15"
 
-                            android:text="@string/bulu_fujian" />
+                            android:text="@string/default_4" />
                         <View
                             android:layout_width="0dp"
                             android:layout_height="@dimen/dp_2"
@@ -408,7 +408,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/sp_15"
                             android:textColor="@color/black"
-                            android:text="@string/add_fujian"
+                            android:text="@string/default_4"
                             />
                         <View
                             android:layout_width="0dp"

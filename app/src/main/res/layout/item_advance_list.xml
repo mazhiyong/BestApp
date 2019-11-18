@@ -36,7 +36,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="@string/qian_date"
+                        android:text="@string/default_4"
                         android:textSize="@dimen/sp_14"
                         android:textColor="@color/black_light"
                       />
@@ -57,12 +57,11 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="@string/ghs"
+                        android:text="@string/default_4"
                         android:layout_gravity="center_vertical"
                         android:textSize="@dimen/sp_14"
                         android:gravity="right"
                         android:textColor="@color/black_light"
-                        android:hint="@string/ht_code"
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:id="@+id/ghs_tv"
@@ -83,7 +82,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/ht_code"
+                        android:text="@string/default_4"
                         android:layout_gravity="center_vertical"
                         android:textSize="@dimen/sp_14"
                         android:textColor="@color/black_light"
@@ -112,7 +111,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/all_jine"
+                    android:text="@string/default_4"
                     android:textColor="@color/black_dark"
                     android:layout_gravity="center_vertical"
                     android:textSize="@dimen/sp_16"
@@ -131,7 +130,7 @@
                     android:id="@+id/go_borrow"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:text="我要借款"
+                    android:text="@string/default_4"
                     android:textSize="@dimen/sp_14"
                     android:paddingTop="@dimen/dp_6"
                     android:paddingBottom="@dimen/dp_6"

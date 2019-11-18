@@ -80,6 +80,8 @@ public class SettingActivity extends BasicActivity implements RequestView, Selec
     LinearLayout helpLay;
     @BindView(R.id.exit_tv)
     TextView exitTv;
+    @BindView(R.id.language_lay)
+    LinearLayout languageLay;
 
     private String mRequestTag = "";
     private String mTempToken = "";
@@ -136,7 +138,7 @@ public class SettingActivity extends BasicActivity implements RequestView, Selec
 
 
     @OnClick({R.id.back_img, R.id.version_check_lay, R.id.iv_about_pihuibao, R.id.welcome_lay, R.id.tv_phone_coutomer,
-            R.id.left_back_lay, R.id.head_image, R.id.puhuibao_jieshao_lay, R.id.shared_lay, R.id.about_us_lay,R.id.help_lay,R.id.exit_tv})
+            R.id.left_back_lay, R.id.head_image, R.id.puhuibao_jieshao_lay, R.id.shared_lay, R.id.about_us_lay, R.id.help_lay, R.id.exit_tv,R.id.language_lay})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -145,6 +147,9 @@ public class SettingActivity extends BasicActivity implements RequestView, Selec
                 break;
             case R.id.left_back_lay:
                 finish();
+                break;
+            case R.id.language_lay:
+
                 break;
             case R.id.puhuibao_jieshao_lay:
                 mDialog.showAtLocation(Gravity.BOTTOM, 0, 0);

@@ -28,7 +28,7 @@
                 android:paddingBottom="@dimen/item_padding"
                 android:textSize="@dimen/sp_15"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/qiye_ca_pay_tip" />
+                android:text="@string/default_4" />
 
 
             <View
@@ -59,7 +59,7 @@
                         android:gravity="left|center_vertical"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
-                        android:text="@string/qiye_ca_recevie_num" />
+                        android:text="@string/default_4" />
                     <TextView
                         android:id="@+id/qiye_receive_num_tv"
                         android:layout_width="0dp"
@@ -103,7 +103,7 @@
                         android:gravity="left|center_vertical"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
-                        android:text="@string/qiye_ca_recevie_name" />
+                        android:text="@string/default_4"/>
                     <TextView
                         android:id="@+id/qiye_receive_name_tv"
                         android:layout_width="0dp"
@@ -147,7 +147,7 @@
                         android:gravity="left|center_vertical"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
-                        android:text="@string/bank_card_open_type" />
+                        android:text="@string/default_4" />
                     <TextView
                         android:id="@+id/qiye_receive_bank_tv"
                         android:layout_width="0dp"
@@ -191,7 +191,7 @@
                         android:gravity="left|center_vertical"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
-                        android:text="@string/qiye_ca_memo" />
+                        android:text="@string/default_4" />
                     <TextView
                         android:id="@+id/qiye_memo_tv"
                         android:layout_width="0dp"
@@ -221,7 +221,7 @@
                 android:paddingBottom="@dimen/item_padding"
                 android:textSize="@dimen/sp_15"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/qiye_ca_pay_tip2" />
+                android:text="@string/default_4"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/divide_hight"
@@ -250,7 +250,7 @@
                         android:gravity="left|center_vertical"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
-                        android:text="@string/qiye_ca_pay_name" />
+                        android:text="@string/default_4" />
                     <TextView
                         android:id="@+id/qiye_pay_name_tv"
                         android:layout_width="0dp"
@@ -294,7 +294,7 @@
                         android:gravity="left|center_vertical"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
-                        android:text="@string/qiye_ca_pay_num" />
+                        android:text="@string/default_4" />
                     <TextView
                         android:id="@+id/qiye_pay_num_tv"
                         android:layout_width="0dp"

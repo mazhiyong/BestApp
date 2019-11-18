@@ -67,7 +67,7 @@
                                 android:layout_weight="1"
                                 android:gravity="left|center_vertical"
                                 android:textSize="@dimen/sp_15"
-                                android:text="@string/borrow_man"
+                                android:text="@string/default_4"
                                 android:textColor="@color/black"/>
 
 
@@ -123,7 +123,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="left|center_vertical"
-                                android:text="@string/borrow_money"
+                                android:text="@string/default_4"
                                 android:textSize="@dimen/sp_15"
                                 android:textColor="@color/black"/>
 
@@ -180,7 +180,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="left|center_vertical"
-                                android:text="@string/borrow_limit"
+                                android:text="@string/default_4"
                                 android:textSize="@dimen/sp_15"
                                 android:textColor="@color/black"/>
 
@@ -237,7 +237,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="left|center_vertical"
-                                android:text="@string/pay_zhouqi"
+                                android:text="@string/default_4"
                                 android:textSize="@dimen/sp_15"
                                 android:textColor="@color/black"/>
 
@@ -289,7 +289,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="left|center_vertical"
-                                android:text="@string/other_info"
+                                android:text="@string/default_4"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_15"/>
                             <TextView
@@ -348,7 +348,7 @@
                                 android:layout_weight="1"
                                 android:padding="@dimen/item_padding"
                                 android:gravity="left|center_vertical"
-                                android:text="@string/lilv_style"
+                                android:text="@string/default_4"
                                 android:textSize="@dimen/sp_15"
                                 android:textColor="@color/black"/>
 
@@ -406,7 +406,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="left|center_vertical"
-                                android:text="@string/daikuan_kind"
+                                android:text="@string/default_4"
                                 android:textSize="@dimen/sp_15"
                                 android:textColor="@color/black"/>
 
@@ -464,7 +464,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="left|center_vertical"
-                                android:text="@string/daikuan_use"
+                                android:text="@string/default_4"
                                 android:textSize="@dimen/sp_15"
                                 android:textColor="@color/black"/>
 
@@ -521,7 +521,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="left|center_vertical"
-                                android:text="@string/pay_style"
+                                android:text="@string/default_4"
                                 android:textSize="@dimen/sp_15"
                                 android:textColor="@color/black"/>
 
@@ -577,7 +577,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="left|center_vertical"
-                                android:text="@string/borrow_pay_man"
+                                android:text="@string/default_4"
                                 android:textSize="@dimen/sp_15"
                                 android:textColor="@color/black"/>
 
@@ -640,7 +640,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="left|center_vertical"
-                                android:text="@string/check_result"
+                                android:text="@string/default_4"
                                 android:textSize="@dimen/sp_15"
                                 android:textColor="@color/black"/>
 

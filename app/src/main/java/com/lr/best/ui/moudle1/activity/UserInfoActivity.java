@@ -124,7 +124,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
     @Override
     public void init() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
-        mTitleText.setText(getResources().getString(R.string.base_msg));
+        mTitleText.setText("用户信息");
         mTitleText.setCompoundDrawables(null, null, null, null);
 
         // GlideUtils.loadImage(UserInfoActivity.this,"http://tupian.qqjay.com/u/2017/1201/2_161641_2.jpg",mHeadImageView);

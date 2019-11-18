@@ -224,7 +224,7 @@
                                             android:gravity="left|center_vertical"
                                             android:textSize="@dimen/sp_15"
                                             android:textColor="@color/black"
-                                            android:text="@string/user_name_str" />
+                                            android:text="@string/default_4"/>
                                         <View
                                             android:layout_width="0dp"
                                             android:layout_height="@dimen/dp_2"
@@ -271,7 +271,7 @@
                                             android:gravity="left|center_vertical"
                                             android:textSize="@dimen/sp_15"
                                             android:textColor="@color/black"
-                                            android:text="@string/card_kind" />
+                                            android:text="@string/default_4" />
                                         <View
                                             android:layout_width="0dp"
                                             android:layout_height="@dimen/dp_2"
@@ -317,7 +317,7 @@
                                             android:gravity="left|center_vertical"
                                             android:textSize="@dimen/sp_15"
                                             android:textColor="@color/black"
-                                            android:text="@string/card_num" />
+                                            android:text="@string/default_4" />
                                         <View
                                             android:layout_width="0dp"
                                             android:layout_height="@dimen/dp_2"
@@ -410,7 +410,7 @@
                                             android:textSize="@dimen/sp_15"
                                             android:textColor="@color/black"
                                             android:layout_gravity="center"
-                                            android:text="@string/more_info" />
+                                            android:text="@string/default_4"/>
                                 </LinearLayout>
                         </androidx.cardview.widget.CardView>
                         <View
@@ -452,7 +452,7 @@
                                             android:layout_gravity="center"
                                             android:textSize="@dimen/sp_15"
                                             android:textColor="@color/black"
-                                            android:text="@string/logout" />
+                                            android:text="@string/default_4"/>
                                 </LinearLayout>
                         </androidx.cardview.widget.CardView>
                         <View

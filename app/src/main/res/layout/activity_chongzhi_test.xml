@@ -97,7 +97,6 @@
             android:paddingLeft="@dimen/dp_5"
             android:inputType="numberDecimal"
             android:background="@null"
-            android:hint="@string/money_hint"
             android:textSize="@dimen/sp_15"/>
     </LinearLayout>
     <View
@@ -114,7 +113,7 @@
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
         android:background="@drawable/btn_next"
-        android:text="@string/chongzhi"
+        android:text="@string/default_4"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_17"/>
 </LinearLayout>

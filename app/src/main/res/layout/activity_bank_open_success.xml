@@ -58,7 +58,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_15"
                     android:layout_marginLeft="@dimen/dp_5"
-                    android:text="开户成功"/>
+                    android:text="@string/default_4"/>
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
@@ -116,7 +116,7 @@
                 android:layout_height="@dimen/but_height"
                 android:layout_margin="@dimen/dp_18"
                 android:background="@drawable/btn_next"
-                android:text="@string/apply_amount"
+                android:text="@string/default_4"
                 android:textSize="@dimen/sp_17"
                 android:textColor="@color/btn_login_text"
                 />

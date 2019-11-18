@@ -132,7 +132,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/sp_14"
-                        android:text="@string/totle_money"/>
+                        android:text="@string/default_4"/>
                     <TextView
                         android:id="@+id/edu_value_tv"
                         android:layout_width="wrap_content"
@@ -154,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/sp_14"
-                        android:text="@string/borrow_lilu"/>
+                        android:text="@string/default_4"/>
                     <TextView
                         android:id="@+id/lilv_value_tv"
                         android:layout_marginTop="@dimen/dp_5"
@@ -182,7 +182,7 @@
                     android:layout_marginRight="@dimen/dp_40"
                     android:layout_below="@+id/layout_view"
                     android:background="@drawable/btn_ok"
-                    android:text="@string/get_my_num"
+                    android:text="@string/default_4"
                     android:layout_marginTop="@dimen/dp_30"
                     android:layout_marginBottom="@dimen/dp_20"
                     android:textSize="@dimen/sp_17"

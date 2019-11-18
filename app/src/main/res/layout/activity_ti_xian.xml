@@ -25,7 +25,7 @@
         <TextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
-            android:text="@string/bank_card_title"
+            android:text="@string/default_4"
             android:textColor="@color/black"
             android:layout_centerVertical="true"
             android:textSize="@dimen/sp_15"
@@ -118,7 +118,7 @@
             android:paddingBottom="@dimen/item_padding"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_17"
-            android:text="@string/tixian_money" />
+            android:text="@string/default_4" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -139,8 +139,7 @@
                     android:textSize="20sp"
                     android:paddingRight="@dimen/dp_5"
                     android:textColor="@color/black"
-
-                    android:text="@string/rmb"/>
+                    android:text="@string/default_4"/>
                 <EditText
                     android:id="@+id/money_edit"
                     android:layout_width="match_parent"

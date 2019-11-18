@@ -46,8 +46,7 @@
                     android:gravity="left|center_vertical"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_15"
-                    android:hint="@string/invoice_check_6"
-                    android:text="@string/invoice_daima" />
+                    android:text="@string/default_4"/>
                 <EditText
                     android:id="@+id/code_edit"
                     android:layout_width="0dp"
@@ -61,7 +60,6 @@
                     android:textColor="@color/black"
                     android:layout_marginLeft="@dimen/dp_30"
                     android:paddingRight="@dimen/dp_10"
-                    android:hint="@string/invoice_daima_hint"
                     />
             </LinearLayout>
             <View
@@ -87,8 +85,7 @@
                     android:gravity="left|center_vertical"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_15"
-                    android:hint="@string/invoice_check_6"
-                    android:text="@string/invoice_haoma" />
+                    android:text="@string/default_4" />
                 <EditText
                     android:id="@+id/number_edit"
                     android:layout_width="0dp"
@@ -102,7 +99,6 @@
                     android:textColor="@color/black"
                     android:layout_marginLeft="@dimen/dp_30"
                     android:paddingRight="@dimen/dp_10"
-                    android:hint="@string/invoice_haoma_hint"
                     />
             </LinearLayout>
 
@@ -135,8 +131,7 @@
                         android:gravity="left|center_vertical"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
-                        android:hint="@string/invoice_check_6"
-                        android:text="@string/invoice_date" />
+                        android:text="@string/default_4" />
 
 
                     <TextView
@@ -148,7 +143,6 @@
                         android:paddingRight="@dimen/dp_10"
                         android:layout_marginLeft="@dimen/dp_30"
                         android:gravity="right"
-                        android:hint="@string/invoice_date_hint"
                         android:textSize="@dimen/sp_15"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
@@ -185,7 +179,7 @@
                     android:gravity="left|center_vertical"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_15"
-                    android:text="@string/invoice_check_6" />
+                    android:text="@string/default_4"/>
                 <EditText
                     android:id="@+id/textcode_edit"
                     android:layout_width="0dp"
@@ -199,7 +193,6 @@
                     android:textColor="@color/black"
                     android:layout_marginLeft="@dimen/dp_30"
                     android:paddingRight="@dimen/dp_10"
-                    android:hint="@string/invoice_check6_hint"
                     />
             </LinearLayout>
             <View
@@ -224,8 +217,7 @@
                     android:gravity="left|center_vertical"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_15"
-                    android:hint="@string/invoice_check_6"
-                    android:text="@string/invoice_money" />
+                    android:text="@string/default_4" />
                 <EditText
                     android:id="@+id/money_edit"
                     android:layout_width="0dp"
@@ -237,9 +229,7 @@
                     android:inputType="numberDecimal"
                     android:textColor="@color/black"
                     android:layout_marginLeft="@dimen/dp_30"
-                    android:paddingRight="@dimen/dp_10"
-                    android:hint="@string/invoice_money_hint"
-                    />
+                    android:paddingRight="@dimen/dp_10" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -257,7 +247,7 @@
                 android:id="@+id/but_submit"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/but_height"
-                android:text="@string/invoice_import"
+                android:text="@string/default_4"
                 android:background="@drawable/btn_next"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_17"

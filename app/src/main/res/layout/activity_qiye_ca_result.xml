@@ -41,7 +41,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_15"
                 android:textColor="@color/black"
-                android:text="@string/submit_success"/>
+                android:text="@string/default_4"/>
 
             <TextView
                 android:id="@+id/submit_tip_tv"
@@ -50,7 +50,7 @@
                 android:textSize="@dimen/sp_15"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/dp_20"
-                android:text="@string/applay_wait_tip"/>
+                android:text="@string/default_4"/>
 
             <Button
                 android:id="@+id/but_back"

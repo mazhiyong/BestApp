@@ -48,7 +48,7 @@
                         android:gravity="center"
                         android:paddingTop="@dimen/dp_5"
                         android:paddingBottom="@dimen/dp_5"
-                        android:text="@string/base_info"
+                        android:text="@string/default_4"
                         android:textSize="@dimen/sp_15"
                         android:textColor="@drawable/order_title_font" />
 
@@ -86,7 +86,7 @@
                         android:gravity="center"
                         android:paddingTop="@dimen/dp_5"
                         android:paddingBottom="@dimen/dp_5"
-                        android:text="@string/work_msg"
+                        android:text="@string/default_4"
                         android:textSize="@dimen/sp_15"
                         android:textColor="@drawable/order_title_font" />
 
@@ -145,7 +145,7 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_17"
                         android:background="@drawable/btn_next"
-                        android:text="@string/bianji_info"/>
+                        android:text="@string/default_4"/>
                 </LinearLayout>
 
             </RelativeLayout>

@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="@dimen/sp_15"
-            android:text="@string/sx_pz"
+            android:text="@string/default_4"
             android:textColor="@color/black"
             android:layout_gravity="center"/>
         <TextView
@@ -61,7 +61,7 @@
             android:paddingTop="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_8"
             android:layout_weight="1"
-            android:text="@string/sx_ed"
+            android:text="@string/default_4"
             android:gravity="right"/>
 
         <TextView
@@ -89,7 +89,7 @@
             android:paddingTop="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_8"
             android:layout_weight="1"
-            android:text="@string/has_ues_ed"
+            android:text="@string/default_4"
             android:gravity="right"/>
 
         <TextView
@@ -117,7 +117,7 @@
             android:paddingTop="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_8"
             android:layout_weight="1"
-            android:text="@string/dongjie_ed"
+            android:text="@string/default_4"
             android:gravity="right"/>
 
         <TextView
@@ -145,7 +145,7 @@
             android:paddingTop="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_8"
             android:layout_weight="1"
-            android:text="@string/nian_lilv"
+            android:text="@string/default_4"
             android:gravity="right"/>
 
         <TextView
@@ -175,7 +175,7 @@
             android:paddingTop="@dimen/dp_8"
             android:paddingRight="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_8"
-            android:text="@string/sx_ht"/>
+            android:text="@string/default_4"/>
 
         <TextView
             android:id="@+id/sx_ht_value_tv"
@@ -204,7 +204,7 @@
             android:paddingTop="@dimen/dp_8"
             android:paddingRight="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_8"
-            android:text="@string/sx_start"/>
+            android:text="@string/default_4"/>
 
         <TextView
             android:id="@+id/sx_start_value_tv"
@@ -223,7 +223,7 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="horizontal">
-        <TextView
+        android:text="@string/default_4"        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/dp_8"
@@ -231,7 +231,7 @@
             android:paddingTop="@dimen/dp_8"
             android:paddingBottom="@dimen/dp_14"
             android:layout_weight="1"
-            android:text="@string/sx_stop"
+            android:text="@string/default_4"
             android:gravity="right"/>
 
         <TextView

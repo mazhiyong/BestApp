@@ -40,7 +40,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="0dp"
-            android:text="@string/welcome_pager"
+            android:text="@string/default_4"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_weight="1"
@@ -71,7 +71,7 @@
 
         <TextView
             android:layout_width="0dp"
-            android:text="@string/share_text"
+            android:text="@string/default_4"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_weight="1"
@@ -225,6 +225,53 @@
         android:background="@color/divide_line"/>
 
     <LinearLayout
+        android:id="@+id/language_lay"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:text="语言切换"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/item_padding"
+            android:layout_marginBottom="@dimen/item_padding"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_0"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/item_padding"
+            android:layout_marginBottom="@dimen/item_padding"
+            android:layout_marginLeft="@dimen/dp_0"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/item_padding"
+            android:layout_marginBottom="@dimen/item_padding"
+            android:layout_marginLeft="@dimen/dp_0"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_gravity="center"
+            android:src="@drawable/android_list_idex"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="@dimen/divide_hight"
+        android:background="@color/divide_line"/>
+
+    <LinearLayout
         android:id="@+id/version_check_lay"
         android:layout_width="match_parent"
         android:visibility="gone"
@@ -234,7 +281,7 @@
 
         <TextView
             android:layout_width="0dp"
-            android:text="@string/app_version"
+            android:text="@string/default_4"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_weight="1"

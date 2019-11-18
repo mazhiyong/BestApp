@@ -102,9 +102,8 @@
                     android:textColor="@color/gray_normal"
                     android:textSize="@dimen/sp_14"
                     android:layout_gravity="center"
-                    android:text="金额(元)"
+                    android:text="@string/default_4"
                     android:layout_marginRight="@dimen/dp_15"
-                    android:hint="@string/four_zi"
                     />
                 <TextView
                     android:id="@+id/hetong_money_tv"

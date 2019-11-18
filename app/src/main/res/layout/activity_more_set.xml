@@ -453,7 +453,7 @@
                 android:src="@drawable/android_list_idex"
                 android:textSize="@dimen/sp_15"
                 android:textColor="@color/black"
-                android:text="@string/dianzi_zhang" />
+                android:text="@string/default_4" />
 
             <TextView
                 android:id="@+id/zhang_tv"
@@ -463,7 +463,7 @@
                 android:src="@drawable/android_list_idex"
                 android:layout_marginRight="@dimen/dp_5"
                 android:textSize="@dimen/sp_15"
-                android:text="@string/chakan" />
+                android:text="@string/default_4"/>
 
             <ImageView
                 android:layout_width="wrap_content"

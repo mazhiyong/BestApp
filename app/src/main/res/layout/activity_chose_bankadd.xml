@@ -60,7 +60,7 @@
                         android:src="@drawable/android_list_idex"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
-                        android:text="@string/chose_city" />
+                        android:text="@string/default_4" />
 
 
                     <TextView
@@ -75,7 +75,7 @@
                         android:focusable="true"
                         android:textSize="@dimen/sp_15"
                         android:focusableInTouchMode="true"
-                        android:hint="@string/please_choose"  />
+                       />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
                         android:src="@drawable/android_list_idex"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_15"
-                        android:text="@string/bank_dian" />
+                        android:text="@string/default_4" />
 
 
                     <TextView
@@ -137,8 +137,7 @@
                         android:layout_marginRight="@dimen/dp_5"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
-                        android:textSize="@dimen/sp_15"
-                        android:hint="@string/please_choose" />
+                        android:textSize="@dimen/sp_15" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -28,7 +28,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/bank_card_tip"
+                    android:text="@string/default_4"
                     android:layout_gravity="center"
                     android:textSize="@dimen/sp_15"
 
@@ -39,7 +39,7 @@
                     android:id="@+id/bind_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/bank_card_bind"
+                    android:text="@string/default_4"
                     android:layout_gravity="center"
                     android:background="@drawable/order_corners"
                     android:textColor="@color/bank_bian"
