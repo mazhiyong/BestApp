@@ -101,9 +101,18 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
         rightImg.setVisibility(View.VISIBLE);
         rightImg.setImageResource(R.drawable.icon6_dingdan);
 
+        getInfoAction();
+        //initDialog();
+    }
 
-
-        initDialog();
+    private void getInfoAction() {
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(DuiHuanActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.DUIHUAN_INFO, map);
     }
 
 
@@ -366,35 +375,13 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
                 String str= (String) map.get("name"); //选择账户
                 typeTv.setText(str);
                 type2Tv.setText(str);
-                getAviableMoneyAction(str);
+                //getInfoAction(str);
                 huzhuanTv.setEnabled(true);
                 break;
         }
     }
 
-    private void getAviableMoneyAction(String symbol) {
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(DuiHuanActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
-        }
-        map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("symbol",symbol);
 
-        if (fromTv.getText().toString().equals("币币账户")){
-            map.put("type", "1");
-        }
-        if (fromTv.getText().toString().equals("法币账户")){
-            map.put("type", "2");
-        }
-        if (fromTv.getText().toString().equals("合约账户")){
-            map.put("type", "3");
-        }
-        if (fromTv.getText().toString().equals("奖励金")){
-            map.put("type", "4");
-        }
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ACCOUNT_AVAIABLE_MONEY, map);
-    }
 
 
     /**---------------------------------------------------------------------以下代码申请权限---------------------------------------------

@@ -103,7 +103,7 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
             }
         });
 
-        for (int i = 0; i <6 ; i++) {
+       /* for (int i = 0; i <6 ; i++) {
             Map<String,Object> map = new HashMap<>();
             map.put("title","1281928192");
             map.put("title1","222");
@@ -112,9 +112,9 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
 
         }
 
-        responseData();
+        responseData();*/
 
-        //getMyTreamInfoAction();
+        getMyTreamInfoAction();
 
     }
 

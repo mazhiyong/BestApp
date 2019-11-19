@@ -63,7 +63,7 @@ public class MethodUrl {
     public static final String EDIT_ACCOUNT = "Personal/editAccount";//修改账户手机号
     public static final String SAFE_CENTER = "Personal/safetyCenter";//安全中心
     public static final String USER_GVRP = "Register/gvrp";//用户协议
-    public static final String MY_TREAM = "Personal/myTeam";//我的团队
+    public static final String MY_TREAM = "user_info/myTeam";//我的团队
 
 
 
@@ -204,6 +204,13 @@ public class MethodUrl {
     public static final String ACCOUNT_AVAIABLE_MONEY = "user_info/assets";//用户某个账户 某个币可用余额
     public static final String HUAZHUAN_DEAL = "user_info/dealTransfer";//划转币操作
     public static final String HUAZHUAN_LIST = "user_info/transferRecordApp";//划转记录
+    public static final String DUIHUAN_INFO = "Coin/changeChipInfo";//兑换信息
+    public static final String DUIHUAN_ACTION = "user_info/changeToChip";//兑换操作
+    public static final String DUIHUAN_LIST = "user_info/exchangeLog3";//兑换记录
+    public static final String RELEASE_LIST = "user_info/releaseLog";//释放记录
+
+
+
 
 
 

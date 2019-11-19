@@ -77,9 +77,9 @@ public class TreamListAdapter extends ListBaseAdapter {
         } else {
             final Map<String, Object> item = mDataList.get(position-1);
             ViewHolder viewHolder = (ViewHolder) holder;
-            viewHolder.accontTv.setText(item.get("title") + "");
-            viewHolder.yejiTv.setText(item.get("title1") + "");
-            viewHolder.childTreamTv.setText(item.get("title2") + "");
+            viewHolder.accontTv.setText(item.get("phone") + "");
+            viewHolder.yejiTv.setText(item.get("performance") + "");
+            viewHolder.childTreamTv.setText(item.get("floor") + "");
 
         }
 

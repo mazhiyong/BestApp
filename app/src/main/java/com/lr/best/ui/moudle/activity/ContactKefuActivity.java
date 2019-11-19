@@ -16,9 +16,8 @@ import com.lr.best.basic.BasicActivity;
 import com.lr.best.basic.MbsConstans;
 import com.lr.best.listener.SelectBackListener;
 import com.lr.best.mvp.view.RequestView;
-import com.lr.best.mywidget.dialog.KindSelectDialog;
+import com.lr.best.ui.moudle4.activity.ChatActivity;
 import com.lr.best.utils.imageload.GlideUtils;
-import com.lr.best.utils.tool.JSONUtil;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;
 
@@ -47,17 +46,11 @@ public class ContactKefuActivity extends BasicActivity implements RequestView, S
     ImageView codeIv;
     @BindView(R.id.tvTitle)
     TextView tvTitle;
+    @BindView(R.id.shangwuTv)
+    TextView shangwuTv;
+    @BindView(R.id.ruanjianTv)
+    TextView ruanjianTv;
 
-
-    private String mRequestTag = "";
-    private String mTempToken = "";
-    private String mAuthCode = "";
-    private String mSmsToken = "";
-
-
-    private Map<String, Object> mShareMap;
-
-    private KindSelectDialog mDialog;
 
     @Override
     public int getContentView() {
@@ -72,25 +65,23 @@ public class ContactKefuActivity extends BasicActivity implements RequestView, S
 
         mTitleText.setText("联系客服");
         mTitleText.setCompoundDrawables(null, null, null, null);
-        divideLine.setVisibility(View.GONE);
 
         getContactUsAction();
 
     }
 
     private void getContactUsAction() {
-        mRequestTag = MethodUrl.CONTACT_US;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(ContactKefuActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(ContactKefuActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CONTACT_US, map);
     }
 
 
-    @OnClick({R.id.back_img, R.id.left_back_lay,R.id.code_iv})
+    @OnClick({R.id.back_img, R.id.left_back_lay, R.id.code_iv,R.id.shangwuTv,R.id.ruanjianTv})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -103,6 +94,15 @@ public class ContactKefuActivity extends BasicActivity implements RequestView, S
             case R.id.code_iv:
                 getContactUsAction();
                 break;
+            case R.id.shangwuTv:
+                intent = new Intent(ContactKefuActivity.this, ChatActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.ruanjianTv:
+                intent = new Intent(ContactKefuActivity.this, ChatActivity.class);
+                startActivity(intent);
+                break;
+
 
         }
     }
@@ -122,13 +122,13 @@ public class ContactKefuActivity extends BasicActivity implements RequestView, S
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         switch (mType) {
             case MethodUrl.CONTACT_US:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0": //请求成功
-                        GlideUtils.loadImage(ContactKefuActivity.this,tData.get("data")+"",codeIv);
+                        GlideUtils.loadImage(ContactKefuActivity.this, tData.get("data") + "", codeIv);
                         tvTitle.setText("扫一扫上面的二维码图案，加我微信");
                         break;
                     case "-1": //请求失败
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         codeIv.setImageResource(R.drawable.icon4_er2);
                         tvTitle.setText("二维码信息错误，请点击刷新");
                         break;

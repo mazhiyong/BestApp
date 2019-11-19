@@ -576,12 +576,14 @@
             android:name=".ui.moudle2.activity.WeiTuoListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 聊天界面 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!-- 聊天界面 -->
         <activity
             android:name=".ui.moudle4.activity.ChatActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan"/><!-- 修改昵称 -->
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <!-- 修改昵称 -->
         <activity
             android:name=".ui.moudle.activity.UpdateNichengActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
@@ -592,9 +594,7 @@
             android:name=".ui.moudle4.activity.ChatNoticeListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustResize"/> <!-- 选择联系人 -->
-        <!-- 聊天详情 -->
-        <!-- 群聊聊天详情 -->
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <!-- 投诉原因选择 -->
         <activity
             android:name=".ui.moudle4.activity.ChoseReasonTypeActivity"
