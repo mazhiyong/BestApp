@@ -18,7 +18,6 @@ import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -60,8 +59,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     public void addMessage(Map<String,Object> message) {
-        msgs.addAll(Arrays.asList(message));
-        notifyDataSetChanged();
+        msgs.add(message);
+        //notifyDataSetChanged();
     }
 
     /**获取消息
@@ -131,7 +130,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 String s = SPUtils.get(context, MbsConstans.SharedInfoConstans.LOGIN_INFO, "").toString();
                 MbsConstans.USER_MAP = JSONUtil.getInstance().jsonMap(s);
             }
-            GlideUtils.loadImage2(context, MbsConstans.USER_MAP.get("portrait") + "",((SendTextHolder) holder).iv_avatar , R.drawable.default_headimg);
+            GlideUtils.loadImage2(context, MbsConstans.USER_MAP.get("portrait") + "",((SendTextHolder) holder).iv_avatar ,R.drawable.default_headimg);
             ((SendTextHolder) holder).tv_message.setText(msgs.get(position).get("text")+"");
         }
     }

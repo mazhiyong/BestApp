@@ -536,9 +536,16 @@
             android:name=".ui.moudle.activity.SecurityCheckActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 重置支付密码 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!-- 重置支付密码 -->
         <activity
             android:name=".ui.moudle.activity.ResetPayPassButActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!-- 重置支付密码 -->
+        <activity
+            android:name=".ui.moudle.activity.ResetPayPassActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 收款方式 -->

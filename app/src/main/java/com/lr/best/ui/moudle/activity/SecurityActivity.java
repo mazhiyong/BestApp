@@ -23,7 +23,6 @@ import com.lr.best.utils.tool.UtilTools;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

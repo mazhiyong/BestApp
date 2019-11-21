@@ -216,6 +216,7 @@
             android:id="@+id/number_et"
             android:layout_width="@dimen/dp_0"
             android:layout_weight="1"
+            android:inputType="numberDecimal"
             android:background="@null"
             android:hint="请输入划转数量"
             android:textSize="@dimen/sp_13"

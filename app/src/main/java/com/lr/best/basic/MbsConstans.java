@@ -107,7 +107,7 @@ public class MbsConstans {
 
 	public static final long SECOND_TIME_5000 = 5000;
 	public static final long SECOND_TIME_30 = 30*1000;
-
+	public static final long SECOND_TIME_15 = 15*1000;
 	public static boolean isNet = false;
 
 	public static String RMB = "¥";

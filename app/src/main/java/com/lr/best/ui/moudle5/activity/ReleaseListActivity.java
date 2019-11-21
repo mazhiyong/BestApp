@@ -94,7 +94,7 @@ public class ReleaseListActivity extends BasicActivity implements RequestView, R
         if (bundle != null) {
             mapData = (Map<String, Object>) bundle.getSerializable("DATA");
             id = mapData.get("id")+"";
-            tipTV.setText("订单号:"+id+"的释放记录");
+            tipTV.setText("订单号: "+id+" 的释放记录");
             getReleaseInfoAction();
         }
 

@@ -86,7 +86,7 @@ public class ChatActivity extends BasicActivity implements RequestView {
         public void run() {
             // 轮询回复消息
             obtainMsgAction();
-            handler2.postDelayed(this, MbsConstans.SECOND_TIME_30);
+            handler2.postDelayed(this, MbsConstans.SECOND_TIME_15);
         }
     };
 
@@ -133,7 +133,7 @@ public class ChatActivity extends BasicActivity implements RequestView {
         if (!UtilTools.empty(bundle)){
            kind =  bundle.getString("type");
            if (!UtilTools.empty(kind)){
-               if (kind.equals("1")){
+               if (kind.equals("0")){
                    titleText.setText("商务咨询客服");
                }else {
                    titleText.setText("软件咨询客服");
@@ -307,7 +307,8 @@ public class ChatActivity extends BasicActivity implements RequestView {
                         map.put("text", editMsg.getText().toString());
                         adapter.addMessage(map);
                         scrollToBottom();
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyItemChanged(adapter.getCount());
+                        //adapter.notifyDataSetChanged();
                         editMsg.setText("");
                         editMsg.requestFocus();
                         break;
@@ -328,29 +329,31 @@ public class ChatActivity extends BasicActivity implements RequestView {
                         if (!UtilTools.empty(tData.get("data")+"")){
                             List<Map<String,Object>> list = (List<Map<String, Object>>) tData.get("data");
                             if (!UtilTools.empty(list) && list.size()>0){
-
-                                for (Map<String,Object> map:list){
-                                    if ((map.get("status")+"").equals("0")){ //收到的消息
-                                        mapReceiveList.add(map);
+                                mapReceiveList.clear();
+                                for (Map<String,Object> map1:list){
+                                    if ((map1.get("status")+"").equals("0")){ //收到的消息
+                                        Log.i("show","receiver:"+map1.get("text"));
+                                        mapReceiveList.add(map1);
                                     }
                                 }
                                 if (mapOldReceiveList.size() == 0){//首次轮询
-                                    mapOldReceiveList = mapReceiveList;
-                                    mapReceiveList.clear();
+                                    mapOldReceiveList.addAll(mapReceiveList);
                                     return;
                                 }
+
                                 int number = mapReceiveList.size() - mapOldReceiveList.size();
-                                Log.i("show","&&&&&&&&&&&&&&number:"+number);
                                 if (number>0){
                                     for (int i = mapOldReceiveList.size(); i < mapReceiveList.size(); i++) {
                                         Log.i("show","&&&&&&&&&&&&&&:"+mapReceiveList.get(i).get("text"));
                                         mapReceiveList.get(i).put("kind",kind);
                                         adapter.addMessage( mapReceiveList.get(i));
                                         scrollToBottom();
-                                        adapter.notifyDataSetChanged();
+                                        adapter.notifyItemChanged(adapter.getCount());
+                                        //adapter.notifyDataSetChanged();
                                     }
-                                    mapOldReceiveList = mapReceiveList;
-                                    mapReceiveList.clear();
+                                    mapOldReceiveList.clear();
+                                    mapOldReceiveList.addAll(mapReceiveList);
+
                                 }
 
                             }
