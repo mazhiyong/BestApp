@@ -33,7 +33,7 @@ import com.lr.best.db.CustomViewsInfo;
 import com.lr.best.listener.ReLoadingData;
 import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.view.PageView;
-import com.lr.best.ui.moudle.activity.ContactKefuActivity;
+import com.lr.best.ui.moudle1.activity.ContactKefuActivity;
 import com.lr.best.ui.moudle.activity.IdCardEditActivity;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle.activity.MainActivity;

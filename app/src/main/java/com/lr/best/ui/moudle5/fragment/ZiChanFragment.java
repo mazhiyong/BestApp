@@ -150,7 +150,7 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
 
         tabLayout.addTab(tabLayout.newTab().setText("币币账户"));
         tabLayout.addTab(tabLayout.newTab().setText("法币账户"));
-        tabLayout.addTab(tabLayout.newTab().setText("奖励金"));
+        //tabLayout.addTab(tabLayout.newTab().setText("奖励金"));
         tabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(XTabLayout.Tab tab) {
@@ -174,7 +174,7 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
 
                         getAccountDataAction();
                         break;
-                    case 2: //奖励金
+                /*    case 2: //奖励金
                         mType = "4";
                         pageView.setVisibility(View.GONE);
                         zichanAcccountLay.setVisibility(View.GONE);
@@ -182,7 +182,7 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
                         duihuanAcountlay.setVisibility(View.VISIBLE);
 
                         //getAccountDataAction();
-                        break;
+                        break;*/
                 }
 
 

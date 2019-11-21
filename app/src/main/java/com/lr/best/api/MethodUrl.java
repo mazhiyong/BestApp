@@ -64,7 +64,9 @@ public class MethodUrl {
     public static final String SAFE_CENTER = "Personal/safetyCenter";//安全中心
     public static final String USER_GVRP = "Register/gvrp";//用户协议
     public static final String MY_TREAM = "user_info/myTeam";//我的团队
-
+    public static final String CHAT_RECEIVER = "Chart_info/obtain_chart";//客服聊天轮询
+    public static final String CHAT_SEND = "Chart_info/send_chart";//客服发送消息
+    public static final String CHAT_RECORD = "Chart_info/open_chat";//客服聊天记录
 
 
 

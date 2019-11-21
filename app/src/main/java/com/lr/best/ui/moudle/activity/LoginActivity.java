@@ -394,8 +394,8 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
                 startActivity(intent);
                 break;
             case R.id.btn_login:
-                loginAction();
                 mBtnLogin.setEnabled(false);
+                loginAction();
 //                CrashReport.testJavaCrash();
 //                intent = new Intent(LoginActivity.this, ModifyFileActivity.class);
 //                startActivity(intent);
@@ -500,7 +500,6 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
         dismissProgressDialog();
-        mEditPsw.setText("");
         mBtnLogin.setEnabled(true);
         //showToastMsg(msg);
         dealFailInfo(map,mType);

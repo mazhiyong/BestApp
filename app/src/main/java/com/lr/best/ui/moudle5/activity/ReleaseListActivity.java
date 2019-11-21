@@ -1,6 +1,7 @@
 package com.lr.best.ui.moudle5.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -42,7 +43,7 @@ import butterknife.OnClick;
 /**
  * 释放记录  界面
  */
-public class ReleaseListActivity extends BasicActivity implements RequestView , ReLoadingData {
+public class ReleaseListActivity extends BasicActivity implements RequestView, ReLoadingData {
     @BindView(R.id.back_img)
     ImageView mBackImg;
     @BindView(R.id.title_text)
@@ -60,13 +61,17 @@ public class ReleaseListActivity extends BasicActivity implements RequestView , 
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
-
+    @BindView(R.id.tipTV)
+    TextView tipTV;
 
 
     private String mRequestTag = "";
     private List<Map<String, Object>> mDataList = new ArrayList<>();
     private ReleaseListAdapter mListAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
+
+    private Map<String, Object> mapData;
+    private String id ="";
 
     @Override
     public int getContentView() {
@@ -80,11 +85,18 @@ public class ReleaseListActivity extends BasicActivity implements RequestView , 
 
         mTitleText.setText("释放记录");
         mTitleText.setCompoundDrawables(null, null, null, null);
-        divideLine.setVisibility(View.GONE);
 
         mPageView.setContentView(mContent);
         mPageView.setReLoadingData(this);
         mPageView.showLoading();
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mapData = (Map<String, Object>) bundle.getSerializable("DATA");
+            id = mapData.get("id")+"";
+            tipTV.setText("订单号:"+id+"的释放记录");
+            getReleaseInfoAction();
+        }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -103,11 +115,7 @@ public class ReleaseListActivity extends BasicActivity implements RequestView , 
             }
         });
 
-        getReleaseInfoAction();
-
     }
-
-
 
 
     @OnClick({R.id.back_img, R.id.left_back_lay})
@@ -115,8 +123,6 @@ public class ReleaseListActivity extends BasicActivity implements RequestView , 
         Intent intent = null;
         switch (view.getId()) {
             case R.id.back_img:
-                finish();
-                break;
             case R.id.left_back_lay:
                 finish();
                 break;
@@ -129,9 +135,10 @@ public class ReleaseListActivity extends BasicActivity implements RequestView , 
         mRequestTag = MethodUrl.RELEASE_LIST;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(ReleaseListActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(ReleaseListActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("id", id);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.RELEASE_LIST, map);
 
@@ -149,41 +156,41 @@ public class ReleaseListActivity extends BasicActivity implements RequestView , 
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
-        switch (mType){
+        switch (mType) {
             case MethodUrl.RELEASE_LIST:
-            switch (tData.get("code")+""){
-                case "0": //请求成功
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (UtilTools.empty(tData.get("data")+"")){
+                            mPageView.showEmpty();
+                        }else {
+                            List<Map<String, Object>> list = (List<Map<String, Object>>) tData.get("data");
+                            if (UtilTools.empty(list) || list.size() ==0) {
+                                mPageView.showEmpty();
+                            } else {
+                                mPageView.showContent();
+                                mDataList.clear();
+                                mDataList.addAll(list);
+                                responseData();
+                                mRefreshListView.refreshComplete(10);
+                            }
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
 
-                    List<Map<String,Object>> list = (List<Map<String, Object>>) tData.get("data");
-                    if (UtilTools.empty(list)){
-                        mPageView.showEmpty();
-                    }else {
-                        mPageView.showContent();
-                        mDataList.clear();
-                        mDataList.addAll(list);
-                        responseData();
-
-                    }
-                    mRefreshListView.refreshComplete(10);
-                    break;
-                case "-1": //请求失败
-                    showToastMsg(tData.get("msg")+"");
-                    break;
-
-                case "1": //token过期
-                    closeAllActivity();
-                    Intent intent = new Intent(ReleaseListActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    break;
+                    case "1": //token过期
+                        closeAllActivity();
+                        Intent intent = new Intent(ReleaseListActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
 
 
-            }
+                }
                 break;
         }
 
     }
-
-
 
 
     private void responseData() {
@@ -217,8 +224,6 @@ public class ReleaseListActivity extends BasicActivity implements RequestView , 
             mRefreshListView.setLoadMoreEnabled(true);
 
 
-
-
             mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -247,9 +252,9 @@ public class ReleaseListActivity extends BasicActivity implements RequestView , 
 
         mRefreshListView.refreshComplete(10);
         mListAdapter.notifyDataSetChanged();
-        if (mListAdapter.getDataList().size() <= 0){
+        if (mListAdapter.getDataList().size() <= 0) {
             mPageView.showEmpty();
-        }else {
+        } else {
             mPageView.showContent();
         }
 
@@ -266,4 +271,6 @@ public class ReleaseListActivity extends BasicActivity implements RequestView , 
     public void reLoadingData() {
         getReleaseInfoAction();
     }
+
+
 }

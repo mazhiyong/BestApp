@@ -10,6 +10,7 @@
     <TextView
         android:id="@+id/tv_time"
         android:textSize="@dimen/sp_12"
+        android:visibility="gone"
         android:padding="@dimen/dp_5"
         android:text="2019-11-11"
         android:background="@color/white"

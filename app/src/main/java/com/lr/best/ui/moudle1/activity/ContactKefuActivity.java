@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle.activity;
+package com.lr.best.ui.moudle1.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import com.lr.best.basic.BasicActivity;
 import com.lr.best.basic.MbsConstans;
 import com.lr.best.listener.SelectBackListener;
 import com.lr.best.mvp.view.RequestView;
-import com.lr.best.ui.moudle4.activity.ChatActivity;
+import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.utils.imageload.GlideUtils;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;
@@ -66,7 +66,7 @@ public class ContactKefuActivity extends BasicActivity implements RequestView, S
         mTitleText.setText("联系客服");
         mTitleText.setCompoundDrawables(null, null, null, null);
 
-        getContactUsAction();
+        //getContactUsAction();
 
     }
 
@@ -96,10 +96,12 @@ public class ContactKefuActivity extends BasicActivity implements RequestView, S
                 break;
             case R.id.shangwuTv:
                 intent = new Intent(ContactKefuActivity.this, ChatActivity.class);
+                intent.putExtra("type","0");
                 startActivity(intent);
                 break;
             case R.id.ruanjianTv:
                 intent = new Intent(ContactKefuActivity.this, ChatActivity.class);
+                intent.putExtra("type","1");
                 startActivity(intent);
                 break;
 
@@ -121,7 +123,7 @@ public class ContactKefuActivity extends BasicActivity implements RequestView, S
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         switch (mType) {
-            case MethodUrl.CONTACT_US:
+            case MethodUrl.CHAT_RECORD:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
                         GlideUtils.loadImage(ContactKefuActivity.this, tData.get("data") + "", codeIv);

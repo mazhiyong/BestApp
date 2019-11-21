@@ -872,6 +872,20 @@ public class SelectDataUtil {
         return mDataList;
     }
 
+    public static List<Map<String,Object>> getDuiHuanType(){//兑换类型
+        //（0：法币账户，1：币币账户 2：合约账户）
+        List<Map<String,Object>> mDataList=new ArrayList<>();
+        Map<String,Object> map1=new HashMap<>();
+        map1.put("name","Chip");
+        mDataList.add(map1);
+
+        map1=new HashMap<>();
+        map1.put("name","Best");
+        mDataList.add(map1);
+
+        return mDataList;
+    }
+
     public static List<Map<String,Object>> getBiType(){//交易账户类型
         List<Map<String,Object>> mDataList=new ArrayList<>();
         Map<String,Object> map1=new HashMap<>();

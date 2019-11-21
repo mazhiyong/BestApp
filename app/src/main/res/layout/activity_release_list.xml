@@ -9,6 +9,21 @@
     <include
         android:id="@+id/top_layout"
         layout="@layout/title_leftbut_bar"/>
+    <TextView
+        android:id="@+id/tipTV"
+        android:layout_width="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="aaaa"
+        android:paddingLeft="@dimen/dp_5"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_15"
+        android:layout_height="wrap_content"/>
+    <View
+        android:id="@+id/divide_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divide_hight"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divide_line" />
     <com.lr.best.mywidget.view.PageView
         android:id="@+id/page_view"
         android:layout_width="match_parent"

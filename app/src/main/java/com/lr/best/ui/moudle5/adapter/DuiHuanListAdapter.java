@@ -1,9 +1,11 @@
 package com.lr.best.ui.moudle5.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -11,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lr.best.R;
 import com.lr.best.ui.moudle.adapter.ListBaseAdapter;
+import com.lr.best.ui.moudle5.activity.ReleaseListActivity;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -37,31 +41,29 @@ public class DuiHuanListAdapter extends ListBaseAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Map<String, Object> item = mDataList.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
-//        map.put("type", "USDT");
-//        map.put("formto", "币币到法币");
-//        map.put("number", "100.00USDT");
-//        map.put("time", "05/01 12:12:10");
 
-        viewHolder.typeTv.setText(item.get("from") + "");
+        viewHolder.typeTv.setText("订单号:" + item.get("id"));
         viewHolder.timeTv.setText(item.get("create_time") + "");
         viewHolder.numberTv.setText(item.get("num") + "");
         viewHolder.fromtoTv.setText(item.get("text") + "");
-        viewHolder.jifenTv.setText(item.get("integral")+"");
-        viewHolder.jianglijinTv.setText(item.get("bounty")+"");
+        viewHolder.jifenTv.setText(item.get("integral") + "");
+        viewHolder.jianglijinTv.setText(item.get("bounty") + "");
 
-        //viewHolder.mStatusTv.setText(item.get("abstract")+"");
-        /*if ((item.get("amt")+"").contains("-")){
-            viewHolder.mMoneyTv.setText(UtilTools.getMoney(item.get("amt")+""));
+        if ((item.get("type") + "").equals("1")) {
+           viewHolder.toIv.setVisibility(View.VISIBLE);
         }else {
-            viewHolder.mMoneyTv.setText("+"+UtilTools.getMoney(item.get("amt")+""));
-        }*/
+            viewHolder.toIv.setVisibility(View.GONE);
+        }
 
         viewHolder.tradeLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(mContext, TradeDetailActivity.class);
-//                intent.putExtra("DATA", (Serializable) item);
-//                mContext.startActivity(intent);
+                if ((item.get("type") + "").equals("1")) {
+                    Intent intent = new Intent(mContext, ReleaseListActivity.class);
+                    intent.putExtra("DATA", (Serializable) item);
+                    mContext.startActivity(intent);
+                }
+
             }
         });
 
@@ -84,7 +86,8 @@ public class DuiHuanListAdapter extends ListBaseAdapter {
         TextView jianglijinTv;
         @BindView(R.id.trade_lay)
         CardView tradeLay;
-
+        @BindView(R.id.to_iv)
+        ImageView toIv;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

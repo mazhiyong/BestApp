@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flyco.dialog.utils.CornerUtils;
-import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnNetWorkErrorListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -201,18 +200,6 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
 
             mRefreshListView.setPullRefreshEnabled(true);
             mRefreshListView.setLoadMoreEnabled(true);
-
-
-            mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    Map<String, Object> item = mListAdapter.getDataList().get(position);
-                   /* Intent intent = new Intent(getActivity(), ShowDetailPictrue.class);
-                    intent.putExtra("jsonData",item.get("url")+"");
-                    startActivity(intent);*/
-                }
-
-            });
 
 
         } else {

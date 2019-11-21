@@ -11,6 +11,11 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lr.best.R;
+import com.lr.best.basic.MbsConstans;
+import com.lr.best.utils.imageload.GlideUtils;
+import com.lr.best.utils.tool.JSONUtil;
+import com.lr.best.utils.tool.SPUtils;
+import com.lr.best.utils.tool.UtilTools;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,17 +104,42 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ReceiveTextHolder) {
             //((ReceiveTextHolder)holder).showTime(shouldShowTime(position));
-            ((ReceiveTextHolder) holder).tv_message.setText(msgs.get(position).get("content")+"");
+            ((ReceiveTextHolder) holder).tv_message.setText(msgs.get(position).get("text")+"");
+            if (UtilTools.empty(msgs.get(position).get("img"))){
+                if ((msgs.get(position).get("kind")+"").equals("0")){
+                    ((ReceiveTextHolder) holder).iv_avatar.setImageResource(R.drawable.man);
+                }else {
+                    ((ReceiveTextHolder) holder).iv_avatar.setImageResource(R.drawable.woman);
+                }
+            }else {
+                GlideUtils.loadImage2(context, msgs.get(position).get("img") + "",((ReceiveTextHolder) holder).iv_avatar , R.drawable.default_headimg);
+            }
+
         } else {
             //((SendTextHolder)holder).showTime(shouldShowTime(position));
-            ((SendTextHolder) holder).tv_message.setText(msgs.get(position).get("content")+"");
+           /* if (UtilTools.empty(msgs.get(position).get("img"))){
+                if (UtilTools.empty(MbsConstans.USER_MAP)) {
+                    String s = SPUtils.get(context, MbsConstans.SharedInfoConstans.LOGIN_INFO, "").toString();
+                    MbsConstans.USER_MAP = JSONUtil.getInstance().jsonMap(s);
+                }
+                GlideUtils.loadImage2(context, MbsConstans.USER_MAP.get("portrait") + "",((SendTextHolder) holder).iv_avatar , R.drawable.default_headimg);
+            }else {
+                GlideUtils.loadImage2(context, msgs.get(position).get("img") + "",((SendTextHolder) holder).iv_avatar , R.drawable.default_headimg);
+            }*/
+            //用户头像
+            if (UtilTools.empty(MbsConstans.USER_MAP)) {
+                String s = SPUtils.get(context, MbsConstans.SharedInfoConstans.LOGIN_INFO, "").toString();
+                MbsConstans.USER_MAP = JSONUtil.getInstance().jsonMap(s);
+            }
+            GlideUtils.loadImage2(context, MbsConstans.USER_MAP.get("portrait") + "",((SendTextHolder) holder).iv_avatar , R.drawable.default_headimg);
+            ((SendTextHolder) holder).tv_message.setText(msgs.get(position).get("text")+"");
         }
     }
 
     @Override
     public int getItemViewType(int position) {
         Map<String,Object> message = msgs.get(position);
-        if(message.get("type").equals("0")){
+        if((message.get("status")+"").equals("0")){
            return TYPE_RECEIVER_TXT;
         }else {
             return TYPE_SEND_TXT;

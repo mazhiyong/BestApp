@@ -523,7 +523,7 @@
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 联系客服 -->
         <activity
-            android:name=".ui.moudle.activity.ContactKefuActivity"
+            android:name=".ui.moudle1.activity.ContactKefuActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 安全中心 -->
@@ -592,7 +592,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <!-- 聊天界面 -->
         <activity
-            android:name=".ui.moudle4.activity.ChatActivity"
+            android:name=".ui.moudle1.activity.ChatActivity"
             android:theme="@style/AppTheme.Transparent"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
