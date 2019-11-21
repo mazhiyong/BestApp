@@ -160,7 +160,8 @@ public class TradeListActivity extends BasicActivity implements RequestView,ReLo
         mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                traderListAction();
+                //traderListAction();
+                mRefreshListView.setNoMore(true);
             }
         });
     }

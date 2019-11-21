@@ -22,14 +22,13 @@
         android:layout_marginRight="@dimen/dp_5"
         android:layout_marginTop="@dimen/dp_10" >
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_avatar"
             android:layout_width="@dimen/dp_45"
             android:layout_height="@dimen/dp_45"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/head"
-            android:scaleType="fitXY" />
+            android:src="@drawable/man" />
 
         <TextView
             android:id="@+id/tv_message"

@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle.activity;
+package com.lr.best.ui.moudle1.activity;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -26,7 +26,8 @@ import com.lr.best.basic.MbsConstans;
 import com.lr.best.listener.ReLoadingData;
 import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.view.PageView;
-import com.lr.best.ui.moudle.adapter.TreamListAdapter;
+import com.lr.best.ui.moudle.activity.LoginActivity;
+import com.lr.best.ui.moudle1.adapter.TreamListAdapter;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;
 

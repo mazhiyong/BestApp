@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.flyco.dialog.utils.CornerUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
+import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnNetWorkErrorListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -157,12 +158,13 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
             }
         });
 
-       /* mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                // traderListAction();
+                mRefreshListView.setNoMore(true);
             }
-        });*/
+        });
     }
     private void traderListAction(){
 

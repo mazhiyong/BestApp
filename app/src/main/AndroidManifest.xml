@@ -488,7 +488,7 @@
         <!--我的团队 -->
 
         <activity
-            android:name=".ui.moudle.activity.MyTreamActivity"
+            android:name=".ui.moudle1.activity.MyTreamActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
@@ -571,7 +571,20 @@
             android:name=".ui.moudle1.activity.HelpDetialActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 兑换记录列表 -->
+
+        <activity
+            android:name=".ui.moudle5.activity.DuiHuanListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 释放记录列表 -->
+
+        <activity
+            android:name=".ui.moudle5.activity.ReleaseListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 委托列表 -->
+
         <activity
             android:name=".ui.moudle2.activity.WeiTuoListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"

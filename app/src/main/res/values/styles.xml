@@ -176,6 +176,11 @@
         <item name="android:windowEnterAnimation">@anim/base_slide_left_in</item>
         <item name="android:windowExitAnimation">@anim/base_slide_left_out</item>
     </style>
+    <style name="PopupAnimation2" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/base_slide_right_in</item>
+        <item name="android:windowExitAnimation">@anim/base_slide_right_out</item>
+    </style>
+
 
     <style name="tablayout_home_title" parent="Widget.Design.TabLayout">
         <item name="tabGravity">center</item>

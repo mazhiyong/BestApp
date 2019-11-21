@@ -152,7 +152,8 @@ public class WeiTuoListActivity extends BasicActivity implements RequestView, Re
         mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                trustdListAction(status);
+               // trustdListAction(status);
+                mRefreshListView.setNoMore(true);
             }
         });
 

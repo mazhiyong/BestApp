@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle.adapter;
+package com.lr.best.ui.moudle1.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lr.best.R;
+import com.lr.best.ui.moudle.adapter.ListBaseAdapter;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle1.activity;
+package com.lr.best.ui.moudle5.activity;
 
 import android.animation.Animator;
 import android.content.Intent;
@@ -41,7 +41,7 @@ import com.lr.best.mywidget.dialog.DateSelectDialog;
 import com.lr.best.mywidget.view.PageView;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle.adapter.TradeDialogAdapter;
-import com.lr.best.ui.moudle1.adapter.NoticeListAdapter;
+import com.lr.best.ui.moudle5.adapter.DuiHuanListAdapter;
 import com.lr.best.utils.tool.AnimUtil;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.SelectDataUtil;
@@ -57,9 +57,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 公告消息中心  界面
+ * 兑换记录  界面
  */
-public class NoticeListActivity extends BasicActivity implements RequestView,ReLoadingData,SelectBackListener{
+public class DuiHuanListActivity extends BasicActivity implements RequestView,ReLoadingData,SelectBackListener{
 
     @BindView(R.id.back_img)
     ImageView mBackImg;
@@ -95,7 +95,7 @@ public class NoticeListActivity extends BasicActivity implements RequestView,ReL
     private String mSelectType = "";
 
 
-    private NoticeListAdapter mListAdapter;
+    private DuiHuanListAdapter mListAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     private List<Map<String, Object>> mDataList = new ArrayList<>();
     private int mPage = 1;
@@ -104,7 +104,7 @@ public class NoticeListActivity extends BasicActivity implements RequestView,ReL
 
     @Override
     public int getContentView() {
-        return R.layout.activity_trade_list;
+        return R.layout.activity_duihuan_list;
     }
 
     @Override
@@ -115,7 +115,7 @@ public class NoticeListActivity extends BasicActivity implements RequestView,ReL
 
         mAnimUtil = new AnimUtil();
 
-        mTitleText.setText("公告");
+        mTitleText.setText("兑换记录");
         mTitleText.setCompoundDrawables(null,null,null,null);
 
         mRightImg.setVisibility(View.GONE);
@@ -134,22 +134,9 @@ public class NoticeListActivity extends BasicActivity implements RequestView,ReL
         mStartTime = mSelectStartTime;
         mEndTime = mSelectEndTime;
 
-
         initView();
         showProgressDialog();
         traderListAction();
-
-//        for (int i = 0; i <10 ; i++) {
-//            Map<String,Object> map = new HashMap<>();
-//            if (i == 0){
-//                map.put("kind","0"); //充币
-//            }else {
-//                map.put("kind","1"); //提币
-//            }
-//            map.put("title","火币全球站将于6月13号开启首期FastTrack投票上币" +i);
-//            mDataList.add(map);
-//        }
-//        responseData();
     }
 
 
@@ -157,43 +144,41 @@ public class NoticeListActivity extends BasicActivity implements RequestView,ReL
         mPageView.setContentView(mContent);
         mPageView.setReLoadingData(this);
         mPageView.showLoading();
-        LinearLayoutManager manager = new LinearLayoutManager(NoticeListActivity.this);
+        LinearLayoutManager manager = new LinearLayoutManager(DuiHuanListActivity.this);
         manager.setOrientation(RecyclerView.VERTICAL);
         mRefreshListView.setLayoutManager(manager);
 
         mRefreshListView.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //traderListAction();
-                mRefreshListView.setNoMore(true);
+                mPage = 1;
+                traderListAction();
             }
         });
 
         mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                traderListAction();
+                //traderListAction();
+                mRefreshListView.setNoMore(true);
             }
         });
     }
-    //获取公告列表
     private void traderListAction(){
-
-        mRequestTag = MethodUrl.NOTICE_LIST;
         Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(NoticeListActivity.this,MbsConstans.ACCESS_TOKEN,"").toString();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(DuiHuanListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.NOTICE_LIST, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.DUIHUAN_LIST, map);
     }
 
 
 
     private void responseData() {
         if (mListAdapter == null) {
-            mListAdapter = new NoticeListAdapter(NoticeListActivity.this);
+            mListAdapter = new DuiHuanListAdapter(DuiHuanListActivity.this);
             mListAdapter.addAll(mDataList);
 
             /*AnimationAdapter adapter = new ScaleInAnimationAdapter(mDataAdapter);
@@ -288,7 +273,7 @@ public class NoticeListActivity extends BasicActivity implements RequestView,ReL
 
     private void initPopupWindow(){
 
-        int nH = UtilTools.getNavigationBarHeight(NoticeListActivity.this);
+        int nH = UtilTools.getNavigationBarHeight(DuiHuanListActivity.this);
         LinearLayout mNagView ;
 
         if (mConditionDialog == null) {
@@ -297,8 +282,8 @@ public class NoticeListActivity extends BasicActivity implements RequestView,ReL
             mySelectDialog2 = new DateSelectDialog(this, true, "选择日期", 22);
             mySelectDialog2.setSelectBackListener(this);
 
-            popView = LayoutInflater.from(NoticeListActivity.this).inflate(R.layout.dialog_trade_condition,null);
-            mConditionDialog = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            popView = LayoutInflater.from(DuiHuanListActivity.this).inflate(R.layout.dialog_trade_condition,null);
+            mConditionDialog = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             mConditionDialog.setClippingEnabled(false);
             initConditionDialog(popView);
 
@@ -307,23 +292,25 @@ public class NoticeListActivity extends BasicActivity implements RequestView,ReL
             mNagView.setLayoutParams(layoutParams);
 
 
-            int screenWidth=UtilTools.getScreenWidth(NoticeListActivity.this);
-            int screenHeight=UtilTools.getScreenHeight(NoticeListActivity.this);
+            int screenWidth=UtilTools.getScreenWidth(DuiHuanListActivity.this);
+            int screenHeight=UtilTools.getScreenHeight(DuiHuanListActivity.this);
             mConditionDialog.setWidth((int)(screenWidth*0.8));
-            mConditionDialog.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
+            mConditionDialog.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
 
             //设置background后在外点击才会消失
-            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(NoticeListActivity.this,5)));
+            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(DuiHuanListActivity.this,5)));
             mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
             //自定义动画
-            mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
+            mConditionDialog.setAnimationStyle(R.style.PopupAnimation2);
 //            mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画
             mConditionDialog.update();
             mConditionDialog.setTouchable(true);
             mConditionDialog.setFocusable(true);
             //popView.requestFocus();//pop设置不setBackgroundDrawable情况，把焦点给popView，添加popView.setOnKeyListener。可实现点击外部不消失，点击反键才消失
             //			mConditionDialog.showAtLocation(mCityTv, Gravity.TOP|Gravity.RIGHT, 0, 0); //设置layout在PopupWindow中显示的位置
-            mConditionDialog.showAtLocation(NoticeListActivity.this.getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
+            //mConditionDialog.showAtLocation(DuiHuanListActivity.this.getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
+            mConditionDialog.showAtLocation(getWindow().getDecorView(),
+                    Gravity.TOP | Gravity.RIGHT, 0, mLeftBackLay.getHeight()+UtilTools.getStatusHeight2(DuiHuanListActivity.this));
             toggleBright();
             mConditionDialog.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -336,7 +323,9 @@ public class NoticeListActivity extends BasicActivity implements RequestView,ReL
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,nH);
             mNagView.setLayoutParams(layoutParams);
 
-            mConditionDialog.showAtLocation(NoticeListActivity.this.getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
+            //mConditionDialog.showAtLocation(DuiHuanListActivity.this.getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
+            mConditionDialog.showAtLocation(getWindow().getDecorView(),
+                    Gravity.TOP | Gravity.RIGHT, 0, mLeftBackLay.getHeight()+UtilTools.getStatusHeight2(DuiHuanListActivity.this));
             toggleBright();
         }
     }
@@ -453,9 +442,9 @@ public class NoticeListActivity extends BasicActivity implements RequestView,ReL
 
         List<Map<String,Object>> maps = SelectDataUtil.getCondition();
 
-        GridLayoutManager linearLayoutManager = new GridLayoutManager(NoticeListActivity.this,3);
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(DuiHuanListActivity.this,3);
         mTypeRecyclerView.setLayoutManager(linearLayoutManager);
-        mTradeDialogAdapter = new TradeDialogAdapter(NoticeListActivity.this,maps);
+        mTradeDialogAdapter = new TradeDialogAdapter(DuiHuanListActivity.this,maps);
         //第一次设置默认值
         mSelectType = "borrow";
         mTradeDialogAdapter.setSelectItme(0);
@@ -548,39 +537,43 @@ public class NoticeListActivity extends BasicActivity implements RequestView,ReL
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
-        Intent intent ;
+        Intent intent;
         switch (mType){
-            case MethodUrl.NOTICE_LIST:
-                switch (tData.get("code")+""){
-                    case "0":
-                        List<Map<String,Object>> list = (List<Map<String, Object>>) tData.get("data");
-                        if (UtilTools.empty(list)){
+            case MethodUrl.DUIHUAN_LIST:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (UtilTools.empty(tData.get("data") + "")) {
                             mPageView.showEmpty();
-                        }else {
-                            mPageView.showContent();
-                            mDataList.clear();
-                            mDataList.addAll(list);
-                            responseData();
-
+                        } else {
+                            mDataList = (List<Map<String, Object>>) tData.get("data");
+                            if (!UtilTools.empty(mDataList) && mDataList.size()>0) {
+                                mPageView.showContent();
+                                responseData();
+                                mRefreshListView.refreshComplete(10);
+                            } else {
+                                mPageView.showEmpty();
+                            }
                         }
-                        mRefreshListView.refreshComplete(10);
                         break;
-                    case "1":
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        mPageView.showNetworkError();
+                        break;
+
+                    case "1": //token过期
                         closeAllActivity();
-                        intent = new Intent(NoticeListActivity.this, LoginActivity.class);
+                        intent = new Intent(DuiHuanListActivity.this, LoginActivity.class);
                         startActivity(intent);
                         break;
-                    case "-1":
-                        mPageView.showNetworkError();
-                        showToastMsg(tData.get("msg")+"");
-                        break;
                 }
+
+
                 break;
             case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
                 MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
                 mIsRefreshToken = false;
                 switch (mRequestTag) {
-                    case MethodUrl.NOTICE_LIST:
+                    case MethodUrl.tradeList:
                         traderListAction();
                         break;
                 }

@@ -19,6 +19,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * @author :smile
@@ -138,7 +139,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
    class SendTextHolder  extends RecyclerView.ViewHolder {
 
        @BindView(R.id.iv_avatar)
-       protected ImageView iv_avatar;
+       protected CircleImageView iv_avatar;
 
        @BindView(R.id.iv_fail_resend)
        protected ImageView iv_fail_resend;
@@ -168,7 +169,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     class ReceiveTextHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_avatar)
-        protected ImageView iv_avatar;
+        protected CircleImageView iv_avatar;
 
         @BindView(R.id.tv_time)
         protected TextView tv_time;

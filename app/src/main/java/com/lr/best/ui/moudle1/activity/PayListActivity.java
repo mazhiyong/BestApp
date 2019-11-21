@@ -160,6 +160,7 @@ public class PayListActivity extends BasicActivity implements RequestView,ReLoad
             @Override
             public void onLoadMore() {
                 //payListAction();
+                mRefreshListView.setNoMore(true);
             }
         });
     }

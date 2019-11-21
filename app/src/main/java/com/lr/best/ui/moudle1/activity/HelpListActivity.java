@@ -172,7 +172,8 @@ public class HelpListActivity extends BasicActivity implements RequestView,ReLoa
         mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                traderListAction();
+                //traderListAction();
+                mRefreshListView.setNoMore(true);
             }
         });
     }

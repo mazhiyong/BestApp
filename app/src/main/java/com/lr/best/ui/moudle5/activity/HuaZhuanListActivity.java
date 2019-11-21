@@ -160,7 +160,8 @@ public class HuaZhuanListActivity extends BasicActivity implements RequestView,R
         mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                traderListAction();
+                //traderListAction();
+                mRefreshListView.setNoMore(true);
             }
         });
     }

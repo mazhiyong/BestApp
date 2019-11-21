@@ -37,7 +37,7 @@ import com.lr.best.ui.moudle.activity.ContactKefuActivity;
 import com.lr.best.ui.moudle.activity.IdCardEditActivity;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle.activity.MainActivity;
-import com.lr.best.ui.moudle.activity.MyTreamActivity;
+import com.lr.best.ui.moudle1.activity.MyTreamActivity;
 import com.lr.best.ui.moudle.activity.SecurityActivity;
 import com.lr.best.ui.moudle.activity.SettingActivity;
 import com.lr.best.ui.moudle1.activity.HelpDetialActivity;
