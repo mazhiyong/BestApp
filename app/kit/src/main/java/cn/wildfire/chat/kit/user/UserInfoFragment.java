@@ -23,6 +23,7 @@ import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
 import com.lr.best.R;
 import com.lr.best.utils.tool.LogUtilDebug;
+import com.lr.best.utils.tool.UtilTools;
 
 import java.util.ArrayList;
 
@@ -138,7 +139,13 @@ public class UserInfoFragment extends Fragment {
             // self
             nickyNameTextView.setText("昵称:"+userViewModel.getUserDisplayName(userInfo));
         }else {
-            nickyNameTextView.setText("备注:"+userViewModel.getUserDisplayName(userInfo));
+            nickyNameTextView.setText("昵称:"+userInfo.displayName);
+            if (UtilTools.empty(userInfo.friendAlias)){
+                mobileTextView.setVisibility(View.GONE);
+            }else {
+                mobileTextView.setVisibility(View.VISIBLE);
+                mobileTextView.setText("备注:"+userInfo.friendAlias);
+            }
         }
 
 

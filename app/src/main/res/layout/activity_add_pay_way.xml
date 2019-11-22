@@ -201,9 +201,10 @@
         <EditText
             android:id="@+id/et_number"
             android:layout_width="wrap_content"
-            android:hint="输入新的支付密码"
+            android:hint="输入账号信息"
             android:background="@null"
             android:layout_weight="1"
+            android:inputType="number"
             android:textColor="@color/black"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_15"

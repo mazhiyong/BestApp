@@ -33,15 +33,14 @@ import com.lr.best.db.CustomViewsInfo;
 import com.lr.best.listener.ReLoadingData;
 import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.view.PageView;
-import com.lr.best.ui.moudle1.activity.ContactKefuActivity;
 import com.lr.best.ui.moudle.activity.IdCardEditActivity;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle.activity.MainActivity;
-import com.lr.best.ui.moudle1.activity.MyTreamActivity;
 import com.lr.best.ui.moudle.activity.SecurityActivity;
 import com.lr.best.ui.moudle.activity.SettingActivity;
+import com.lr.best.ui.moudle1.activity.ContactKefuActivity;
 import com.lr.best.ui.moudle1.activity.HelpDetialActivity;
-import com.lr.best.ui.moudle1.activity.HtmlActivity;
+import com.lr.best.ui.moudle1.activity.MyTreamActivity;
 import com.lr.best.ui.moudle1.activity.NoticeDetialActivity;
 import com.lr.best.ui.moudle1.activity.NoticeListActivity;
 import com.lr.best.ui.moudle1.activity.PayListActivity;
@@ -52,6 +51,7 @@ import com.lr.best.ui.moudle1.adapter.MoreTypeAdapter;
 import com.lr.best.ui.moudle3.activity.CoinInfoDetailActivity;
 import com.lr.best.ui.moudle4.activity.RedRecordListActivity;
 import com.lr.best.ui.moudle5.activity.ChoseBiTypeActivity;
+import com.lr.best.ui.moudle5.activity.DuiHuanActivity;
 import com.lr.best.ui.moudle5.activity.HuaZhuanActivity;
 import com.lr.best.utils.imageload.GlideUtils;
 import com.lr.best.utils.tool.AnimUtil;
@@ -362,10 +362,10 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                                         xBanner.setOnItemClickListener(new XBanner.OnItemClickListener() {
                                             @Override
                                             public void onItemClick(XBanner banner, Object model, View view, int position) {
-                                                ;
-                                                Intent intent1 = new Intent(getActivity(), HtmlActivity.class);
+                                                //不跳转
+                                                /*Intent intent1 = new Intent(getActivity(), HtmlActivity.class);
                                                 intent1.putExtra("id",bannerMapList.get(position).get("web")+"");
-                                                startActivity(intent1);
+                                                startActivity(intent1);*/
                                             }
                                         });
 
@@ -466,9 +466,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                                     }
                                 });
                             }
-
                         }
-
                         break;
                     case "-1":
                         showToastMsg(tData.get("msg")+"");
@@ -493,11 +491,13 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                         Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
                         if (!UtilTools.empty(mapData)){
                             intent = new Intent(getActivity(), IdCardEditActivity.class);
-                            if ((mapData.get("is_identity")+"").equals("1")){
+                          /*  if ((mapData.get("is_identity")+"").equals("1")){
                                 intent.putExtra("TYPE","1");
                             }else {
                                 intent.putExtra("TYPE","0");
-                            }
+                            }*/
+                            intent.putExtra("status",mapData.get("status")+"");
+                            //intent.putExtra("type",mapData.get("is_identity")+"");
                             startActivity(intent);
                         }
                         break;
@@ -547,7 +547,8 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                 }
                 break;
             case R.id.fast_buy_lay: //闪兑
-
+                intent = new Intent(getActivity(), DuiHuanActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -600,7 +601,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
             //			mConditionDialog.showAtLocation(mCityTv, Gravity.TOP|Gravity.RIGHT, 0, 0); //设置layout在PopupWindow中显示的位置
             //mConditionDialog.showAsDropDown(divideLine, 0,  -leftBackLay.getHeight(), Gravity.BOTTOM);
             mConditionDialog.showAtLocation(getActivity().getWindow().getDecorView(),
-                    Gravity.TOP | Gravity.LEFT, 0, leftBackLay.getHeight()+UtilTools.getStatusHeight2(getActivity()));
+                    Gravity.TOP | Gravity.LEFT, 0, 0);
             toggleBright();
             mConditionDialog.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -610,7 +611,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
             });
         } else {
             mConditionDialog.showAtLocation(getActivity().getWindow().getDecorView(),
-                    Gravity.TOP | Gravity.LEFT, 0, leftBackLay.getHeight()+UtilTools.getStatusHeight2(getActivity()));
+                    Gravity.TOP | Gravity.LEFT, 0, 0);
             //mConditionDialog.showAsDropDown(divideLine, 0, leftBackLay.getHeight(), Gravity.BOTTOM);
             toggleBright();
         }

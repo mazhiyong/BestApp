@@ -235,7 +235,6 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
         }else {
             LogUtilDebug.i("show","聊天服务器已断开");
         }
-
     }
 
 
@@ -460,6 +459,7 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
                         SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.LOGIN_ACCOUNT, mAccount+"");
                         SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.LOGIN_PASSWORD,mPassWord+"");
 
+
                      /*   imManager.connectIM(MbsConstans.RONGYUN_MAP.get("token")+"", true, new ResultCallback<String>() {
                             @Override
                             public void onSuccess(String s) {
@@ -476,6 +476,7 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
                                 LogUtilDebug.i("show","链接rong融云失败");
                             }
                         });*/
+
 
                         intent = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(intent);

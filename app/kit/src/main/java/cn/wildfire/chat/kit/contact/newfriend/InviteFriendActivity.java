@@ -73,12 +73,14 @@ public class InviteFriendActivity extends WfcBaseActivity {
                 .observe(this, new Observer<Boolean>() {
                     @Override
                     public void onChanged(@Nullable Boolean aBoolean) {
-                        if (aBoolean) {
+                        Toast.makeText(InviteFriendActivity.this, "好友邀请已发送", Toast.LENGTH_SHORT).show();
+                        finish();
+                        /*if (aBoolean) {
                             Toast.makeText(InviteFriendActivity.this, "好友邀请已发送", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
-                            Toast.makeText(InviteFriendActivity.this, "添加好友失败", Toast.LENGTH_SHORT).show();
-                        }
+                            Toast.makeText(InviteFriendActivity.this, "好友邀请已发送", Toast.LENGTH_SHORT).show();
+                        }*/
                     }
                 });
     }

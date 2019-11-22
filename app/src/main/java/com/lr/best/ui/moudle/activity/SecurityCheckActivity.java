@@ -167,7 +167,7 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
                     showToastMsg("请输入手机/邮箱账号");
                     return;
                 }
-                mTimeCount.start();
+
                 getMsgcodeAction();
                 break;
             case R.id.bt_next:
@@ -235,13 +235,28 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
 
     }
 
-    // TODO: 2019/8/29  修改手机号和邮箱
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         switch (mType){
             case MethodUrl.REGIST_SMSCODE:
-                showToastMsg(getResources().getString(R.string.code_phone_tip));
-                etCode.setText(tData.get("data")+"");
+                switch (tData.get("code")+""){
+                    case "0": //请求成功
+                        mTimeCount.start();
+                        showToastMsg(getResources().getString(R.string.code_phone_tip));
+                        etCode.setText(tData.get("data")+"");
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        Intent intent = new Intent(SecurityCheckActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+
+                }
+
                 break;
             case MethodUrl.EDIT_ACCOUNT:
 

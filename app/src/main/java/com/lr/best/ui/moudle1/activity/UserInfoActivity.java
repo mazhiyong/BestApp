@@ -40,7 +40,6 @@ import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.dialog.ShowImageDialog;
 import com.lr.best.mywidget.dialog.SureOrNoDialog;
 import com.lr.best.ui.moudle.activity.LoginActivity;
-import com.lr.best.ui.moudle.activity.UpdateNichengActivity;
 import com.lr.best.utils.imageload.GlideApp;
 import com.lr.best.utils.imageload.GlideUtils;
 import com.lr.best.utils.permission.PermissionsUtils;

@@ -27,6 +27,7 @@ import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.dialog.KindSelectDialog;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.SelectDataUtil;
+import com.lr.best.utils.tool.TextViewUtils;
 import com.lr.best.utils.tool.UtilTools;
 
 import java.io.Serializable;
@@ -106,6 +107,12 @@ public class RegistActivity extends BasicActivity implements RequestView, Select
         backText.setText("取消");
         divideLine.setVisibility(View.GONE);
 
+
+        String content = mTvTip.getText().toString().trim();
+        TextViewUtils textViewUtils = new TextViewUtils();
+        textViewUtils.init(content, mTvTip);
+        textViewUtils.setTextColor(content.indexOf("登") , content.length(), ContextCompat.getColor(this, R.color.blue1));
+        textViewUtils.build();
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -187,7 +194,17 @@ public class RegistActivity extends BasicActivity implements RequestView, Select
                     }
                     return;
                 }
-                mTimeCount.start();
+                if (TYPE == 0){
+                    if (!UtilTools.isMobileNO(mEtPhone.getText().toString())){
+                        showToastMsg("手机号格式不正确");
+                        return;
+                    }
+                }else {
+                    if (!UtilTools.isEmail(mEtPhone.getText().toString())){
+                        showToastMsg("邮箱格式不正确");
+                        return;
+                    }
+                }
                 getMsgcodeAction();
                 break;
             case R.id.regist_type_tv:
@@ -241,10 +258,24 @@ public class RegistActivity extends BasicActivity implements RequestView, Select
                     }
                     return;
                 }
+
                 if (UtilTools.empty(mEtCode.getText().toString())){
                     showToastMsg("请输入验证码");
                     return;
                 }
+                if (TYPE == 0){
+                    if (!UtilTools.isMobileNO(mEtPhone.getText().toString())){
+                        showToastMsg("手机号格式不正确");
+                        return;
+                    }
+                }else {
+                    if (!UtilTools.isEmail(mEtPhone.getText().toString())){
+                        showToastMsg("邮箱格式不正确");
+                        return;
+                    }
+                }
+
+
 
                 //mBtNext.setEnabled(false);
                 intent = new Intent(RegistActivity.this,ResetLoginPassButActivity.class);
@@ -255,9 +286,6 @@ public class RegistActivity extends BasicActivity implements RequestView, Select
                 map.put("type","0");
                 intent.putExtra("DATA",(Serializable) map);
                 startActivity(intent);
-
-
-
 
                 break;
         }
@@ -397,6 +425,7 @@ public class RegistActivity extends BasicActivity implements RequestView, Select
             case MethodUrl.REGIST_SMSCODE:
                 switch (tData.get("code")+""){
                     case "0":
+                        mTimeCount.start();
                         showToastMsg(getResources().getString(R.string.code_phone_tip));
                         mEtCode.setText(tData.get("data")+"");
                         break;

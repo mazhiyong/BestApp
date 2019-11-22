@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.jaeger.library.StatusBarUtil;
 import com.lr.best.R;
 import com.lr.best.basic.BasicFragment;
-import com.lr.best.utils.imageload.GlideApp;
 import com.lr.best.utils.tool.UtilTools;
 
 import java.util.Map;
@@ -60,7 +59,7 @@ public class ShopFragment extends BasicFragment {
         titleText.setText("商城");
         titleText.setCompoundDrawables(null,null,null,null);
 
-        GlideApp.with(getActivity()).load(R.drawable.shop).into(iv);
+       // GlideApp.with(getActivity()).load(R.drawable.shop).into(iv);
     }
 
     public void setBarTextColor() {

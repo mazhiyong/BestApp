@@ -233,7 +233,6 @@ public class ResetLoginPassActivity extends BasicActivity implements RequestView
                     showToastMsg("手机号或邮箱地址不能为空");
                     return;
                 }
-                mTimeCount.start();
                 getMsgCodeAction();
                 break;
         }
@@ -257,6 +256,7 @@ public class ResetLoginPassActivity extends BasicActivity implements RequestView
             case MethodUrl.REGIST_SMSCODE:
                 switch (tData.get("code")+""){
                     case "0":
+                        mTimeCount.start();
                         showToastMsg("获取验证码成功");
                         etCode.setText(tData.get("data")+"");
                         break;

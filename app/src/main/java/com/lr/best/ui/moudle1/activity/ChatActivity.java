@@ -188,7 +188,9 @@ public class ChatActivity extends BasicActivity implements RequestView {
         swRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swRefresh.setRefreshing(false);
+                //查询聊天记录
+                getChatRecordAction();
+
             }
         });
 
@@ -373,8 +375,10 @@ public class ChatActivity extends BasicActivity implements RequestView {
             case MethodUrl.CHAT_RECORD:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
+
                         if (!UtilTools.empty(tData.get("data")+"")){
                             List<Map<String,Object>> list = (List<Map<String, Object>>) tData.get("data");
+                            mapList.clear();
                             if (!UtilTools.empty(list) && list.size()>0){
                                 for (Map<String,Object> map:list){
                                     map.put("kind",kind);
@@ -383,6 +387,7 @@ public class ChatActivity extends BasicActivity implements RequestView {
                                 adapter.notifyDataSetChanged();
                             }
                         }
+                        swRefresh.setRefreshing(false);
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg") + "");

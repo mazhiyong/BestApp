@@ -1,4 +1,4 @@
-package com.lr.best.ui.moudle.activity;
+package com.lr.best.ui.moudle1.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -26,6 +25,7 @@ import com.lr.best.basic.MbsConstans;
 import com.lr.best.listener.SelectBackListener;
 import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.dialog.KindSelectDialog;
+import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.utils.tool.JSONUtil;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;
@@ -210,11 +210,10 @@ public class UpdateNichengActivity extends BasicActivity implements RequestView,
                             @Override
                             public void onChanged(@Nullable OperateResult<Boolean> booleanOperateResult) {
                                 if (booleanOperateResult.isSuccess()) {
-                                    Toast.makeText(UpdateNichengActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                                    showToastMsg("修改成功");
                                 } else {
-                                    Toast.makeText(UpdateNichengActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                                    showToastMsg("修改失败");
                                 }
-                                showToastMsg("修改成功");
                                 //MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
                                 getUserInfoAction();
                             }

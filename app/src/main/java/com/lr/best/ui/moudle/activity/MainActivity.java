@@ -54,6 +54,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -174,6 +175,12 @@ public class MainActivity extends BasicActivity implements RequestView {
         // getNameCodeInfo();
 
 
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        if (fragmentList.size() > 0){
+            for (Fragment fragment:fragmentList){
+                getSupportFragmentManager().beginTransaction().remove(fragment);
+            }
+        }
 
       /*  //首次安装启动
         String code = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.IS_FIRST_START, "") + "";
@@ -233,8 +240,6 @@ public class MainActivity extends BasicActivity implements RequestView {
                 }
             });
             dialog.show();
-
-
         }
 
 

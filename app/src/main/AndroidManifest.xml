@@ -605,7 +605,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <!-- 修改昵称 -->
         <activity
-            android:name=".ui.moudle.activity.UpdateNichengActivity"
+            android:name=".ui.moudle1.activity.UpdateNichengActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 添加好友 -->

@@ -35,6 +35,7 @@ import com.lr.best.utils.permission.PermissionsUtils;
 import com.lr.best.utils.permission.RePermissionResultBack;
 import com.lr.best.utils.tool.AppUtil;
 import com.lr.best.utils.tool.SPUtils;
+import com.lr.best.utils.tool.TextViewUtils;
 import com.lr.best.utils.tool.UtilTools;
 import com.yanzhenjie.permission.Permission;
 
@@ -83,13 +84,17 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
     ImageView backIv;
     @BindView(R.id.cardIv)
     ImageView cardIv;
+    @BindView(R.id.checkIV)
+    ImageView checkIV;
+    @BindView(R.id.checkTV)
+    TextView checkTV;
 
-    private String mOpType = "";
+    private String mOpType = "0";
 
     private String mRequestTag = "";
     private String mIdNum = "";
     private String mName = "";
-    
+
     private String frontPhoto = "";
     private String backPhoto = "";
     private String cardPhoto = "";
@@ -109,10 +114,47 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
-                mOpType = bundle.getString("TYPE");
+                mOpType = bundle.getString("status");
+                //0 未提交 1 提交待审核 2 审核通过 3拒绝
+                switch (mOpType){
+                    case "0":
+                        checkLay.setVisibility(View.VISIBLE);
+                        resultCheckLay.setVisibility(View.GONE);
+                        break;
+                    case "1":
+                        checkLay.setVisibility(View.GONE);
+                        resultCheckLay.setVisibility(View.VISIBLE);
+                        checkIV.setImageResource(R.drawable.wait_check);
+                        checkTV.setText("已提交,请等待系统审核");
+                        break;
+                    case "2":
+                        checkLay.setVisibility(View.GONE);
+                        resultCheckLay.setVisibility(View.VISIBLE);
+                        checkIV.setImageResource(R.drawable.icon1_renzheng1);
+                        checkTV.setText("您的身份认证已通过审核");
+                        break;
+                    case "3":
+                        checkLay.setVisibility(View.GONE);
+                        resultCheckLay.setVisibility(View.VISIBLE);
+                        checkIV.setImageResource(R.drawable.refuse_check);
+                        checkTV.setText("身份认证未通过审核,重新提交");
+                        String content = checkTV.getText().toString().trim();
+                        TextViewUtils textViewUtils = new TextViewUtils();
+                        textViewUtils.init(content, checkTV);
+                        textViewUtils.setTextColor(content.indexOf("重新提交") , content.length(), ContextCompat.getColor(this, R.color.blue1));
+                        textViewUtils.setTextClick(content.indexOf("重新提交"), content.length(), new TextViewUtils.ClickCallBack() {
+                            @Override
+                            public void onClick() {
+                                checkLay.setVisibility(View.VISIBLE);
+                                resultCheckLay.setVisibility(View.GONE);
+                            }
+                        });
+                        textViewUtils.build();
+                        break;
+                }
                 if (!UtilTools.empty(mOpType) && mOpType.equals("1")) {
                     resultCheckLay.setVisibility(View.VISIBLE);
-                    checkLay.setVisibility(View.GONE);
+
                 }
             }
         }
@@ -170,7 +212,7 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
     }
 
 
-    @OnClick({R.id.back_img, R.id.left_back_lay, R.id.but_next,R.id.frontIv,R.id.backIv,R.id.cardIv})
+    @OnClick({R.id.back_img, R.id.left_back_lay, R.id.but_next, R.id.frontIv, R.id.backIv, R.id.cardIv})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -204,16 +246,16 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
                     showToastMsg("身份证号不能为空");
                     return;
                 }
-                if (UtilTools.empty(frontPhoto)){
+                if (UtilTools.empty(frontPhoto)) {
                     showToastMsg("请上传身份证正面");
                     return;
                 }
 
-                if (UtilTools.empty(backPhoto)){
+                if (UtilTools.empty(backPhoto)) {
                     showToastMsg("请上传身份证反面");
                     return;
                 }
-                if (UtilTools.empty(cardPhoto)){
+                if (UtilTools.empty(cardPhoto)) {
                     showToastMsg("请上传手持身份证正面");
                     return;
                 }
@@ -235,14 +277,12 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("real_name", mName);
         map.put("identity", mIdNum);
-        map.put("front_photo",frontPhoto);
-        map.put("back_photo",backPhoto);
-        map.put("card_photo",cardPhoto);
+        map.put("front_photo", frontPhoto);
+        map.put("back_photo", backPhoto);
+        map.put("card_photo", cardPhoto);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.IDENTITY_ACTIVE, map);
     }
-
-
 
 
     @Override
@@ -264,8 +304,10 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
                 butNext.setEnabled(true);
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
-                        resultCheckLay.setVisibility(View.VISIBLE);
                         checkLay.setVisibility(View.GONE);
+                        resultCheckLay.setVisibility(View.VISIBLE);
+                        checkIV.setImageResource(R.drawable.wait_check);
+                        checkTV.setText("已提交,请等待系统审核");
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg") + "");
@@ -280,11 +322,11 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
                 butNext.setEnabled(true);
                 break;
             case MethodUrl.UPLOAD_FILE: //上传二维码图片成功
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0": //请求成功
-                        String imgUrl= tData.get("data")+"";
-                        if (!UtilTools.empty(imgUrl)){
-                            switch (imageType){
+                        String imgUrl = tData.get("data") + "";
+                        if (!UtilTools.empty(imgUrl)) {
+                            switch (imageType) {
                                 case "0":
                                     frontPhoto = imgUrl;
                                     break;
@@ -296,12 +338,12 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
                                     break;
                             }
                             showToastMsg("图片上传成功");
-                        }else{
+                        } else {
                             showToastMsg("图片上传失败");
                         }
                         break;
                     case "-1": //请求失败
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
 
                     case "1": //token过期
@@ -361,7 +403,7 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
                             public void requestFailer() {
                                 showToastMsg(R.string.failure);
                             }
-                        },Permission.Group.STORAGE,Permission.Group.CAMERA);
+                        }, Permission.Group.STORAGE, Permission.Group.CAMERA);
                         break;
                 }
 
@@ -394,7 +436,7 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //下面这句指定调用相机拍照后的照片存储的路径
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(IdCardEditActivity.this, AppUtil.getAppProcessName(this)+".FileProvider", new File(Environment.getExternalStorageDirectory(), "xiaoma.jpg"));
+            uri = FileProvider.getUriForFile(IdCardEditActivity.this, AppUtil.getAppProcessName(this) + ".FileProvider", new File(Environment.getExternalStorageDirectory(), "xiaoma.jpg"));
         } else {
             uri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "xiaoma.jpg"));
         }
@@ -419,7 +461,7 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
                 File temp = new File(Environment.getExternalStorageDirectory() + "/xiaoma.jpg");
                 if (temp.exists()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        uri = FileProvider.getUriForFile(IdCardEditActivity.this, AppUtil.getAppProcessName(IdCardEditActivity.this)+".FileProvider", temp);
+                        uri = FileProvider.getUriForFile(IdCardEditActivity.this, AppUtil.getAppProcessName(IdCardEditActivity.this) + ".FileProvider", temp);
                     } else {
                         uri = Uri.fromFile(temp);
                     }
@@ -434,8 +476,8 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
                     // TODO，将裁剪的bitmap显示在imageview控件上
-                    Drawable dr = new BitmapDrawable(getResources(),bitmap);
-                    switch (imageType){
+                    Drawable dr = new BitmapDrawable(getResources(), bitmap);
+                    switch (imageType) {
                         case "0":
                             frontIv.setImageDrawable(dr);
                             break;
@@ -462,7 +504,6 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 
 
     private String imgName = "";
@@ -502,7 +543,7 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
          * 故将图片保存在Uri中，调用时将Uri转换为Bitmap，此方法还可解决miui系统不能return data的问题
          */
         imgName = System.currentTimeMillis() + ".jpg";
-        uritempFile = Uri.parse("file:///"  + MbsConstans.BASE_PATH + "/" + imgName);
+        uritempFile = Uri.parse("file:///" + MbsConstans.BASE_PATH + "/" + imgName);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         startActivityForResult(intent, 3);
@@ -510,6 +551,7 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
     }
 
     private String mHeadImgPath = "";
+
     private void saveCroppedImage(Bitmap bmp) {
 
         try {
@@ -544,15 +586,14 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
         Map<String, Object> signMap = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(IdCardEditActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(IdCardEditActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, Object> fileMap = new HashMap<>();
-        fileMap.put("file",mHeadImgPath);
+        fileMap.put("file", mHeadImgPath);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.postFileToMap(mHeaderMap, MethodUrl.UPLOAD_FILE,signMap, map,fileMap);
+        mRequestPresenterImp.postFileToMap(mHeaderMap, MethodUrl.UPLOAD_FILE, signMap, map, fileMap);
     }
-
 
 
 

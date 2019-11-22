@@ -172,7 +172,7 @@
             android:layout_marginBottom="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_10"
             android:digits="@string/shuzi_zimu"
-            android:maxLength="16"
+            android:maxLength="20"
             android:textSize="@dimen/sp_15"
             android:layout_height="wrap_content"/>
 

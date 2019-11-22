@@ -121,9 +121,9 @@
     <string name="regist_account_phone">手机注册</string>
     <string name="regist_account_phone_hint">请输入手机号码</string>
     <string name="regist_account_email_hint">请输入邮箱</string>
-    <string name="regist_account_phone_code">验证码</string>
+    <string name="regist_account_phone_code">请输入验证码</string>
     <string name="regist_account_phone_code_send">发送验证码</string>
-    <string name="regist_account_phone_yaocode">邀请码（选填）</string>
+    <string name="regist_account_phone_yaocode">请输入邀请码（选填）</string>
     <string name="regist_account_email">邮箱注册</string>
     <string name="regist_account_to_longin">已有账号 登录</string>
 

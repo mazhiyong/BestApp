@@ -165,8 +165,19 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
             case MethodUrl.MY_TREAM:
             switch (tData.get("code")+""){
                 case "0": //请求成功
-
-                    List<Map<String,Object>> list = (List<Map<String, Object>>) tData.get("data");
+                    if (UtilTools.empty(tData.get("data") + "")) {
+                        mPageView.showEmpty();
+                    } else {
+                        mDataList = (List<Map<String, Object>>) tData.get("data");
+                        if (!UtilTools.empty(mDataList) && mDataList.size()>0) {
+                            mPageView.showContent();
+                            responseData();
+                            mRefreshListView.refreshComplete(10);
+                        } else {
+                            mPageView.showEmpty();
+                        }
+                    }
+                   /* List<Map<String,Object>> list = (List<Map<String, Object>>) tData.get("data");
                     if (UtilTools.empty(list)){
                         mPageView.showEmpty();
                     }else {
@@ -176,7 +187,7 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
                         responseData();
 
                     }
-                    mRefreshListView.refreshComplete(10);
+                    mRefreshListView.refreshComplete(10);*/
 
                     break;
                 case "-1": //请求失败

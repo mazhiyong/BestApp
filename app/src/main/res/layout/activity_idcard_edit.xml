@@ -144,17 +144,19 @@
         android:layout_marginTop="@dimen/dp_145"
         android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/checkIV"
             android:layout_gravity="center_horizontal"
-            android:layout_width="@dimen/dp_45"
-            android:src="@drawable/icon1_renzheng1"
-            android:layout_height="@dimen/dp_45" />
+            android:layout_width="@dimen/dp_60"
+            android:src="@drawable/wait_check"
+            android:layout_height="@dimen/dp_60" />
         <TextView
+            android:id="@+id/checkTV"
             android:layout_width="wrap_content"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_14"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_20"
             android:layout_gravity="center_horizontal"
-            android:text="您的身份认证已通过审核"
+            android:text="已提交,请等待系统审核"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
