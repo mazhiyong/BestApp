@@ -537,7 +537,7 @@ public class ConversationFragment extends Fragment implements
     @Override
     public void onPortraitClick(UserInfo userInfo) {
         //点击头像,查看用户详情,管理员用户不跳转
-        if(userInfo.name.equals("17319449662") || userInfo.displayName.equals("用户938")){
+        if(userInfo.name.equals("admin") || userInfo.displayName.equals("系统管理员")){
             return;
         }
         Intent intent = new Intent(getActivity(), UserInfoActivity.class);

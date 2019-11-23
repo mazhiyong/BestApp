@@ -290,9 +290,6 @@ public class ResetLoginPassActivity extends BasicActivity implements RequestView
                         break;
 
                     case "1":
-                        showToastMsg(tData.get("msg")+"");
-                        break;
-
                     case "-1":
                         showToastMsg(tData.get("msg")+"");
                         break;

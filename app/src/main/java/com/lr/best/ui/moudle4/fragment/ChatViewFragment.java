@@ -737,10 +737,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             return;
         }
 
-        LogUtilDebug.i("show","头像url222:"+userInfo.portrait);
-
-
-
 
         Intent intent = new Intent(getActivity(), UserInfoActivity.class);
         intent.putExtra("userInfo", userInfo);

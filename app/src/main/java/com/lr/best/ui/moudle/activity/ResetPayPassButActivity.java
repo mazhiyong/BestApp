@@ -407,15 +407,6 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
 
                 }
                 break;
-            case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
-                MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
-                mIsRefreshToken = false;
-                switch (mRequestTag) {
-                    case MethodUrl.RESET_PASSWORD:
-                        submitAction();
-                        break;
-                }
-                break;
         }
 
     }

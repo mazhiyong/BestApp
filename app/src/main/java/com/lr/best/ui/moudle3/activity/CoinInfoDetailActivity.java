@@ -264,7 +264,6 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                 event.setMessage(map);
                 EventBus.getDefault().post(event);
 */
-
                 intent.putExtra("buySell", "1");
                 //intent.putExtra("area", area);
                 //intent.putExtra("symbol", symbol);
@@ -675,7 +674,6 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                         } else {
                             menuItem.setIcon(R.drawable.icon_xing);
                         }
-                        Log.e("tag", menuItem.isChecked() + "");
                         break;
                     case R.id.fullScreen:
                         UiTools.showToast("全屏");

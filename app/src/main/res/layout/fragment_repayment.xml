@@ -64,18 +64,19 @@
                         <ImageView
                             android:id="@+id/select_iv"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/icon_xuanze" />
 
                         <TextView
                             android:id="@+id/select_tv"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
+                            android:gravity="center_vertical"
                             android:paddingLeft="@dimen/dp_5"
-                            android:text="BTC/USDT"
+                            android:text=""
                             android:textSize="@dimen/sp_15"
                             android:textColor="@color/black" />
 
@@ -238,7 +239,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/dp_5"
-                                android:text="USDT"
+                                android:text="--"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -306,7 +307,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/dp_5"
-                                android:text="BTC"
+                                android:text="--"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14"
                                 app:layout_constraintEnd_toEndOf="parent"

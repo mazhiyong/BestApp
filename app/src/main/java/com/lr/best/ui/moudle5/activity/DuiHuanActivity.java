@@ -141,6 +141,11 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
                         numberEt.setText("");
                         fromIv.setVisibility(View.VISIBLE);
                         toIv.setVisibility(View.VISIBLE);
+                        if (fromTv.getText().toString().equals("请选择")){
+                            type2Tv.setText("");
+                        }else {
+                            type2Tv.setText(fromTv.getText());
+                        }
                         break;
                     case 1://奖励金兑换
                         type = "2";
@@ -160,6 +165,7 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
                         numberEt.setText("");
                         fromIv.setVisibility(View.GONE);
                         toIv.setVisibility(View.GONE);
+                        type2Tv.setText(fromTv.getText());
                         break;
                 }
             }

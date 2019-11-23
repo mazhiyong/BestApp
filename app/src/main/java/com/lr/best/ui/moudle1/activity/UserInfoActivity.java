@@ -356,14 +356,14 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                 break;
             // 如果是调用相机拍照时
             case 2:
-
                 File temp = new File(Environment.getExternalStorageDirectory() + "/xiaoma.jpg");
-                if (temp.exists()) {
+                if (temp.exists() && temp.length()> 0) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         uri = FileProvider.getUriForFile(UserInfoActivity.this, AppUtil.getAppProcessName(UserInfoActivity.this) + ".FileProvider", temp);
                     } else {
                         uri = Uri.fromFile(temp);
                     }
+
                     startPhotoZoom(uri);
                 }
 

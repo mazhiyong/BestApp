@@ -24,7 +24,7 @@
             android:layout_height="@dimen/dp_90"/>
         <TextView
             android:layout_below="@+id/iv"
-            android:text="商城尚未开放,敬取期待..."
+            android:text="商城尚未开放,敬请期待..."
             android:textColor="@color/blue"
             android:layout_marginTop="@dimen/dp_50"
             android:layout_centerHorizontal="true"

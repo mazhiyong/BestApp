@@ -324,7 +324,6 @@ public class ChatManager {
     private void onReceiveMessage(final List<Message> messages, final boolean hasMore) {
         messagesList = messages;
         Log.i("show","全局收到新消息******");
-
         mainHandler.post(() -> {
             Iterator<OnReceiveMessageListener> iterator = onReceiveMessageListeners.iterator();
 
@@ -356,11 +355,13 @@ public class ChatManager {
      * @param userInfos
      */
     private void onUserInfoUpdate(List<UserInfo> userInfos) {
-        if (userInfos == null || userInfos.isEmpty()) {
+        if (userInfos == null || userInfos.isEmpty()|| userInfos.size()==0) {
             return;
         }
         for (UserInfo info : userInfos) {
-            userInfoCache.put(info.uid, info);
+            if (userInfoCache != null){
+                userInfoCache.put(info.uid, info);
+            }
         }
         mainHandler.post(() -> {
             for (OnUserInfoUpdateListener listener : userInfoUpdateListeners) {
