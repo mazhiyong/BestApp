@@ -103,7 +103,7 @@
 
 
     <!--登录-->
-    <string name="login_account_tip">登录best</string>
+    <string name="login_account_tip"> 登录best区块链现货交易所</string>
     <string name="login_account_tip2">手机号/邮箱</string>
     <string name="login_pass_tip">密码</string>
     <string name="forget_pass">忘记密码</string>

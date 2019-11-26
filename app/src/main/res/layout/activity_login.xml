@@ -28,7 +28,6 @@
 					android:layout_height="@dimen/dp_55"
 					android:layout_gravity="center_horizontal"
 					android:padding="@dimen/dp_3"
-					android:visibility="gone"
 					android:src="@drawable/logo" />
 
 				<TextView

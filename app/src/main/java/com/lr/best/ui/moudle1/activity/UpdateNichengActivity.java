@@ -215,10 +215,11 @@ public class UpdateNichengActivity extends BasicActivity implements RequestView,
                                     showToastMsg("修改失败");
                                 }
                                 //MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
-                                getUserInfoAction();
+                                //getUserInfoAction();
+
                             }
                         });
-
+                        finish();
 
                         break;
                     case "-1": //请求失败

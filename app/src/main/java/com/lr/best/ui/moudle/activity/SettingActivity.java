@@ -203,7 +203,6 @@ public class SettingActivity extends BasicActivity implements RequestView, Selec
                                 SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
                                 sp.edit().clear().apply();*/
 
-
                                 closeAllActivity();
                                 MbsConstans.USER_MAP = null;
                                 MbsConstans.RONGYUN_MAP = null;

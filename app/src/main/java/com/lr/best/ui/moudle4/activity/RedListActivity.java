@@ -188,7 +188,11 @@ public class RedListActivity extends BasicActivity implements RequestView, ReLoa
                             if (UtilTools.empty(mDataList)) {
                                 pageView.showEmpty();
                             } else {
-                                totalTv.setText(mDataList.size()+"个红包");
+                                if (type.equals("1")){
+                                    totalTv.setText(mDataList.size()+"个红包");
+                                }else {
+                                    totalTv.setText(mDataList.size()+"笔转账");
+                                }
                                 pageView.showContent();
                                 responseData();
                                 refreshListView.refreshComplete(10);

@@ -14,7 +14,6 @@ import com.lr.best.R;
 import com.lr.best.listener.OnChildClickListener;
 import com.lr.best.ui.moudle.adapter.ListBaseAdapter;
 import com.lr.best.utils.imageload.GlideUtils;
-import com.lr.best.utils.tool.LogUtilDebug;
 
 import java.util.Map;
 
@@ -46,11 +45,10 @@ public class RedListAdapter extends ListBaseAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Map<String, Object> item = mDataList.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
-        LogUtilDebug.i("show","integer:"+item.get("account")+"");
-        if ((item.get("type")+"").equals("0")){
-            viewHolder.shouqiTv.setVisibility(View.GONE);
-        }else {
+        if ((item.get("type")+"").equals("1")){
             viewHolder.shouqiTv.setVisibility(View.VISIBLE);
+        }else {
+            viewHolder.shouqiTv.setVisibility(View.GONE);
         }
         viewHolder.nameTv.setText(item.get("name") + "");
         viewHolder.contentTv.setText(item.get("time")+"");

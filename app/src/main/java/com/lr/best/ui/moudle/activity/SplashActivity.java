@@ -3,6 +3,7 @@ package com.lr.best.ui.moudle.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Message;
 import android.view.View;
 import android.view.animation.Animation;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.best.R;
 import com.lr.best.basic.BasicActivity;
 import com.lr.best.basic.MbsConstans;
@@ -83,13 +85,7 @@ public class SplashActivity extends BasicActivity {
 
     @Override
     public int getContentView() {
-        return R.layout.activity_splash;
-    }
-
-
-    @Override
-    public void init() {
-      /*  if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             MbsConstans.ALPHA = 100;
             MbsConstans.TOP_BAR_COLOR = R.color.top_bar_bg;
             StatusBarUtil.setTranslucent(this, MbsConstans.ALPHA);
@@ -97,7 +93,15 @@ public class SplashActivity extends BasicActivity {
             MbsConstans.ALPHA = 0;
             MbsConstans.TOP_BAR_COLOR = R.color.top_bar_bg;
             StatusBarUtil.setTranslucent(this, MbsConstans.ALPHA);
-        }*/
+        }
+
+        return R.layout.activity_splash;
+    }
+
+
+    @Override
+    public void init() {
+
         mShared = getSharedPreferences(MbsConstans.SharedInfoConstans.LOGIN_INFO, Context.MODE_PRIVATE);
         AppUtil.getInstance(this).getAppVersion();
         setupView();

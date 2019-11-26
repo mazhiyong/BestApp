@@ -133,14 +133,14 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (MbsConstans.USER_MAP != null && !MbsConstans.USER_MAP.isEmpty()) {
+       getUserInfoAction();
+     /*   if (MbsConstans.USER_MAP != null && !MbsConstans.USER_MAP.isEmpty()) {
             mPhoneTv.setText(MbsConstans.USER_MAP.get("name") + "");
             GlideUtils.loadImage2(UserInfoActivity.this, MbsConstans.USER_MAP.get("portrait") + "", mHeadImageView, R.drawable.head);
             //initHeadPic();
         } else {
             getUserInfoAction();
-        }
+        }*/
     }
 
     /**

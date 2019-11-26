@@ -1,9 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-
+    <string name="complete">完成</string>
     <string name="video">视频</string>
     <string name="set_conversation_to_top">置顶聊天</string>
 
+    <string name="draft">[草稿]</string>
     <!--联系人-->
     <string name="new_friend">新的朋友</string>
     <string name="group_cheat">群聊</string>
