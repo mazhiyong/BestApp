@@ -598,7 +598,9 @@ public class ConversationFragment extends Fragment implements
     public void onPause() {
         super.onPause();
         inputPanel.onActivityPause();
-        messageViewModel.stopPlayAudio();
+        if (messageViewModel != null){
+            messageViewModel.stopPlayAudio();
+        }
     }
 
     @Override

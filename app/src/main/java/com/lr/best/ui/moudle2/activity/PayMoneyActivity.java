@@ -40,6 +40,7 @@ import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle.activity.ShowDetailPictrue;
 
 import com.lr.best.utils.imageload.GlideUtils;
+import com.lr.best.utils.tool.LogUtilDebug;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;
 
@@ -332,14 +333,20 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                 if (payTypeTv.getText().toString().equals("买家已付款")) {
                     showDialog("确认取消交易", "", "买家已付款,您不能取消订单,请耐心等待,如果15分钟还未到账,请联系客服处理", "3");
                 }
+
                 break;
             case R.id.order://完成付款
                 if (payTypeTv.getText().toString().equals("请付款")) {
                     showDialog("付款确认", "请确认您已完成付款.", "如未付款,点击确认,后台查明后做封号处理.", "4");
                 }
 
+
                 if (payTypeTv.getText().toString().equals("等待买家付款")) {
-                    showDialog("确认收款", "确认之后,将会把币打给买家", "如果买家已付款,恶意取消交易,查明后做封号处理!", "5");
+                    showDialog("确认收款", "等待买家付款", "买家尚未完成付款,请耐心等待!", "5");
+                }
+
+                if (payTypeTv.getText().toString().equals("买家已付款")) {
+                    showDialog("确认收款", "确认之后,将会把币打给买家", "如果买家已付款,恶意取消交易,查明后做封号处理!", "6");
                 }
 
 
@@ -396,8 +403,10 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                                 payTimeTv.setText(mapAppendInfo.get("tips") + "");
                                 //启动定时器
                                 String timeCount = mapAppendInfo.get("remaining_second") + "";
+                                LogUtilDebug.i("show","timeCount:"+timeCount);
                                 if (!UtilTools.empty(timeCount)) {
                                     int time = Integer.parseInt(timeCount);
+                                    LogUtilDebug.i("show","time:"+time);
                                     if (time > 0) {
                                         if (mTimeCount != null) {
                                             mTimeCount.cancel();
@@ -470,7 +479,14 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                             } else {
                                 Map<String, Object> mapBtn = (Map<String, Object>) mapData.get("btn");
                                 if (!UtilTools.empty(mapBtn)) {
-                                    cancel.setText(mapBtn.get("cancel") + "");
+                                    if (UtilTools.empty(mapBtn.get("cancel") + "")){
+                                        //cancel.setVisibility(View.GONE);
+                                        cancel.setText( "取消订单");
+                                    }else {
+                                        //cancel.setVisibility(View.VISIBLE);
+                                        cancel.setText(mapBtn.get("cancel") + "");
+                                    }
+
                                     order.setText(mapBtn.get("confirm") + "");
                                 }
                             }
@@ -753,6 +769,8 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                                 surePayMoneyAction();
                                 break;
                             case "5":
+                                break;
+                            case "6":
                                 //收款确认
                                 sureShouKuanAction();
                                 break;
@@ -849,6 +867,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
             //tvCode.setClickable(false);
             //tvCode.setText(millisUntilFinished / 1000 + "秒");
             Log.i("show", "格式化时间:" + UtilTools.getStandardDate2(millisUntilFinished));
+            //0待支付，1已付款 2已完成 4超时取消 5卖家取消 6买家取消
             switch (status) {
                 case "0": //请在 1天23:54:2 内完成付款
                     if (payTimeTv.getText().toString().contains("内完成付款")) {
@@ -858,9 +877,17 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                     if (payTimeTv.getText().toString().contains("后订单自动取消")) {
                         payTimeTv.setText(UtilTools.getStandardDate2(millisUntilFinished) + " 后订单自动取消");
                     }
+
+                    if (payTimeTv.getText().toString().contains("后买家未付款")) {
+                        payTimeTv.setText(UtilTools.getStandardDate2(millisUntilFinished) + " 后买家未付款,请联系客服处理");
+                    }
+
                     break;
 
                 case "1":
+                    if (payTypeTv.getText().toString().equals("买家已付款")){
+                        payTimeTv.setText(UtilTools.getStandardDate2(millisUntilFinished) + " 后订单超时取消");
+                    }
 
                     break;
             }

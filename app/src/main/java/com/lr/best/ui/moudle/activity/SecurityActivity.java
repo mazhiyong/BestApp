@@ -11,15 +11,16 @@ import androidx.core.content.ContextCompat;
 
 import com.jaeger.library.StatusBarUtil;
 import com.lr.best.R;
+import com.lr.best.api.MethodUrl;
 import com.lr.best.basic.BasicActivity;
 import com.lr.best.basic.MbsConstans;
 import com.lr.best.listener.SelectBackListener;
 import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.dialog.KindSelectDialog;
-import com.lr.best.utils.tool.JSONUtil;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -82,25 +83,43 @@ public class SecurityActivity extends BasicActivity implements RequestView, Sele
         divideLine.setVisibility(View.GONE);
 
 
+    }
 
+    private void getAccountInfoAction() {
+        mRequestTag = MethodUrl.SAFE_CENTER;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(SecurityActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);
+        Map<String, String> mHeaderMap = new HashMap<>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.SAFE_CENTER, map);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (UtilTools.empty(MbsConstans.USER_MAP)) {
+        getAccountInfoAction();
+
+      /*  if (UtilTools.empty(MbsConstans.USER_MAP)) {
             String s = SPUtils.get(SecurityActivity.this, MbsConstans.SharedInfoConstans.LOGIN_INFO, "").toString();
             MbsConstans.USER_MAP = JSONUtil.getInstance().jsonMap(s);
 
         }
         account =MbsConstans.USER_MAP.get("account") + "";
-        emailTv.setText(account);
+        if (account.equals("@")){
+            emailTv.setText(account);
+        }else {
+            phoneTv.setText(account);
+        }
+*/
 
-        if (account.contains("@")){
+      /* if (account.contains("@")){
+
             typeTv.setText("邮箱");
         }else {
             typeTv.setText("手机号");
-        }
+        }*/
     }
 
     @OnClick({R.id.back_img, R.id.left_back_lay, R.id.phone_lay, R.id.email_lay, R.id.code_lay, R.id.exit_tv})
@@ -114,22 +133,20 @@ public class SecurityActivity extends BasicActivity implements RequestView, Sele
                 finish();
                 break;
             case R.id.phone_lay:
+                intent = new Intent(SecurityActivity.this, SecurityCheckActivity.class);
+                intent.putExtra("TYPE", "1");
+                intent.putExtra("DATA",account);
+                startActivity(intent);
                 break;
             case R.id.email_lay:
-
                 intent = new Intent(SecurityActivity.this, SecurityCheckActivity.class);
-                if (account.contains("@")){
-                    intent.putExtra("TYPE", "0");
-                }else {
-                    intent.putExtra("TYPE", "1");
-                }
+                intent.putExtra("TYPE", "0");
                 intent.putExtra("DATA",account);
                 startActivity(intent);
                 break;
             case R.id.code_lay:
                 intent = new Intent(SecurityActivity.this, ResetPayPassButActivity.class);
-                intent.putExtra("TYPE", "1");
-                startActivity(intent);
+
                 break;
             case R.id.exit_tv:
                 break;
@@ -149,6 +166,35 @@ public class SecurityActivity extends BasicActivity implements RequestView, Sele
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
+        switch (mType) {
+            case MethodUrl.SAFE_CENTER:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data")+"")){
+                            Map<String,Object> map = (Map<String, Object>) tData.get("data");
+                            if (!UtilTools.empty(map.get("phone")+"")){
+                                phoneTv.setText(map.get("phone")+"");
+                            }
+                            if (!UtilTools.empty(map.get("email")+"")){
+                                emailTv.setText(map.get("email")+"");
+                            }
+
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        Intent intent = new Intent(SecurityActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+
+                }
+
+                break;
+        }
 
     }
 

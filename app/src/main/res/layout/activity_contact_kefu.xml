@@ -25,7 +25,7 @@
             android:textSize="@dimen/sp_14"
             android:gravity="center_horizontal"
             android:src="@drawable/icon1_shangwu"
-            android:layout_height="@dimen/dp_125"/>
+            android:layout_height="@dimen/dp_150"/>
 
         <TextView
             android:id="@+id/ruanjianTv"
@@ -36,7 +36,7 @@
             android:layout_alignParentRight="true"
             android:layout_width="@dimen/dp_125"
             android:src="@drawable/icon1_shangwu"
-            android:layout_height="@dimen/dp_125"/>
+            android:layout_height="@dimen/dp_150"/>
     </RelativeLayout>
 
 

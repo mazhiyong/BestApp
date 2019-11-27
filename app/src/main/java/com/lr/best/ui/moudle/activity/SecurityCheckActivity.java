@@ -82,23 +82,24 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
 
         mTimeCount = new TimeCount(1 * 60 * 1000, 1000);
 
-        mTitleText.setText("更换账号");
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
 
         Bundle bundle =getIntent().getExtras();
-       /* if (bundle != null){
+        if (bundle != null){
             type =bundle.getString("TYPE");
             String account= bundle.getString("DATA");
-           *//* if (type.equals("0")){
+            if (type.equals("0")){
+                mTitleText.setText("修改邮箱");
                 etPhoneEmail.setHint("请输入邮箱帐号");
             }else {
+                mTitleText.setText("修改手机号");
                 etPhoneEmail.setHint("请输入手机号");
-            }*//*
-            etPhoneEmail.setHint("请输入手机/邮箱帐号");
-            etPhoneEmail.setText(account);
-        }*/
-        etPhoneEmail.setHint("请输入手机/邮箱帐号");
+            }
+            //etPhoneEmail.setHint("请输入手机/邮箱帐号");
+            //etPhoneEmail.setText(account);
+        }
+        //etPhoneEmail.setHint("请输入手机/邮箱帐号");
 
         etPhoneEmail.addTextChangedListener(new TextWatcher() {
             @Override
