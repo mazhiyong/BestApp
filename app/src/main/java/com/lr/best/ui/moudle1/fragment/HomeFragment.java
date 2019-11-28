@@ -221,8 +221,8 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(RecyclerView.VERTICAL);
         rvList.setLayoutManager(manager);
-        //rvList.setHasFixedSize(true);
-        rvList.setNestedScrollingEnabled(true);
+        rvList.setHasFixedSize(true);
+        rvList.setNestedScrollingEnabled(false);
 
         moreTypeAdapter = new MoreTypeAdapter(getActivity());
         rvList.setAdapter(moreTypeAdapter);

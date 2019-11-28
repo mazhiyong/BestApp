@@ -56,6 +56,9 @@ import com.lr.best.utils.tool.JSONUtil;
 import com.lr.best.utils.tool.LogUtilDebug;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import java.util.ArrayList;
@@ -90,6 +93,7 @@ import cn.wildfire.chat.kit.user.ChangeMyNameActivity;
 import cn.wildfire.chat.kit.user.UserInfoActivity;
 import cn.wildfire.chat.kit.user.UserViewModel;
 import cn.wildfirechat.client.ConnectionStatus;
+import cn.wildfirechat.model.UserInfo;
 import cn.wildfirechat.remote.ChatManager;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -97,7 +101,7 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 @SuppressLint("ValidFragment")
-public class ChatViewFragment extends BasicFragment implements RequestView, ReLoadingData,ViewPager.OnPageChangeListener {
+public class ChatViewFragment extends BasicFragment implements RequestView, ReLoadingData, ViewPager.OnPageChangeListener {
 
 
     @BindView(R.id.title_text)
@@ -140,14 +144,16 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     LinearLayout activityMain;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     private boolean mIsback = false;
 
     private String mRequestTag = "";
-    private String isShow="-1";
+    private String isShow = "-1";
 
     private List<Fragment> mFragments = new ArrayList<>();
     //会话界面
-    private ConversationListFragment conversationListFragment ;
+    private ConversationListFragment conversationListFragment;
     //联系人界面
     private ContactListFragment contactListFragment;
     //群组界面
@@ -170,11 +176,10 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     private int mPage = 1;
 
 
-
     private String friendName;
 
     //检索
-    private  List<SearchableModule> modules = new ArrayList<>();
+    private List<SearchableModule> modules = new ArrayList<>();
     private SearchResultAdapter adapter;
     private SearchViewModel searchViewModel;
     private Observer<SearchResult> searchResultObserver = this::onSearchResult;
@@ -234,7 +239,45 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         module1 = new ContactSearchModule();
         //搜索群组Module
         module2 = new GroupSearchViewModule();
+        //下拉刷新
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+               switch (tabLayout.getSelectedTabPosition()){
+                   case 0:
+                       if (conversationListFragment != null){
+                           conversationListFragment.reloadConversations();
+                       }
+                       break;
+                   case 1:
+                       if (contactListFragment != null && contactListFragment.contactViewModel != null){
+                           contactListFragment.contactViewModel.reloadContact();
+                           contactListFragment.contactViewModel.reloadFriendRequestStatus();
+                       }
+                       break;
+                   case 2:
+                       if (groupListFragment != null){
+                           groupListFragment.reloadGroupList();
+                       }
 
+                       break;
+               }
+                refreshLayout.finishRefresh();
+            }
+        });
+        //禁止上拉加载：
+        refreshLayout.setEnableLoadMore(false);
+       //使上拉加载具有弹性效果：
+        refreshLayout.setEnableAutoLoadMore(false);
+        //禁止越界拖动：
+        //refreshLayout.setEnableOverScrollDrag(false);
+        refreshLayout.setNestedScrollingEnabled(true);
+       /* refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                //refreshLayout.finishLoadMoreWithNoMoreData();
+            }
+        });*/
     }
 
     @Override
@@ -246,27 +289,26 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             conversationListViewModel.reloadConversationUnreadStatus();
         }
 
-        if (channelViewModel == null){
+        if (channelViewModel == null) {
             channelViewModel = ViewModelProviders.of(this).get(ChannelViewModel.class);
         }
 
         isFollowed = channelViewModel.isListenedChannel("EjELELbb");
-        if (isFollowed){
-            LogUtilDebug.i("show","已经订阅当前频道");
-        }else {
-            LogUtilDebug.i("show","未订阅当前频道");
+        if (isFollowed) {
+            LogUtilDebug.i("show", "已经订阅当前频道");
+        } else {
+            LogUtilDebug.i("show", "未订阅当前频道");
             channelViewModel.listenChannel("EjELELbb", true).observe(this, new Observer<OperateResult<Boolean>>() {
                 @Override
                 public void onChanged(@Nullable OperateResult<Boolean> booleanOperateResult) {
                     if (booleanOperateResult.isSuccess()) {
-                        LogUtilDebug.i("show","成功订阅当前频道");
+                        LogUtilDebug.i("show", "成功订阅当前频道");
                     } else {
-                        LogUtilDebug.i("show","订阅当前频道失败");
+                        LogUtilDebug.i("show", "订阅当前频道失败");
                     }
                 }
             });
         }
-
 
 
     }
@@ -277,16 +319,16 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         IMConnectionStatusViewModel connectionStatusViewModel = ViewModelProviders.of(this).get(IMConnectionStatusViewModel.class);
         connectionStatusViewModel.connectionStatusLiveData().observe(this, status -> {
             if (status == ConnectionStatus.ConnectionStatusTokenIncorrect || status == ConnectionStatus.ConnectionStatusSecretKeyMismatch || status == ConnectionStatus.ConnectionStatusRejected || status == ConnectionStatus.ConnectionStatusLogout) {
-                LogUtilDebug.i("show","重新连接聊天服务器");
+                LogUtilDebug.i("show", "重新连接聊天服务器");
                 ChatManager.Instance().disconnect(true);
                 //重新连接登录
                 if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
-                    String s = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
+                    String s = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.RONGYUN_DATA, "").toString();
                     MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
                 }
-                ChatManagerHolder.gChatManager.connect(MbsConstans.RONGYUN_MAP.get("id")+"", MbsConstans.RONGYUN_MAP.get("token")+"");
-            }else {
-                LogUtilDebug.i("show","已经连接聊天服务器");
+                ChatManagerHolder.gChatManager.connect(MbsConstans.RONGYUN_MAP.get("id") + "", MbsConstans.RONGYUN_MAP.get("token") + "");
+            } else {
+                LogUtilDebug.i("show", "已经连接聊天服务器");
             }
         });
     }
@@ -346,7 +388,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                         adapter.reset();
                     }
                     modules.clear();
-                    switch (viewPager.getCurrentItem()){
+                    switch (viewPager.getCurrentItem()) {
                         case 0://近期聊天
                             modules.add(module0);
                             break;
@@ -363,13 +405,14 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                     }
 
                     searchViewModel.search(sequence.toString(), modules);
-                }else {
+                } else {
                     mPageView.setVisibility(View.GONE);
                     viewPager.setVisibility(View.VISIBLE);
                     tabLayout.setVisibility(View.VISIBLE);
                 }
 
             }
+
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -379,7 +422,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         if (checkDisplayName()) {
             ignoreBatteryOption();
         }
-
 
 
     }
@@ -403,7 +445,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         }
 
     }
-
 
 
     private boolean checkDisplayName() {
@@ -492,7 +533,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     }
 
 
-
     @OnClick({R.id.right_img, R.id.right_lay, R.id.notice_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -521,7 +561,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        LogUtilDebug.i("show","onPageScrollStateChanged()....");
+        LogUtilDebug.i("show", "onPageScrollStateChanged()....");
         if (state != ViewPager.SCROLL_STATE_IDLE) {
             //滚动过程中隐藏快速导航条
             contactListFragment.showQuickIndexBar(false);
@@ -529,9 +569,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             contactListFragment.showQuickIndexBar(true);
         }
     }
-
-
-
 
 
     @Override
@@ -553,8 +590,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     public void loadDataError(Map<String, Object> map, String mType) {
         dealFailInfo(map, mType);
     }
-
-
 
 
     private View popView;
@@ -732,7 +767,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     private void showUser(String uid) {
 
         UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        cn.wildfirechat.model.UserInfo userInfo = userViewModel.getUserInfo(uid, true);
+        UserInfo userInfo = userViewModel.getUserInfo(uid, true);
         if (userInfo == null) {
             return;
         }
@@ -748,7 +783,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         intent.putExtra("groupId", groupId);
         startActivity(intent);
     }
-
 
 
     @Override

@@ -122,7 +122,7 @@ public class ConversationListFragment extends ProgressFragment {
         });
     }
 
-    private void reloadConversations() {
+    public void reloadConversations() {
         if (ChatManager.Instance().getConnectionStatus() == ConnectionStatus.ConnectionStatusReceiveing) {
             return;
         }

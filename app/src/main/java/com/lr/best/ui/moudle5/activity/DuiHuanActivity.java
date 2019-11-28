@@ -25,6 +25,7 @@ import com.lr.best.mywidget.dialog.KindSelectDialog;
 import com.lr.best.mywidget.dialog.TradePassDialog;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.utils.tool.SPUtils;
+import com.lr.best.utils.tool.SelectDataUtil;
 import com.lr.best.utils.tool.UtilTools;
 
 import java.util.HashMap;
@@ -32,7 +33,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -93,6 +93,7 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
 
     private KindSelectDialog mDialog;
     private KindSelectDialog mDialog2;
+    private KindSelectDialog mDialog3;
 
     private String fromStr;
     private String toStr;
@@ -226,8 +227,20 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
                 startActivity(intent);
                 break;
             case R.id.from_lay:
-                if (!UtilTools.empty(mDialog2)) {
-                    mDialog2.showAtLocation(Gravity.BOTTOM, 0, 0);
+                if (toTv.getText().toString().equals("Best")){
+                    if (mDialog3 == null){
+                        List<Map<String, Object>> mDataList3 = SelectDataUtil.getDuiHuanType();
+                        mDialog3 = new KindSelectDialog(this, true, mDataList3, 30);
+                        mDialog3.setSelectBackListener(this);
+                        mDialog3.showAtLocation(Gravity.BOTTOM, 0, 0);
+                    }else {
+                        mDialog3.showAtLocation(Gravity.BOTTOM, 0, 0);
+                    }
+
+                }else {
+                    if (!UtilTools.empty(mDialog2)) {
+                        mDialog2.showAtLocation(Gravity.BOTTOM, 0, 0);
+                    }
                 }
                 break;
             case R.id.to_lay:
@@ -448,10 +461,5 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

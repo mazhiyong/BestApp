@@ -878,11 +878,6 @@ public class SelectDataUtil {
         Map<String,Object> map1=new HashMap<>();
         map1.put("name","Chip");
         mDataList.add(map1);
-
-        map1=new HashMap<>();
-        map1.put("name","Best");
-        mDataList.add(map1);
-
         return mDataList;
     }
 

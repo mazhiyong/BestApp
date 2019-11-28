@@ -36,7 +36,7 @@ public abstract class BaseUserListFragment extends ProgressFragment implements Q
     protected UserListAdapter userListAdapter;
 
     private LinearLayoutManager linearLayoutManager;
-    protected ContactViewModel contactViewModel;
+    public ContactViewModel contactViewModel;
     private boolean showQuickIndexBar;
 
     @Override
