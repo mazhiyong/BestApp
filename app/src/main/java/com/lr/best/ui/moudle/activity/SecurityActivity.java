@@ -17,6 +17,7 @@ import com.lr.best.basic.MbsConstans;
 import com.lr.best.listener.SelectBackListener;
 import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.dialog.KindSelectDialog;
+import com.lr.best.mywidget.dialog.SureOrNoDialog;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;
 
@@ -122,13 +123,12 @@ public class SecurityActivity extends BasicActivity implements RequestView, Sele
         }*/
     }
 
+    private SureOrNoDialog sureOrNoDialog;
     @OnClick({R.id.back_img, R.id.left_back_lay, R.id.phone_lay, R.id.email_lay, R.id.code_lay, R.id.exit_tv})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
             case R.id.back_img:
-                finish();
-                break;
             case R.id.left_back_lay:
                 finish();
                 break;
@@ -149,6 +149,37 @@ public class SecurityActivity extends BasicActivity implements RequestView, Sele
                 startActivity(intent);
                 break;
             case R.id.exit_tv:
+                sureOrNoDialog = new SureOrNoDialog(SecurityActivity.this, true);
+                sureOrNoDialog.initValue("提示", "确定要退出登录吗？");
+                sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.cancel:
+                                sureOrNoDialog.dismiss();
+                                break;
+                            case R.id.confirm:
+                                /*ChatManagerHolder.gChatManager.disconnect(true);
+                                SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
+                                sp.edit().clear().apply();*/
+
+                                closeAllActivity();
+                                MbsConstans.USER_MAP = null;
+                                MbsConstans.RONGYUN_MAP = null;
+                                MbsConstans.ACCESS_TOKEN = "";
+                                SPUtils.put(SecurityActivity.this, MbsConstans.SharedInfoConstans.LOGIN_OUT, true);
+                                SPUtils.put(SecurityActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "");
+                                SPUtils.put(SecurityActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE, "0");
+                                Intent intent = new Intent(SecurityActivity.this, LoginActivity.class);
+                                startActivity(intent);
+
+                                break;
+                        }
+                    }
+                });
+                sureOrNoDialog.show();
+                sureOrNoDialog.setCanceledOnTouchOutside(false);
+                sureOrNoDialog.setCancelable(true);
                 break;
         }
     }

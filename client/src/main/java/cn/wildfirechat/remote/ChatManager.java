@@ -2511,7 +2511,10 @@ public class ChatManager {
                 for (UserInfo info : userInfos) {
                     if (info != null) {
                         if (TextUtils.isEmpty(groupId)) {
-                            userInfoCache.put(info.uid, info);
+                            if (userInfoCache != null){
+                                userInfoCache.put(info.uid, info);
+                            }
+
                         }
                     }
                 }

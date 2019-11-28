@@ -54,16 +54,16 @@ public class ZiChanListAdapter extends ListBaseAdapter {
 //        map.put("money2","909010");
 //        map.put("money3","608109291");
         viewHolder.typeTv.setText(item.get("symbol") + "");
-        //viewHolder.moneyAvaivable.setText(UtilTools.formatDecimal(item.get("balance")+"",2));
-        viewHolder.moneyAvaivable.setText(item.get("balance")+"");
+        viewHolder.moneyAvaivable.setText(UtilTools.formatDecimal(item.get("balance")+"",8));
+        //viewHolder.moneyAvaivable.setText(item.get("balance")+"");
         if (UtilTools.empty(item.get("frozen"))){
             viewHolder.dongjieLay.setVisibility(View.GONE);
         }else {
-            //viewHolder.moneyLimit.setText(UtilTools.formatDecimal(item.get("frozen")+"",2));
-            viewHolder.moneyLimit.setText(item.get("frozen")+"");
+            viewHolder.moneyLimit.setText(UtilTools.formatDecimal(item.get("frozen")+"",8));
+            //viewHolder.moneyLimit.setText(item.get("frozen")+"");
         }
-        //viewHolder.moneyZhehe.setText(UtilTools.formatDecimal(item.get("cny")+"",2));
-        viewHolder.moneyZhehe.setText(item.get("cny")+"");
+        viewHolder.moneyZhehe.setText(UtilTools.formatDecimal(item.get("cny")+"",2));
+        //viewHolder.moneyZhehe.setText(item.get("cny")+"");
 
         viewHolder.itemLay.setOnClickListener(new View.OnClickListener() {
             @Override

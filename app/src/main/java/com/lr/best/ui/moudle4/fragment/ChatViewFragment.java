@@ -243,6 +243,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshLayout) {
+                isConnncted();
                switch (tabLayout.getSelectedTabPosition()){
                    case 0:
                        if (conversationListFragment != null){
@@ -328,7 +329,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                 }
                 ChatManagerHolder.gChatManager.connect(MbsConstans.RONGYUN_MAP.get("id") + "", MbsConstans.RONGYUN_MAP.get("token") + "");
             } else {
-                LogUtilDebug.i("show", "已经连接聊天服务器");
+                LogUtilDebug.i("show", "已经连接聊天服务器!!!");
             }
         });
     }

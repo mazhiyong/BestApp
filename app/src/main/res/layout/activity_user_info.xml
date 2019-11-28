@@ -460,10 +460,10 @@
                             android:background="@color/divide_line"/>
                         <TextView
                             android:id="@+id/exit_tv"
-
                             android:layout_width="match_parent"
                             android:layout_margin="@dimen/dp_35"
                             android:text="退出登录"
+                            android:visibility="gone"
                             android:padding="@dimen/dp_10"
                             android:background="@drawable/btn_next"
                             android:textColor="@color/white"
