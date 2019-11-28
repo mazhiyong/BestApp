@@ -244,7 +244,13 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
             case R.id.type_lay:
                 break;
             case R.id.selectall_tv:
-                numberEt.setText(avaiableNumber);
+                if (UtilTools.empty(avaiableNumber)){
+                    numberEt.setText(0+"");
+                }else {
+                    int num = (int) Double.parseDouble(avaiableNumber);
+                    numberEt.setText(num+"");
+                }
+
                 break;
             case R.id.huzhuan_tv:
                 huzhuanTv.setEnabled(false);

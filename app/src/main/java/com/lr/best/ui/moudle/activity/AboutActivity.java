@@ -18,6 +18,7 @@ import com.lr.best.basic.BasicActivity;
 import com.lr.best.basic.MbsConstans;
 import com.lr.best.listener.SelectBackListener;
 import com.lr.best.mvp.view.RequestView;
+import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;
 
 import java.util.HashMap;
@@ -58,7 +59,7 @@ public class AboutActivity extends BasicActivity implements RequestView , Select
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
 
 
-        mTitleText.setText("用户协议");
+        mTitleText.setText("关于我们");
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
 
@@ -86,14 +87,14 @@ public class AboutActivity extends BasicActivity implements RequestView , Select
 
 
     private void getAboutInfoAction() {
-        mRequestTag = MethodUrl.USER_GVRP;
+        mRequestTag = MethodUrl.ABOUT_US;
         Map<String, Object> map = new HashMap<>();
-       /* if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(AboutActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);*/
+        map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_GVRP, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ABOUT_US, map);
 
     }
 
@@ -110,7 +111,7 @@ public class AboutActivity extends BasicActivity implements RequestView , Select
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         switch (mType){
-            case MethodUrl.USER_GVRP:
+            case MethodUrl.ABOUT_US:
             switch (tData.get("code")+""){
                 case "0": //请求成功
                      String mapData = tData.get("data")+"";

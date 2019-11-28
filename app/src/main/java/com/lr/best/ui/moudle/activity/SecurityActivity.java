@@ -146,7 +146,7 @@ public class SecurityActivity extends BasicActivity implements RequestView, Sele
                 break;
             case R.id.code_lay:
                 intent = new Intent(SecurityActivity.this, ResetPayPassButActivity.class);
-
+                startActivity(intent);
                 break;
             case R.id.exit_tv:
                 break;

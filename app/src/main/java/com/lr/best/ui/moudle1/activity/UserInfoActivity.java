@@ -246,7 +246,37 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                 overridePendingTransition(R.anim.zoomin, R.anim.zoomout);*/
                 break;
             case R.id.exit_tv:
+                sureOrNoDialog = new SureOrNoDialog(UserInfoActivity.this, true);
+                sureOrNoDialog.initValue("提示", "确定要退出登录吗？");
+                sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.cancel:
+                                sureOrNoDialog.dismiss();
+                                break;
+                            case R.id.confirm:
+                                /*ChatManagerHolder.gChatManager.disconnect(true);
+                                SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
+                                sp.edit().clear().apply();*/
 
+                                closeAllActivity();
+                                MbsConstans.USER_MAP = null;
+                                MbsConstans.RONGYUN_MAP = null;
+                                MbsConstans.ACCESS_TOKEN = "";
+                                SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.LOGIN_OUT, true);
+                                SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "");
+                                SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE, "0");
+                                Intent intent = new Intent(UserInfoActivity.this, LoginActivity.class);
+                                startActivity(intent);
+
+                                break;
+                        }
+                    }
+                });
+                sureOrNoDialog.show();
+                sureOrNoDialog.setCanceledOnTouchOutside(false);
+                sureOrNoDialog.setCancelable(true);
 
                 break;
         }

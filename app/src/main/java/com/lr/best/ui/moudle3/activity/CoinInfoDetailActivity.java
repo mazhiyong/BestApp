@@ -67,7 +67,7 @@ import okhttp3.Response;
 
 import static androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 
-public class CoinInfoDetailActivity extends BasicActivity implements View.OnClickListener {
+public class  CoinInfoDetailActivity extends BasicActivity implements View.OnClickListener {
     private ImageView ivBack, ivKlineSet, ivSelf;
     private Toolbar toolBar;
     private TextView tvCoinName, tvCoinPrice, tvCnyPrice, tvUpRatio, tvHighPrice, tvLowPrice, tv24H,
@@ -530,6 +530,10 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                         });
 
                     }
+                }else {
+                    showToastMsg("暂无相关数据");
+                    kLineChartView.refreshComplete();
+                    kLineChartView.refreshEnd();
                 }
 
             }
@@ -1151,6 +1155,11 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                                     kLineChartView.refreshEnd();
                                 }
                             });
+                        }else {
+                            showToastMsg("暂无相关数据");
+                            kLineChartView.refreshComplete();
+                            kLineChartView.refreshEnd();
+
                         }
 
                         break;

@@ -92,7 +92,6 @@
         android:background="@color/divide_line"/>
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/puhuibao_jieshao_lay"
         android:layout_width="match_parent"
         android:orientation="horizontal"
@@ -127,7 +126,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/divide_hight"
-        android:visibility="gone"
         android:background="@color/divide_line"/>
     <LinearLayout
         android:id="@+id/about_us_lay"
@@ -138,7 +136,7 @@
 
         <TextView
             android:layout_width="0dp"
-            android:text="用户协议"
+            android:text="关于我们"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_weight="1"
@@ -179,6 +177,7 @@
 
     <LinearLayout
         android:id="@+id/help_lay"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:background="@color/white"
         android:orientation="horizontal"
@@ -275,14 +274,13 @@
     <LinearLayout
         android:id="@+id/version_check_lay"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:background="@drawable/list_item_selector"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="0dp"
-            android:text="@string/default_4"
+            android:text="版本"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:layout_weight="1"
@@ -315,7 +313,6 @@
         android:layout_height="@dimen/divide_hight"
         android:background="@color/divide_line"/>
 
-
     <EditText
         android:id="@+id/edit_phone"
         android:layout_width="match_parent"
@@ -333,6 +330,7 @@
         android:layout_width="match_parent"
         android:layout_margin="@dimen/dp_50"
         android:text="退出登录"
+        android:visibility="gone"
         android:padding="@dimen/dp_10"
         android:background="@drawable/btn_next"
         android:textColor="@color/white"

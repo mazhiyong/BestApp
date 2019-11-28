@@ -15,8 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.Guideline;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -130,22 +128,20 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
     PageView mPageView;
     @BindView(R.id.rvList)
     RecyclerView rvList;
-    @BindView(R.id.tvArea)
-    TextView tv24HVolume;
-    @BindView(R.id.tvCurrentPrice)
-    TextView tvCurrentPrice;
-    @BindView(R.id.tvCurrentPriceCny)
-    TextView tvCurrentPriceCny;
-    @BindView(R.id.tvRiseFallRatio)
-    TextView tvRiseFallRatio;
+    /*   @BindView(R.id.tvArea)
+       TextView tv24HVolume;
+       @BindView(R.id.tvCurrentPrice)
+       TextView tvCurrentPrice;
+       @BindView(R.id.tvCurrentPriceCny)
+       TextView tvCurrentPriceCny;
+       @BindView(R.id.tvRiseFallRatio)
+       TextView tvRiseFallRatio;
     @BindView(R.id.clRise)
     ConstraintLayout clRise;
     @BindView(R.id.guideline10)
     Guideline guideline10;
     @BindView(R.id.guideline11)
-    Guideline guideline11;
-    //    @BindView(R.id.llRankPlace)
-//    LinearLayout llRankPlace;
+    Guideline guideline11;*/
     @BindView(R.id.nsvAllView)
     NestedScrollView nsvAllView;
     @BindView(R.id.tv_loading_content)
@@ -225,8 +221,8 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(RecyclerView.VERTICAL);
         rvList.setLayoutManager(manager);
-        rvList.setHasFixedSize(true);
-        rvList.setNestedScrollingEnabled(false);
+        //rvList.setHasFixedSize(true);
+        rvList.setNestedScrollingEnabled(true);
 
         moreTypeAdapter = new MoreTypeAdapter(getActivity());
         rvList.setAdapter(moreTypeAdapter);
@@ -425,6 +421,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
 
                             //设置数据
                             if (!UtilTools.empty(rankList) && rankList.size() > 0) {
+                                LogUtilDebug.i("show","rankList:"+rankList.size());
                                 mPageView.showContent();
                                 moreTypeAdapter.setRankList(rankList);
                                 List<Map<String, Object>> finalRankList = rankList;
