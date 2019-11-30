@@ -384,7 +384,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             @Override
             public void onTextChanged(CharSequence sequence, int start, int before, int count) {
                 //输入检索内容
-                if (sequence.length() > 0) {
+                if (sequence.toString().length() > 0) {
                     if (adapter != null) {
                         adapter.reset();
                     }

@@ -35,8 +35,8 @@ public class TradeFragment extends BasicFragment {
 
     private int Position = 0;
     public int TYPE = 0;
-    public String selectArea = "USDT";
-    public String selectSymbol = "BTC";
+    public String selectArea = "";
+    public String selectSymbol = "";
     public String buySell = "1";
 
     public TradeFragment() {
