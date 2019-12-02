@@ -127,8 +127,8 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
 
         //禁止截屏
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
-        tabLayout.addTab(tabLayout.newTab().setText("普通兑换"));
-        tabLayout.addTab(tabLayout.newTab().setText("奖励金兑换"));
+        tabLayout.addTab(tabLayout.newTab().setText("零售"));
+        tabLayout.addTab(tabLayout.newTab().setText("批发"));
         tabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(XTabLayout.Tab tab) {
@@ -137,7 +137,7 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
                         type = "1";
                         fromLay.setClickable(true);
                         toLay.setClickable(true);
-                        tipTv.setText("兑换后系统即不退回，兑换后可释放一次1：3兑换平台币的奖励金");
+                        tipTv.setText("兑换后系统即不退回，兑换后可释放一次1：3兑换平台币的指标");
                         duihuanAcountlay.setVisibility(View.INVISIBLE);
                         numberEt.setText("");
                         fromIv.setVisibility(View.VISIBLE);
@@ -156,7 +156,7 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
                         toTv.setText("Best");
                         tipTv.setText("温馨提示：\n" +
                                 "任意币种兑换best实行1：3兑换\n" +
-                                "兑换一次消耗1奖励金");
+                                "兑换一次消耗1个指标");
                         avaiableNumber = balanceMap.get("Chip") + "";
                         if (UtilTools.empty(avaiableNumber)) {
                             avaiableNumber = "0";
