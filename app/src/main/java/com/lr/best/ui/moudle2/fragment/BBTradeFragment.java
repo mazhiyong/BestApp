@@ -223,7 +223,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private List<List<String>> mDataListSell = new ArrayList<>();
     private List<Map<String, Object>> mDatas = new ArrayList<>();
     private List<Map<String, Object>> mtabsData = new ArrayList<>();
-    private int precision = 2;
+    private int precision = 4;
 
     List<Map<String, Object>> mapOneList = new ArrayList<>();
 
@@ -1470,7 +1470,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                             mDataListBuy.add(strings1);
                                         }
                                     }
-                                    buyAdapter.setBuyTradeInfo(mDataListBuy, precision);
+                                    buyAdapter.setBuyTradeInfo(mListBuy, precision);
                                 }
 
                                 if (!UtilTools.empty(mListSell) && mListSell.size() > 0) {
@@ -1507,7 +1507,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                             mDataListSell.add(strings1);
                                         }
                                     }
-                                    sellAdapter.setSellTradeInfos(mDataListSell, precision);
+                                    sellAdapter.setSellTradeInfos(mListSell, precision);
                                 }
 
                             }
