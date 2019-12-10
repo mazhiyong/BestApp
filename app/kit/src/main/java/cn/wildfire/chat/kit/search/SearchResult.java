@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SearchResult {
     SearchableModule module;
-    public List<Object> result;
+    List<Object> result;
 
     public SearchResult(SearchableModule module, List<Object> result) {
         this.module = module;

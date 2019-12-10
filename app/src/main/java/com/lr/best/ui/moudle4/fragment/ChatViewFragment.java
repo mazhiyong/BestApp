@@ -101,7 +101,7 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 @SuppressLint("ValidFragment")
-public class ChatViewFragment extends BasicFragment implements RequestView, ReLoadingData {
+public class ChatViewFragment extends BasicFragment implements RequestView, ReLoadingData, ViewPager.OnPageChangeListener {
 
 
     @BindView(R.id.title_text)
@@ -279,8 +279,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                 //refreshLayout.finishLoadMoreWithNoMoreData();
             }
         });*/
-
-
     }
 
     @Override
@@ -364,10 +362,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             @Override
             public void onTabSelected(XTabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                if (tab.getPosition() == 1){
-                    //滚动过程中隐藏快速导航条
-                    contactListFragment.showQuickIndexBar(true);
-                }
             }
 
             @Override
@@ -390,7 +384,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             @Override
             public void onTextChanged(CharSequence sequence, int start, int before, int count) {
                 //输入检索内容
-                if (sequence.toString().length() > 0) {
+                if (sequence.length() > 0) {
                     if (adapter != null) {
                         adapter.reset();
                     }
@@ -435,7 +429,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
 
     private void onSearchResult(SearchResult result) {
-        if (result == null || result.result == null || result.result.isEmpty()) {
+        if (result == null) {
             mPageView.setVisibility(View.GONE);
             tabLayout.setVisibility(View.VISIBLE);
             viewPager.setVisibility(View.VISIBLE);
@@ -445,8 +439,8 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             viewPager.setVisibility(View.GONE);
             if (adapter == null) {
                 adapter = new SearchResultAdapter(this);
-                mRefreshListView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 mRefreshListView.setAdapter(adapter);
+                mRefreshListView.setLayoutManager(new LinearLayoutManager(getActivity()));
             }
             adapter.submitSearResult(result);
         }
@@ -553,6 +547,27 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                 Intent intent = new Intent(getActivity(), ChatNoticeListActivity.class);
                 startActivity(intent);
                 break;
+        }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        LogUtilDebug.i("show", "onPageScrollStateChanged()....");
+        if (state != ViewPager.SCROLL_STATE_IDLE) {
+            //滚动过程中隐藏快速导航条
+            contactListFragment.showQuickIndexBar(false);
+        } else {
+            contactListFragment.showQuickIndexBar(true);
         }
     }
 

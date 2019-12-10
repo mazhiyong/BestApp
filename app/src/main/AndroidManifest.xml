@@ -578,8 +578,26 @@
             android:name=".ui.moudle1.activity.HelpDetialActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 兑换记录列表 -->
-
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!-- 我的分红 -->
+        <activity
+            android:name=".ui.moudle5.activity.MyProfitListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!-- 我的收益 -->
+        <activity
+            android:name=".ui.moudle1.activity.TeamProfitListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!-- 交割金 -->
+        <activity
+            android:name=".ui.moudle5.activity.JiaoGeActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!-- 兑换记录列表 -->
         <activity
             android:name=".ui.moudle5.activity.DuiHuanListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"

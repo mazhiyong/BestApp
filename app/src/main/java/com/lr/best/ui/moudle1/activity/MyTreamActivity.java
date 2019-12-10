@@ -1,6 +1,7 @@
 package com.lr.best.ui.moudle1.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,12 +38,13 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * 我的团队  界面
  */
-public class MyTreamActivity extends BasicActivity implements RequestView , ReLoadingData {
+public class MyTreamActivity extends BasicActivity implements RequestView, ReLoadingData {
     @BindView(R.id.back_img)
     ImageView mBackImg;
     @BindView(R.id.title_text)
@@ -60,7 +62,12 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
-
+    @BindView(R.id.right_text_tv)
+    TextView rightTextTv;
+    @BindView(R.id.right_lay)
+    LinearLayout rightLay;
+    @BindView(R.id.right_img)
+    ImageView rightImg;
 
 
     private String mRequestTag = "";
@@ -82,6 +89,9 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
         mTitleText.setText("我的团队");
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
+        rightImg.setVisibility(View.VISIBLE);
+        rightTextTv.setVisibility(View.VISIBLE);
+        rightTextTv.setText("我的收益");
 
         mPageView.setContentView(mContent);
         mPageView.setReLoadingData(this);
@@ -120,18 +130,19 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
     }
 
 
-
-
-    @OnClick({R.id.back_img, R.id.left_back_lay})
+    @OnClick({R.id.back_img, R.id.left_back_lay, R.id.right_lay})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
             case R.id.back_img:
-                finish();
-                break;
             case R.id.left_back_lay:
                 finish();
                 break;
+            case R.id.right_lay:
+                intent = new Intent(MyTreamActivity.this, TeamProfitListActivity.class);
+                startActivity(intent);
+                break;
+
 
         }
     }
@@ -141,9 +152,9 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
         mRequestTag = MethodUrl.MY_TREAM;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(MyTreamActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(MyTreamActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.MY_TREAM, map);
 
@@ -161,22 +172,22 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
-        switch (mType){
+        switch (mType) {
             case MethodUrl.MY_TREAM:
-            switch (tData.get("code")+""){
-                case "0": //请求成功
-                    if (UtilTools.empty(tData.get("data") + "")) {
-                        mPageView.showEmpty();
-                    } else {
-                        mDataList = (List<Map<String, Object>>) tData.get("data");
-                        if (!UtilTools.empty(mDataList) && mDataList.size()>0) {
-                            mPageView.showContent();
-                            responseData();
-                            mRefreshListView.refreshComplete(10);
-                        } else {
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (UtilTools.empty(tData.get("data") + "")) {
                             mPageView.showEmpty();
+                        } else {
+                            mDataList = (List<Map<String, Object>>) tData.get("data");
+                            if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
+                                mPageView.showContent();
+                                responseData();
+                                mRefreshListView.refreshComplete(10);
+                            } else {
+                                mPageView.showEmpty();
+                            }
                         }
-                    }
                    /* List<Map<String,Object>> list = (List<Map<String, Object>>) tData.get("data");
                     if (UtilTools.empty(list)){
                         mPageView.showEmpty();
@@ -189,25 +200,23 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
                     }
                     mRefreshListView.refreshComplete(10);*/
 
-                    break;
-                case "-1": //请求失败
-                    showToastMsg(tData.get("msg")+"");
-                    break;
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
 
-                case "1": //token过期
-                    closeAllActivity();
-                    Intent intent = new Intent(MyTreamActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    break;
+                    case "1": //token过期
+                        closeAllActivity();
+                        Intent intent = new Intent(MyTreamActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
 
 
-            }
+                }
                 break;
         }
 
     }
-
-
 
 
     private void responseData() {
@@ -242,8 +251,6 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
             mRefreshListView.setLoadMoreEnabled(true);
 
 
-
-
             mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -272,9 +279,9 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
 
         mRefreshListView.refreshComplete(10);
         mListAdapter.notifyDataSetChanged();
-        if (mListAdapter.getDataList().size() <= 0){
+        if (mListAdapter.getDataList().size() <= 0) {
             mPageView.showEmpty();
-        }else {
+        } else {
             mPageView.showContent();
         }
 
@@ -290,5 +297,12 @@ public class MyTreamActivity extends BasicActivity implements RequestView , ReLo
     @Override
     public void reLoadingData() {
         getMyTreamInfoAction();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

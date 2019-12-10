@@ -23,8 +23,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -223,15 +221,15 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private List<List<String>> mDataListSell = new ArrayList<>();
     private List<Map<String, Object>> mDatas = new ArrayList<>();
     private List<Map<String, Object>> mtabsData = new ArrayList<>();
-    private int precision = 4;
+    private int precision = 2;
 
     List<Map<String, Object>> mapOneList = new ArrayList<>();
 
     private KindSelectDialog mDialog;
 
     private String mRequestTag = "";
-    public String area = "";
-    public String symbol = "";
+    public String area = "USDT";
+    public String symbol = "BTC";
     public String buysell = "1";
     private String buysell2 = "0";
 
@@ -260,12 +258,11 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private Runnable cnyRunnable = new Runnable() {
         @Override
         public void run() {
-            if (!UtilTools.empty(symbol) && !UtilTools.empty(area)){
-                // 获取币当前价
-                getCurrentPriceAction();
-                //获取合约价格以及深度信息
-                getPairDepthAction();
-            }
+            // 获取币当前价
+            getCurrentPriceAction();
+
+            //获取合约价格以及深度信息
+            getPairDepthAction();
 
             handler.postDelayed(this, MbsConstans.SECOND_TIME_5000);
         }
@@ -294,7 +291,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         map.put("token",MbsConstans.ACCESS_TOKEN);*/
         map.put("area", area);
         map.put("symbol", symbol);
-        LogUtilDebug.i("show","area:"+area+" /symbol:"+symbol);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CURRENT_PRICE, map);
     }
@@ -341,13 +337,13 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             getAreaListAction();
 
             //查询交易区列表项
-           // getAreaListItemAction();
+            getAreaListItemAction();
 
             //查询委托单
             //getEntrustListAction();
 
             //账户当前交易区交易币可用
-            //getCurAreaAccountAction();
+            getCurAreaAccountAction();
 
             //setWebsocketListener();
             //handler.post(runnable);
@@ -1073,7 +1069,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             public void OnMyItemClickListener(View view, int position) {
                 mConditionDialog.dismiss();
                 symbol = mDatas.get(position).get("name") + "";
-                area =mDatas.get(position).get("area")+"";
                 selectTv.setText(symbol + "/" + area);
                 areaTv.setText(area);
                 tvUnit.setText(symbol);
@@ -1103,14 +1098,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     rbNumber4.setBackgroundResource(R.drawable.selector_open_close_house3);
                 }
 
-                //查询委托单
                 getEntrustListAction();
-                //账户当前交易区交易币可用
-                getCurAreaAccountAction();
-                // 获取币当前价
-                getCurrentPriceAction();
-                //获取合约价格以及深度信息
-                getPairDepthAction();
             }
         });
 
@@ -1315,9 +1303,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 switch (tData.get("code") + "") {
                     case "0":
                         mtabsData = (List<Map<String, Object>>) tData.get("data");
-                        area = mtabsData.get(tabPostion).get("name") + "";
-                        //查询交易区列表项
-                        getAreaListItemAction();
                         break;
                     case "1":
                         if (getParentFragment().getActivity() != null) {
@@ -1338,7 +1323,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         if (!UtilTools.empty(tData.get("data")+"")){
                             mDatas = (List<Map<String, Object>>) tData.get("data");
                             if (mDatas!= null && mDatas.size() > 0){
-                                //默认交易区
                                 Map<String, Object> map = mDatas.get(0);
                                 symbol = map.get("name")+"";
                                 area =map.get("area")+"";
@@ -1351,16 +1335,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                 }else {
                                     tvOperateCoin.setText("卖出" + symbol);
                                 }
-
-                                //查询委托单
-                                getEntrustListAction();
-                                //账户当前交易区交易币可用
-                                getCurAreaAccountAction();
-                                // 获取币当前价
-                                getCurrentPriceAction();
-                                //获取合约价格以及深度信息
-                                getPairDepthAction();
-
                             }
                             if (mAdapter != null && mDatas != null && rcv != null) {
                                 mAdapter.setDatas(mDatas);
@@ -1470,7 +1444,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                             mDataListBuy.add(strings1);
                                         }
                                     }
-                                    buyAdapter.setBuyTradeInfo(mListBuy, precision);
+                                    buyAdapter.setBuyTradeInfo(mDataListBuy, precision);
                                 }
 
                                 if (!UtilTools.empty(mListSell) && mListSell.size() > 0) {
@@ -1507,7 +1481,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                             mDataListSell.add(strings1);
                                         }
                                     }
-                                    sellAdapter.setSellTradeInfos(mListSell, precision);
+                                    sellAdapter.setSellTradeInfos(mDataListSell, precision);
                                 }
 
                             }
@@ -1644,43 +1618,20 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     }
 
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString("symbol",symbol);
-        outState.putString("area",area);
-
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        if (savedInstanceState != null){
-            symbol = savedInstanceState.getString("symbol");
-            area = savedInstanceState.getString("area");
-        }
-
-    }
 
 
     @Override
     public void onResume() {
         super.onResume();
-       /* if (UtilTools.empty(symbol) || UtilTools.empty(area)){
-            //查询交易区列表
-            getAreaListAction();
-        }*/
-        String s = selectTv.getText().toString();
-        if (!UtilTools.empty(s)){
-            symbol = s.substring(0,s.indexOf("/"));
-            area = s.substring(s.indexOf("/")+1);
-        }
+
 
         if (!buysell2.equals("0")) {
             buysell = buysell2;
         }
 
-
+        //查询委托单
+        getEntrustListAction();
+        getAreaListItemAction();
         if (buysell.equals("1")) { //买入
             rbBuy.setChecked(true);
             mKindType = "0";
@@ -1728,10 +1679,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             }
         }
 
-        //selectTv.setText(symbol + "/" + area);
-        //areaTv.setText(area);
-        //tvUnit.setText(symbol);
-
+        selectTv.setText(symbol + "/" + area);
+        areaTv.setText(area);
+        tvUnit.setText(symbol);
         if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())) {
             LogUtilDebug.i("show","交易额:"+Double.parseDouble(etNumber.getText().toString()) * Double.parseDouble(etPrice.getText().toString()));
             tvTransactionAmount.setText(UtilTools.getNormalMoney(Double.parseDouble(etNumber.getText().toString()) * Double.parseDouble(etPrice.getText().toString()) + "") + "  " + area);

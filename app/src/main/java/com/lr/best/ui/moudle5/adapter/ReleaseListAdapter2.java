@@ -21,20 +21,20 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DuiHuanListAdapter extends ListBaseAdapter {
+public class ReleaseListAdapter2 extends ListBaseAdapter {
 
 
 
     private LayoutInflater mLayoutInflater;
 
-    public DuiHuanListAdapter(Context context) {
+    public ReleaseListAdapter2(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
         mContext = context;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mLayoutInflater.inflate(R.layout.item_duihuan, parent, false));
+        return new ViewHolder(mLayoutInflater.inflate(R.layout.item_jiaoge, parent, false));
     }
 
     @Override
@@ -43,20 +43,22 @@ public class DuiHuanListAdapter extends ListBaseAdapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
 
         viewHolder.typeTv.setText("流水号:" + item.get("id"));
-        viewHolder.timeTv.setText(item.get("no") + "");
-        viewHolder.numberTv.setText(item.get("integral") + "");
-        viewHolder.fromtoTv.setText(item.get("integral_surplus") + "");
-        viewHolder.jifenTv.setText(item.get("num") + "");
-        viewHolder.jianglijinTv.setText(item.get("time") + "");
+        viewHolder.timeTv.setText(item.get("num_all") + "");
+        viewHolder.numberTv.setText(item.get("time") + "");
+        viewHolder.fromtoTv.setText(item.get("num") + "");
+        viewHolder.jifenTv.setText(Float.parseFloat(item.get("rate") + "")*100+"%");
+        viewHolder.jianglijinTv.setText(item.get("release_num") + "");
 
 
 
         viewHolder.tradeLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if ((item.get("type") + "").equals("1")) {
                     Intent intent = new Intent(mContext, ReleaseListActivity.class);
                     intent.putExtra("DATA", (Serializable) item);
                     mContext.startActivity(intent);
+                }
 
             }
         });

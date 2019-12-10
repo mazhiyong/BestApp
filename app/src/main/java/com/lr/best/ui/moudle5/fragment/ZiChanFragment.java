@@ -37,8 +37,8 @@ import com.lr.best.mywidget.view.LoadingWindow;
 import com.lr.best.mywidget.view.PageView;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle5.activity.ChoseBiTypeActivity;
-import com.lr.best.ui.moudle5.activity.DuiHuanActivity;
 import com.lr.best.ui.moudle5.activity.HuaZhuanActivity;
+import com.lr.best.ui.moudle5.activity.MyProfitListActivity;
 import com.lr.best.ui.moudle5.adapter.ZiChanListAdapter;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.SelectDataUtil;
@@ -253,8 +253,8 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
                 intent = new Intent(getActivity(), HuaZhuanActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.duihuan_tv:
-                intent = new Intent(getActivity(), DuiHuanActivity.class);
+            case R.id.duihuan_tv://分红
+                intent = new Intent(getActivity(), MyProfitListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.from_tv:

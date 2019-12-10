@@ -70,13 +70,6 @@ public abstract class BaseUserListFragment extends ProgressFragment implements Q
         linearLayoutManager = new LinearLayoutManager(getActivity());
         usersRecyclerView.setLayoutManager(linearLayoutManager);
 
-        indexLetterTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //indexLetterTextView.setVisibility(View.GONE);
-            }
-        });
-
         if (showQuickIndexBar) {
             quickIndexBar.setVisibility(View.VISIBLE);
             quickIndexBar.setOnLetterUpdateListener(this);

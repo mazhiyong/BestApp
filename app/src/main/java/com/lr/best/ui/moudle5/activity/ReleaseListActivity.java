@@ -2,7 +2,6 @@ package com.lr.best.ui.moudle5.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,7 +27,7 @@ import com.lr.best.listener.ReLoadingData;
 import com.lr.best.mvp.view.RequestView;
 import com.lr.best.mywidget.view.PageView;
 import com.lr.best.ui.moudle.activity.LoginActivity;
-import com.lr.best.ui.moudle5.adapter.ReleaseListAdapter;
+import com.lr.best.ui.moudle5.adapter.ReleaseListAdapter2;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.UtilTools;
 
@@ -67,7 +66,7 @@ public class ReleaseListActivity extends BasicActivity implements RequestView, R
 
     private String mRequestTag = "";
     private List<Map<String, Object>> mDataList = new ArrayList<>();
-    private ReleaseListAdapter mListAdapter;
+    private ReleaseListAdapter2 mListAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
 
     private Map<String, Object> mapData;
@@ -163,16 +162,22 @@ public class ReleaseListActivity extends BasicActivity implements RequestView, R
                         if (UtilTools.empty(tData.get("data")+"")){
                             mPageView.showEmpty();
                         }else {
-                            List<Map<String, Object>> list = (List<Map<String, Object>>) tData.get("data");
-                            if (UtilTools.empty(list) || list.size() ==0) {
+                            Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
+                            if (UtilTools.empty(mapData)){
                                 mPageView.showEmpty();
-                            } else {
-                                mPageView.showContent();
-                                mDataList.clear();
-                                mDataList.addAll(list);
-                                responseData();
-                                mRefreshListView.refreshComplete(10);
+                            }else {
+                                List<Map<String, Object>> list = (List<Map<String, Object>>) mapData.get("info");
+                                if (UtilTools.empty(list) || list.size() ==0) {
+                                    mPageView.showEmpty();
+                                } else {
+                                    mPageView.showContent();
+                                    mDataList.clear();
+                                    mDataList.addAll(list);
+                                    responseData();
+                                    mRefreshListView.refreshComplete(10);
+                                }
                             }
+
                         }
                         break;
                     case "-1": //请求失败
@@ -195,17 +200,13 @@ public class ReleaseListActivity extends BasicActivity implements RequestView, R
 
     private void responseData() {
         if (mListAdapter == null) {
-            mListAdapter = new ReleaseListAdapter(ReleaseListActivity.this);
+            mListAdapter = new ReleaseListAdapter2(ReleaseListActivity.this);
             mListAdapter.addAll(mDataList);
 
             /*AnimationAdapter adapter = new ScaleInAnimationAdapter(mDataAdapter);
             adapter.setFirstOnly(false);
             adapter.setDuration(500);
             adapter.setInterpolator(new OvershootInterpolator(.5f));*/
-
-            View view = LayoutInflater.from(this).inflate(R.layout.item_release_header, mRefreshListView, false);
-            //View view = LayoutInflater.from(this).inflate(R.layout.item_bank_bind, null);
-            mListAdapter.addHeaderView(view);
 
             mLRecyclerViewAdapter = new LRecyclerViewAdapter(mListAdapter);
 

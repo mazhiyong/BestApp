@@ -36,9 +36,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 兑换
+ * 交割
  */
-public class DuiHuanActivity extends BasicActivity implements RequestView, TradePassDialog.PassFullListener, SelectBackListener {
+public class JiaoGeActivity extends BasicActivity implements RequestView, TradePassDialog.PassFullListener, SelectBackListener {
     @BindView(R.id.back_img)
     ImageView mBackImg;
     @BindView(R.id.back_text)
@@ -106,7 +106,7 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
 
     @Override
     public int getContentView() {
-        return R.layout.activity_dui_huan;
+        return R.layout.activity_jiaoge;
     }
 
 
@@ -127,60 +127,6 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
 
         //禁止截屏
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
-        tabLayout.addTab(tabLayout.newTab().setText("普通兑换"));
-        tabLayout.addTab(tabLayout.newTab().setText("奖励金兑换"));
-        tabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(XTabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0://普通兑换
-                        type = "1";
-                        fromLay.setClickable(true);
-                        toLay.setClickable(true);
-                        tipTv.setText("兑换后系统即不退回，兑换后可释放一次1：3兑换平台币的奖励金");
-                        duihuanAcountlay.setVisibility(View.INVISIBLE);
-                        numberEt.setText("");
-                        fromIv.setVisibility(View.VISIBLE);
-                        toIv.setVisibility(View.VISIBLE);
-                        if (fromTv.getText().toString().equals("请选择")){
-                            type2Tv.setText("");
-                        }else {
-                            type2Tv.setText(fromTv.getText());
-                        }
-                        break;
-                    case 1://奖励金兑换
-                        type = "2";
-                        fromLay.setClickable(false);
-                        toLay.setClickable(false);
-                        fromTv.setText("Chip");
-                        toTv.setText("Best");
-                        tipTv.setText("温馨提示：\n" +
-                                "任意币种兑换best实行1：3兑换\n" +
-                                "兑换一次消耗1奖励金");
-                        avaiableNumber = balanceMap.get("Chip") + "";
-                        if (UtilTools.empty(avaiableNumber)) {
-                            avaiableNumber = "0";
-                        }
-                        aviableTv.setText("可用 " + avaiableNumber + " Chip");
-                        duihuanAcountlay.setVisibility(View.VISIBLE);
-                        numberEt.setText("");
-                        fromIv.setVisibility(View.GONE);
-                        toIv.setVisibility(View.GONE);
-                        type2Tv.setText(fromTv.getText());
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(XTabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(XTabLayout.Tab tab) {
-
-            }
-        });
 
 
         numberEt.addTextChangedListener(new TextWatcher() {
@@ -207,11 +153,11 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
     private void getInfoAction() {
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(DuiHuanActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(JiaoGeActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.DUIHUAN_INFO, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.BOUNTY_INFO, map);
     }
 
 
@@ -223,7 +169,7 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
                 finish();
                 break;
             case R.id.right_lay: //兑换记录
-                intent = new Intent(DuiHuanActivity.this, DuiHuanListActivity.class);
+                intent = new Intent(JiaoGeActivity.this, DuiHuanListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.from_lay:
@@ -273,40 +219,27 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
     }
 
     private void huazhuanSumbitAction() {
-        if (UtilTools.empty(numberEt.getText()) || toTv.getText().toString().equals("请选择")|| fromTv.getText().toString().equals("请选择")){
-            showToastMsg("兑换信息不完善");
+        if (UtilTools.empty(numberEt.getText()) ){
+            showToastMsg("请输入数量");
             huzhuanTv.setEnabled(true);
             return;
         }
 
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(DuiHuanActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(JiaoGeActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        if (type.equals("1")){
-            if (toTv.getText().toString().equals("Chip")){
-                map.put("type", "0");
-            }else {
-                map.put("type", "1");
-            }
-        }else {
-            map.put("type", "2");
-        }
-        map.put("from",fromTv.getText()+"");
-        map.put("to", toTv.getText()+"");
         map.put("num", numberEt.getText()+"");
-
-
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.DUIHUAN_ACTION, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.DELIVERY_ACTION, map);
 
     }
 
     private void getTypeListAction(String type) {
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(DuiHuanActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(JiaoGeActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("type", type);
@@ -337,26 +270,17 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         Intent intent;
         switch (mType) {
-            case MethodUrl.DUIHUAN_INFO:
+            case MethodUrl.BOUNTY_INFO:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             Map<String, Object> dataMap = (Map<String, Object>) tData.get("data");
-                            mDataList120 = (List<Map<String, Object>>) dataMap.get("120");
-                            if (!UtilTools.empty(mDataList120) && mDataList120.size() > 0) {
-                                mDialog2 = new KindSelectDialog(this, true, mDataList120, 20);
-                                mDialog2.setSelectBackListener(this);
-                            }
-                            List<Map<String, Object>> mDataList3 = (List<Map<String, Object>>) dataMap.get("platform");
-                            if (!UtilTools.empty(mDataList3) && mDataList3.size() > 0) {
-                                mDialog = new KindSelectDialog(this, true, mDataList3, 10);
-                                mDialog.setSelectBackListener(this);
-                            }
-                            Map<String, Object> userMap = (Map<String, Object>) dataMap.get("user");
-                            jianglijinTv.setText(userMap.get("bounty") + "");
-                            jifenTv.setText(userMap.get("integral") + "");
+                            //Map<String, Object> userMap = (Map<String, Object>) dataMap.get("user");
+                            jianglijinTv.setText(dataMap.get("integral") + "");
+                            jifenTv.setText(dataMap.get("bounty") + "");
+                            avaiableNumber = dataMap.get("Best") + "";
+                            aviableTv.setText("可用 " + UtilTools.getNormalMoney(avaiableNumber) + " Best" );
 
-                            balanceMap = (Map<String, Object>) dataMap.get("balance");
                         }
 
                         break;
@@ -366,7 +290,7 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
 
                     case "1": //token过期
                         closeAllActivity();
-                        intent = new Intent(DuiHuanActivity.this, LoginActivity.class);
+                        intent = new Intent(JiaoGeActivity.this, LoginActivity.class);
                         startActivity(intent);
                         break;
                 }
@@ -385,12 +309,12 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
 
                     case "1": //token过期
                         closeAllActivity();
-                        intent = new Intent(DuiHuanActivity.this, LoginActivity.class);
+                        intent = new Intent(JiaoGeActivity.this, LoginActivity.class);
                         startActivity(intent);
                         break;
                 }
                 break;
-            case MethodUrl.DUIHUAN_ACTION:
+            case MethodUrl.DELIVERY_ACTION:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
                         showToastMsg(tData.get("msg") + "");
@@ -402,7 +326,7 @@ public class DuiHuanActivity extends BasicActivity implements RequestView, Trade
 
                     case "1": //token过期
                         closeAllActivity();
-                        intent = new Intent(DuiHuanActivity.this, LoginActivity.class);
+                        intent = new Intent(JiaoGeActivity.this, LoginActivity.class);
                         startActivity(intent);
                         break;
                 }

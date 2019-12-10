@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flyco.dialog.utils.CornerUtils;
+import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnNetWorkErrorListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -40,7 +41,7 @@ import com.lr.best.mywidget.dialog.DateSelectDialog;
 import com.lr.best.mywidget.view.PageView;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle.adapter.TradeDialogAdapter;
-import com.lr.best.ui.moudle5.adapter.DuiHuanListAdapter;
+import com.lr.best.ui.moudle5.adapter.HuaZhuanListAdapter;
 import com.lr.best.utils.tool.AnimUtil;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.SelectDataUtil;
@@ -56,9 +57,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 兑换/交割记录记录  界面
+ * 划转记录  界面
  */
-public class DuiHuanListActivity extends BasicActivity implements RequestView,ReLoadingData,SelectBackListener{
+public class MyProfitListActivity extends BasicActivity implements RequestView,ReLoadingData,SelectBackListener{
 
     @BindView(R.id.back_img)
     ImageView mBackImg;
@@ -94,7 +95,7 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
     private String mSelectType = "";
 
 
-    private DuiHuanListAdapter mListAdapter;
+    private HuaZhuanListAdapter mListAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     private List<Map<String, Object>> mDataList = new ArrayList<>();
     private int mPage = 1;
@@ -103,7 +104,7 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
 
     @Override
     public int getContentView() {
-        return R.layout.activity_duihuan_list;
+        return R.layout.activity_huazhuan_list;
     }
 
     @Override
@@ -114,7 +115,7 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
 
         mAnimUtil = new AnimUtil();
 
-        mTitleText.setText("我的交割金");
+        mTitleText.setText("我的分红");
         mTitleText.setCompoundDrawables(null,null,null,null);
 
         mRightImg.setVisibility(View.GONE);
@@ -133,6 +134,7 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
         mStartTime = mSelectStartTime;
         mEndTime = mSelectEndTime;
 
+
         initView();
         showProgressDialog();
         traderListAction();
@@ -143,7 +145,7 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
         mPageView.setContentView(mContent);
         mPageView.setReLoadingData(this);
         mPageView.showLoading();
-        LinearLayoutManager manager = new LinearLayoutManager(DuiHuanListActivity.this);
+        LinearLayoutManager manager = new LinearLayoutManager(MyProfitListActivity.this);
         manager.setOrientation(RecyclerView.VERTICAL);
         mRefreshListView.setLayoutManager(manager);
 
@@ -166,18 +168,18 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
     private void traderListAction(){
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(DuiHuanListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(MyProfitListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.MY_DELIVERYINFO, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.MY_PROFIT, map);
     }
 
 
 
     private void responseData() {
         if (mListAdapter == null) {
-            mListAdapter = new DuiHuanListAdapter(DuiHuanListActivity.this);
+            mListAdapter = new HuaZhuanListAdapter(MyProfitListActivity.this);
             mListAdapter.addAll(mDataList);
 
             /*AnimationAdapter adapter = new ScaleInAnimationAdapter(mDataAdapter);
@@ -200,6 +202,18 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
 
             mRefreshListView.setPullRefreshEnabled(true);
             mRefreshListView.setLoadMoreEnabled(true);
+
+
+            mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Map<String, Object> item = mListAdapter.getDataList().get(position);
+                   /* Intent intent = new Intent(getActivity(), ShowDetailPictrue.class);
+                    intent.putExtra("jsonData",item.get("url")+"");
+                    startActivity(intent);*/
+                }
+
+            });
 
 
         } else {
@@ -260,7 +274,7 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
 
     private void initPopupWindow(){
 
-        int nH = UtilTools.getNavigationBarHeight(DuiHuanListActivity.this);
+        int nH = UtilTools.getNavigationBarHeight(MyProfitListActivity.this);
         LinearLayout mNagView ;
 
         if (mConditionDialog == null) {
@@ -269,8 +283,8 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
             mySelectDialog2 = new DateSelectDialog(this, true, "选择日期", 22);
             mySelectDialog2.setSelectBackListener(this);
 
-            popView = LayoutInflater.from(DuiHuanListActivity.this).inflate(R.layout.dialog_trade_condition,null);
-            mConditionDialog = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            popView = LayoutInflater.from(MyProfitListActivity.this).inflate(R.layout.dialog_trade_condition,null);
+            mConditionDialog = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             mConditionDialog.setClippingEnabled(false);
             initConditionDialog(popView);
 
@@ -279,25 +293,23 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
             mNagView.setLayoutParams(layoutParams);
 
 
-            int screenWidth=UtilTools.getScreenWidth(DuiHuanListActivity.this);
-            int screenHeight=UtilTools.getScreenHeight(DuiHuanListActivity.this);
+            int screenWidth=UtilTools.getScreenWidth(MyProfitListActivity.this);
+            int screenHeight=UtilTools.getScreenHeight(MyProfitListActivity.this);
             mConditionDialog.setWidth((int)(screenWidth*0.8));
-            mConditionDialog.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+            mConditionDialog.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
 
             //设置background后在外点击才会消失
-            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(DuiHuanListActivity.this,5)));
+            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(MyProfitListActivity.this,5)));
             mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
             //自定义动画
-            mConditionDialog.setAnimationStyle(R.style.PopupAnimation2);
+            mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
 //            mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画
             mConditionDialog.update();
             mConditionDialog.setTouchable(true);
             mConditionDialog.setFocusable(true);
             //popView.requestFocus();//pop设置不setBackgroundDrawable情况，把焦点给popView，添加popView.setOnKeyListener。可实现点击外部不消失，点击反键才消失
             //			mConditionDialog.showAtLocation(mCityTv, Gravity.TOP|Gravity.RIGHT, 0, 0); //设置layout在PopupWindow中显示的位置
-            //mConditionDialog.showAtLocation(DuiHuanListActivity.this.getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
-            mConditionDialog.showAtLocation(getWindow().getDecorView(),
-                    Gravity.TOP | Gravity.RIGHT, 0, mLeftBackLay.getHeight()+UtilTools.getStatusHeight2(DuiHuanListActivity.this));
+            mConditionDialog.showAtLocation(MyProfitListActivity.this.getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
             toggleBright();
             mConditionDialog.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -310,9 +322,7 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,nH);
             mNagView.setLayoutParams(layoutParams);
 
-            //mConditionDialog.showAtLocation(DuiHuanListActivity.this.getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
-            mConditionDialog.showAtLocation(getWindow().getDecorView(),
-                    Gravity.TOP | Gravity.RIGHT, 0, mLeftBackLay.getHeight()+UtilTools.getStatusHeight2(DuiHuanListActivity.this));
+            mConditionDialog.showAtLocation(MyProfitListActivity.this.getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
             toggleBright();
         }
     }
@@ -429,9 +439,9 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
 
         List<Map<String,Object>> maps = SelectDataUtil.getCondition();
 
-        GridLayoutManager linearLayoutManager = new GridLayoutManager(DuiHuanListActivity.this,3);
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(MyProfitListActivity.this,3);
         mTypeRecyclerView.setLayoutManager(linearLayoutManager);
-        mTradeDialogAdapter = new TradeDialogAdapter(DuiHuanListActivity.this,maps);
+        mTradeDialogAdapter = new TradeDialogAdapter(MyProfitListActivity.this,maps);
         //第一次设置默认值
         mSelectType = "borrow";
         mTradeDialogAdapter.setSelectItme(0);
@@ -526,7 +536,7 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         Intent intent;
         switch (mType){
-            case MethodUrl.MY_DELIVERYINFO:
+            case MethodUrl.MY_PROFIT:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
                         if (UtilTools.empty(tData.get("data") + "")) {
@@ -549,7 +559,7 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
 
                     case "1": //token过期
                         closeAllActivity();
-                        intent = new Intent(DuiHuanListActivity.this, LoginActivity.class);
+                        intent = new Intent(MyProfitListActivity.this, LoginActivity.class);
                         startActivity(intent);
                         break;
                 }

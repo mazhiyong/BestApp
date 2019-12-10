@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,8 +32,6 @@ public class RedPacketMessageContentViewHolder extends NormalMessageContentViewH
     @NonNull
     protected ConversationFragment fragment;
 
-    @BindView(R.id.redLay)
-    LinearLayout redLay;
     @BindView(R.id.contentTextView)
     TextView contentTextView;
     @BindView(R.id.imageView)
@@ -69,7 +66,7 @@ public class RedPacketMessageContentViewHolder extends NormalMessageContentViewH
 
     }
 
-    @OnClick(R.id.redLay)
+    @OnClick(R.id.contentTextView)
     public void onClickTest(View view) {
         Intent intent = new Intent(fragment.getContext(), RedListActivity.class);
         intent.putExtra("id",redId);

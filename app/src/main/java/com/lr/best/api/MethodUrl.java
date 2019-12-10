@@ -210,9 +210,12 @@ public class MethodUrl {
     public static final String DUIHUAN_ACTION = "user_info/changeToChip";//兑换操作
     public static final String DUIHUAN_LIST = "user_info/exchangeLog3";//兑换记录
     public static final String RELEASE_LIST = "user_info/releaseLog";//释放记录
-    public static final String JIAOGE_ACTION = "user_info/delivery";//交割
-    public static final String JIAOGE_MONEY = "user_info/deliveryInfo";//我的交割金
-    public static final String JIAOGE_ZHIBIAO = "user_info/bountyInfo";//交割未释放指标和已释放指标
+    public static final String MY_DELIVERYINFO = "user_info/deliveryInfo";//我的交割金
+    public static final String BOUNTY_INFO = "user_info/bountyInfo";//交割未释放指标和已释放指标
+    public static final String DELIVERY_ACTION= "user_info/delivery";//交割
+    public static final String MY_PROFIT= "user_info/profit";//我的分红
+    public static final String TEAM_PROFIT= "user_info/teamProfit";//我的收益
+
 
 
 

@@ -1,6 +1,7 @@
 package com.lr.best.ui.moudle5.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lr.best.R;
 import com.lr.best.listener.OnChildClickListener;
 import com.lr.best.ui.moudle.adapter.ListBaseAdapter;
+import com.lr.best.ui.moudle5.activity.JiaoGeActivity;
 import com.lr.best.utils.tool.LogUtilDebug;
 import com.lr.best.utils.tool.UtilTools;
 
@@ -54,13 +56,26 @@ public class ZiChanListAdapter extends ListBaseAdapter {
 //        map.put("money2","909010");
 //        map.put("money3","608109291");
         viewHolder.typeTv.setText(item.get("symbol") + "");
+        if (!UtilTools.empty(item.get("symbol")) && (item.get("symbol") + "").equals("Best")){
+            viewHolder.jiaogeActionTv.setVisibility(View.VISIBLE);
+            viewHolder.jiaogeTv.setText("交割金");
+        }else {
+            viewHolder.jiaogeActionTv.setVisibility(View.GONE);
+            viewHolder.jiaogeTv.setText("冻结");
+        }
         viewHolder.moneyAvaivable.setText(UtilTools.formatDecimal(item.get("balance")+"",8));
         //viewHolder.moneyAvaivable.setText(item.get("balance")+"");
         if (UtilTools.empty(item.get("frozen"))){
             viewHolder.dongjieLay.setVisibility(View.GONE);
         }else {
-            viewHolder.moneyLimit.setText(UtilTools.formatDecimal(item.get("frozen")+"",8));
-            //viewHolder.moneyLimit.setText(item.get("frozen")+"");
+
+            if (!UtilTools.empty(item.get("symbol")) && (item.get("symbol") + "").equals("Best")){
+
+                viewHolder.moneyLimit.setText(UtilTools.formatDecimal(item.get("JGBEST")+"",8));
+            }else {
+
+                viewHolder.moneyLimit.setText(UtilTools.formatDecimal(item.get("frozen")+"",8));
+            }
         }
         viewHolder.moneyZhehe.setText(UtilTools.formatDecimal(item.get("cny")+"",2));
         //viewHolder.moneyZhehe.setText(item.get("cny")+"");
@@ -71,6 +86,13 @@ public class ZiChanListAdapter extends ListBaseAdapter {
                 if (mCallBack != null) {
                     mCallBack.onChildClickListener(viewHolder.itemLay, position, item);
                 }
+            }
+        });
+        viewHolder.jiaogeActionTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, JiaoGeActivity.class);
+                mContext.startActivity(intent);
             }
         });
 
@@ -85,6 +107,10 @@ public class ZiChanListAdapter extends ListBaseAdapter {
         TextView moneyLimit;
         @BindView(R.id.money_zhehe)
         TextView moneyZhehe;
+        @BindView(R.id.jiaoge_tv)
+        TextView jiaogeTv;
+        @BindView(R.id.jiaoge_action_tv)
+        TextView jiaogeActionTv;
         @BindView(R.id.item_lay)
         CardView itemLay;
         @BindView(R.id.dongjie_lay)
