@@ -41,7 +41,7 @@ import com.lr.best.mywidget.dialog.DateSelectDialog;
 import com.lr.best.mywidget.view.PageView;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle.adapter.TradeDialogAdapter;
-import com.lr.best.ui.moudle5.adapter.HuaZhuanListAdapter;
+import com.lr.best.ui.moudle5.adapter.MyProfitListAdapter;
 import com.lr.best.utils.tool.AnimUtil;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.SelectDataUtil;
@@ -57,7 +57,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 划转记录  界面
+ *我的分红  界面
  */
 public class MyProfitListActivity extends BasicActivity implements RequestView,ReLoadingData,SelectBackListener{
 
@@ -83,6 +83,10 @@ public class MyProfitListActivity extends BasicActivity implements RequestView,R
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
+    @BindView(R.id.divide_line)
+    View divideLine;
+
+
 
     private String mRequestTag ="";
 
@@ -95,7 +99,7 @@ public class MyProfitListActivity extends BasicActivity implements RequestView,R
     private String mSelectType = "";
 
 
-    private HuaZhuanListAdapter mListAdapter;
+    private MyProfitListAdapter mListAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     private List<Map<String, Object>> mDataList = new ArrayList<>();
     private int mPage = 1;
@@ -111,7 +115,7 @@ public class MyProfitListActivity extends BasicActivity implements RequestView,R
     public void init() {
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
-
+        divideLine.setVisibility(View.GONE);
 
         mAnimUtil = new AnimUtil();
 
@@ -138,6 +142,7 @@ public class MyProfitListActivity extends BasicActivity implements RequestView,R
         initView();
         showProgressDialog();
         traderListAction();
+
     }
 
 
@@ -179,13 +184,17 @@ public class MyProfitListActivity extends BasicActivity implements RequestView,R
 
     private void responseData() {
         if (mListAdapter == null) {
-            mListAdapter = new HuaZhuanListAdapter(MyProfitListActivity.this);
+            mListAdapter = new MyProfitListAdapter(MyProfitListActivity.this);
             mListAdapter.addAll(mDataList);
 
             /*AnimationAdapter adapter = new ScaleInAnimationAdapter(mDataAdapter);
             adapter.setFirstOnly(false);
             adapter.setDuration(500);
             adapter.setInterpolator(new OvershootInterpolator(.5f));*/
+
+            View view = LayoutInflater.from(this).inflate(R.layout.item_my_profit_header, mRefreshListView, false);
+            //View view = LayoutInflater.from(this).inflate(R.layout.item_bank_bind, null);
+            mListAdapter.addHeaderView(view);
 
             mLRecyclerViewAdapter = new LRecyclerViewAdapter(mListAdapter);
 

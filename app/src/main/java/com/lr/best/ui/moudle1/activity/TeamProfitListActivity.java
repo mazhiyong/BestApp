@@ -3,6 +3,7 @@ package com.lr.best.ui.moudle1.activity;
 import android.animation.Animator;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,7 @@ import com.lr.best.mywidget.dialog.DateSelectDialog;
 import com.lr.best.mywidget.view.PageView;
 import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle.adapter.TradeDialogAdapter;
-import com.lr.best.ui.moudle5.adapter.HuaZhuanListAdapter;
+import com.lr.best.ui.moudle1.adapter.TeamProfitListAdapter;
 import com.lr.best.utils.tool.AnimUtil;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.SelectDataUtil;
@@ -54,12 +55,13 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * 团队收益 界面
  */
-public class TeamProfitListActivity extends BasicActivity implements RequestView,ReLoadingData,SelectBackListener{
+public class TeamProfitListActivity extends BasicActivity implements RequestView, ReLoadingData, SelectBackListener {
 
     @BindView(R.id.back_img)
     ImageView mBackImg;
@@ -83,10 +85,12 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
+    @BindView(R.id.divide_line)
+    View divideLine;
 
-    private String mRequestTag ="";
+    private String mRequestTag = "";
 
-    private String mStartTime="";
+    private String mStartTime = "";
     private String mEndTime = "";
     private String mBusiType = "";
 
@@ -95,7 +99,7 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     private String mSelectType = "";
 
 
-    private HuaZhuanListAdapter mListAdapter;
+    private TeamProfitListAdapter mListAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     private List<Map<String, Object>> mDataList = new ArrayList<>();
     private int mPage = 1;
@@ -111,23 +115,23 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     public void init() {
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
-
+        divideLine.setVisibility(View.GONE);
 
         mAnimUtil = new AnimUtil();
 
         mTitleText.setText("我的收益");
-        mTitleText.setCompoundDrawables(null,null,null,null);
+        mTitleText.setCompoundDrawables(null, null, null, null);
 
         mRightImg.setVisibility(View.GONE);
         mRightImg.setImageResource(R.drawable.shuaixuan);
         mRightTextTv.setVisibility(View.GONE);
         mRightTextTv.setText("筛选");
-        mRightTextTv.setTextColor(ContextCompat.getColor(this,R.color.btn_login_normal));
+        mRightTextTv.setTextColor(ContextCompat.getColor(this, R.color.btn_login_normal));
 
         String sTime = UtilTools.getFirstDayOfMonthByDate(new Date());
 
 
-        String eTime = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
+        String eTime = UtilTools.getStringFromDate(new Date(), "yyyyMMdd");
 
         mSelectStartTime = sTime;
         mSelectEndTime = eTime;
@@ -138,6 +142,7 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
         initView();
         showProgressDialog();
         traderListAction();
+
     }
 
 
@@ -165,7 +170,8 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
             }
         });
     }
-    private void traderListAction(){
+
+    private void traderListAction() {
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(TeamProfitListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
@@ -176,16 +182,19 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     }
 
 
-
     private void responseData() {
         if (mListAdapter == null) {
-            mListAdapter = new HuaZhuanListAdapter(TeamProfitListActivity.this);
+            mListAdapter = new TeamProfitListAdapter(TeamProfitListActivity.this);
             mListAdapter.addAll(mDataList);
 
             /*AnimationAdapter adapter = new ScaleInAnimationAdapter(mDataAdapter);
             adapter.setFirstOnly(false);
             adapter.setDuration(500);
             adapter.setInterpolator(new OvershootInterpolator(.5f));*/
+
+            View view = LayoutInflater.from(this).inflate(R.layout.item_team_profit_header, mRefreshListView, false);
+            //View view = LayoutInflater.from(this).inflate(R.layout.item_bank_bind, null);
+            mListAdapter.addHeaderView(view);
 
             mLRecyclerViewAdapter = new LRecyclerViewAdapter(mListAdapter);
 
@@ -244,13 +253,14 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
 
         mRefreshListView.refreshComplete(10);
         mListAdapter.notifyDataSetChanged();
-        if (mListAdapter.getDataList().size() <= 0){
+        if (mListAdapter.getDataList().size() <= 0) {
             mPageView.showEmpty();
-        }else {
+        } else {
             mPageView.showContent();
         }
 
     }
+
     private RecyclerView mTypeRecyclerView;
     private TradeDialogAdapter mTradeDialogAdapter;
     private TextView mOneTv;
@@ -260,8 +270,8 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     private TextView mEndTimeTv;
     private Button mResetBut;
     private Button mSureBut;
-    private  DateSelectDialog mySelectDialog;
-    private  DateSelectDialog mySelectDialog2;
+    private DateSelectDialog mySelectDialog;
+    private DateSelectDialog mySelectDialog2;
 
 
     private View popView;
@@ -272,10 +282,10 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
         initPopupWindow();
     }
 
-    private void initPopupWindow(){
+    private void initPopupWindow() {
 
         int nH = UtilTools.getNavigationBarHeight(TeamProfitListActivity.this);
-        LinearLayout mNagView ;
+        LinearLayout mNagView;
 
         if (mConditionDialog == null) {
             mySelectDialog = new DateSelectDialog(this, true, "选择日期", 21);
@@ -283,23 +293,23 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
             mySelectDialog2 = new DateSelectDialog(this, true, "选择日期", 22);
             mySelectDialog2.setSelectBackListener(this);
 
-            popView = LayoutInflater.from(TeamProfitListActivity.this).inflate(R.layout.dialog_trade_condition,null);
+            popView = LayoutInflater.from(TeamProfitListActivity.this).inflate(R.layout.dialog_trade_condition, null);
             mConditionDialog = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             mConditionDialog.setClippingEnabled(false);
             initConditionDialog(popView);
 
             mNagView = popView.findViewById(R.id.navigation_b_view);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,nH);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, nH);
             mNagView.setLayoutParams(layoutParams);
 
 
-            int screenWidth=UtilTools.getScreenWidth(TeamProfitListActivity.this);
-            int screenHeight=UtilTools.getScreenHeight(TeamProfitListActivity.this);
-            mConditionDialog.setWidth((int)(screenWidth*0.8));
+            int screenWidth = UtilTools.getScreenWidth(TeamProfitListActivity.this);
+            int screenHeight = UtilTools.getScreenHeight(TeamProfitListActivity.this);
+            mConditionDialog.setWidth((int) (screenWidth * 0.8));
             mConditionDialog.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
 
             //设置background后在外点击才会消失
-            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(TeamProfitListActivity.this,5)));
+            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(TeamProfitListActivity.this, 5)));
             mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
             //自定义动画
             mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
@@ -309,7 +319,7 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
             mConditionDialog.setFocusable(true);
             //popView.requestFocus();//pop设置不setBackgroundDrawable情况，把焦点给popView，添加popView.setOnKeyListener。可实现点击外部不消失，点击反键才消失
             //			mConditionDialog.showAtLocation(mCityTv, Gravity.TOP|Gravity.RIGHT, 0, 0); //设置layout在PopupWindow中显示的位置
-            mConditionDialog.showAtLocation(TeamProfitListActivity.this.getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
+            mConditionDialog.showAtLocation(TeamProfitListActivity.this.getWindow().getDecorView(), Gravity.TOP | Gravity.RIGHT, 0, 0);
             toggleBright();
             mConditionDialog.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -317,16 +327,15 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
                     toggleBright();
                 }
             });
-        }else {
+        } else {
             mNagView = popView.findViewById(R.id.navigation_b_view);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,nH);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, nH);
             mNagView.setLayoutParams(layoutParams);
 
-            mConditionDialog.showAtLocation(TeamProfitListActivity.this.getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
+            mConditionDialog.showAtLocation(TeamProfitListActivity.this.getWindow().getDecorView(), Gravity.TOP | Gravity.RIGHT, 0, 0);
             toggleBright();
         }
     }
-
 
 
     private void toggleBright() {
@@ -358,8 +367,7 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     }
 
 
-
-    private void initConditionDialog(View view){
+    private void initConditionDialog(View view) {
 
         mTypeRecyclerView = view.findViewById(R.id.type_recycleview);
 
@@ -374,20 +382,20 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
         final View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.one_month_tv:
                         mOneTv.setSelected(true);
                         mThreeTv.setSelected(false);
                         mSetTimeTv.setSelected(false);
 
-                        String startOne = UtilTools.getMonthAgo(new Date(),-1);
-                        String endOne = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
+                        String startOne = UtilTools.getMonthAgo(new Date(), -1);
+                        String endOne = UtilTools.getStringFromDate(new Date(), "yyyyMMdd");
 
                         mSelectStartTime = startOne;
                         mSelectEndTime = endOne;
 
-                        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM-dd"));
-                        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM-dd"));
+                        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime, "yyyyMMdd", "yyyy-MM-dd"));
+                        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime, "yyyyMMdd", "yyyy-MM-dd"));
 
                         break;
                     case R.id.three_month_tv:
@@ -395,14 +403,14 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
                         mThreeTv.setSelected(true);
                         mSetTimeTv.setSelected(false);
 
-                        String startThree = UtilTools.getMonthAgo(new Date(),-3);
-                        String endThree = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
+                        String startThree = UtilTools.getMonthAgo(new Date(), -3);
+                        String endThree = UtilTools.getStringFromDate(new Date(), "yyyyMMdd");
 
                         mSelectStartTime = startThree;
                         mSelectEndTime = endThree;
 
-                        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM-dd"));
-                        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM-dd"));
+                        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime, "yyyyMMdd", "yyyy-MM-dd"));
+                        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime, "yyyyMMdd", "yyyy-MM-dd"));
 
                         break;
                     case R.id.set_time_tv:
@@ -437,30 +445,30 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
         mEndTimeTv.setOnClickListener(onClickListener);
 
 
-        List<Map<String,Object>> maps = SelectDataUtil.getCondition();
+        List<Map<String, Object>> maps = SelectDataUtil.getCondition();
 
-        GridLayoutManager linearLayoutManager = new GridLayoutManager(TeamProfitListActivity.this,3);
+        GridLayoutManager linearLayoutManager = new GridLayoutManager(TeamProfitListActivity.this, 3);
         mTypeRecyclerView.setLayoutManager(linearLayoutManager);
-        mTradeDialogAdapter = new TradeDialogAdapter(TeamProfitListActivity.this,maps);
+        mTradeDialogAdapter = new TradeDialogAdapter(TeamProfitListActivity.this, maps);
         //第一次设置默认值
         mSelectType = "borrow";
         mTradeDialogAdapter.setSelectItme(0);
 
         mOneTv.setSelected(true);
 
-        String startOne = UtilTools.getMonthAgo(new Date(),-1);
-        String endOne = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
+        String startOne = UtilTools.getMonthAgo(new Date(), -1);
+        String endOne = UtilTools.getStringFromDate(new Date(), "yyyyMMdd");
         mSelectStartTime = startOne;
         mSelectEndTime = endOne;
 
-        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM-dd"));
-        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM-dd"));
+        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime, "yyyyMMdd", "yyyy-MM-dd"));
+        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime, "yyyyMMdd", "yyyy-MM-dd"));
 
         mTradeDialogAdapter.setOnItemClickListener(new OnMyItemClickListener() {
             @Override
             public void OnMyItemClickListener(View view, int position) {
-                Map<String,Object> itemMap =  mTradeDialogAdapter.getDatas().get(position);
-                mSelectType = itemMap.get("code")+"";
+                Map<String, Object> itemMap = mTradeDialogAdapter.getDatas().get(position);
+                mSelectType = itemMap.get("code") + "";
             }
         });
         mTypeRecyclerView.setAdapter(mTradeDialogAdapter);
@@ -469,20 +477,21 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     private void showDateDialog() {
         mySelectDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
     }
+
     private void showDateDialog2() {
         mySelectDialog2.showAtLocation(Gravity.BOTTOM, 0, 0);
     }
 
 
-
-    private void getSelectCondition(){
+    private void getSelectCondition() {
         mStartTime = mSelectStartTime;
         mEndTime = mSelectEndTime;
         mBusiType = mSelectType;
         mPage = 1;
         traderListAction();
     }
-    private void resetCondition(){
+
+    private void resetCondition() {
         mOneTv.setSelected(true);
         mThreeTv.setSelected(false);
         mSetTimeTv.setSelected(false);
@@ -492,21 +501,18 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
         mTradeDialogAdapter.setSelectItme(0);
         mTradeDialogAdapter.notifyDataSetChanged();
 
-        String startOne = UtilTools.getMonthAgo(new Date(),-1);
-        String endOne = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
+        String startOne = UtilTools.getMonthAgo(new Date(), -1);
+        String endOne = UtilTools.getStringFromDate(new Date(), "yyyyMMdd");
         mSelectStartTime = startOne;
         mSelectEndTime = endOne;
 
-        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM-dd"));
-        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM-dd"));
+        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime, "yyyyMMdd", "yyyy-MM-dd"));
+        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime, "yyyyMMdd", "yyyy-MM-dd"));
 
     }
 
 
-
-
-
-    @OnClick({R.id.back_img,R.id.right_lay,R.id.left_back_lay})
+    @OnClick({R.id.back_img, R.id.right_lay, R.id.left_back_lay})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -535,7 +541,7 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         Intent intent;
-        switch (mType){
+        switch (mType) {
             case MethodUrl.TEAM_PROFIT:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
@@ -543,7 +549,7 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
                             mPageView.showEmpty();
                         } else {
                             mDataList = (List<Map<String, Object>>) tData.get("data");
-                            if (!UtilTools.empty(mDataList) && mDataList.size()>0) {
+                            if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
                                 mPageView.showContent();
                                 responseData();
                                 mRefreshListView.refreshComplete(10);
@@ -579,14 +585,14 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     }
 
     @Override
-    public void loadDataError(Map<String, Object> map,String mType) {
+    public void loadDataError(Map<String, Object> map, String mType) {
 
         switch (mType) {
             case MethodUrl.tradeList://
-                if (mListAdapter != null){
-                    if (mListAdapter.getDataList().size() <= 0){
+                if (mListAdapter != null) {
+                    if (mListAdapter.getDataList().size() <= 0) {
                         mPageView.showNetworkError();
-                    }else {
+                    } else {
                         mPageView.showContent();
                     }
                     mRefreshListView.refreshComplete(10);
@@ -596,13 +602,13 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
                             traderListAction();
                         }
                     });
-                }else {
+                } else {
                     mPageView.showNetworkError();
                 }
                 break;
         }
 
-        dealFailInfo(map,mType);
+        dealFailInfo(map, mType);
     }
 
     @Override
@@ -613,18 +619,25 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
 
     @Override
     public void onSelectBackListener(Map<String, Object> map, int type) {
-        switch (type){
+        switch (type) {
             case 21:
-                mSelectStartTime = map.get("date")+"";
+                mSelectStartTime = map.get("date") + "";
                 mStartTimeTv.setText(mSelectStartTime);
-                mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM-dd"));
+                mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime, "yyyyMMdd", "yyyy-MM-dd"));
                 break;
             case 22:
-                mSelectEndTime = map.get("date")+"";
+                mSelectEndTime = map.get("date") + "";
                 mEndTimeTv.setText(mSelectEndTime);
-                mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM-dd"));
+                mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime, "yyyyMMdd", "yyyy-MM-dd"));
                 break;
         }
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

@@ -1444,7 +1444,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                             mDataListBuy.add(strings1);
                                         }
                                     }
-                                    buyAdapter.setBuyTradeInfo(mDataListBuy, precision);
+                                    buyAdapter.setBuyTradeInfo(mListBuy, precision);
                                 }
 
                                 if (!UtilTools.empty(mListSell) && mListSell.size() > 0) {
@@ -1481,7 +1481,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                             mDataListSell.add(strings1);
                                         }
                                     }
-                                    sellAdapter.setSellTradeInfos(mDataListSell, precision);
+                                    sellAdapter.setSellTradeInfos(mListSell, precision);
                                 }
 
                             }

@@ -16,7 +16,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ReleaseListAdapter extends ListBaseAdapter {
+public class MyProfitListAdapter extends ListBaseAdapter {
 
     private View mHeaderView;
 
@@ -25,7 +25,7 @@ public class ReleaseListAdapter extends ListBaseAdapter {
     private final int ITEM_TYPE_NORMAL = 0;
     private final int ITEM_TYPE_HEADER = 1;
 
-    public ReleaseListAdapter(Context context) {
+    public MyProfitListAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
         mContext = context;
     }
@@ -78,9 +78,9 @@ public class ReleaseListAdapter extends ListBaseAdapter {
         } else {
             final Map<String, Object> item = mDataList.get(position-1);
             ViewHolder viewHolder = (ViewHolder) holder;
-            viewHolder.accontTv.setText(item.get("balance") + "");
-            viewHolder.yejiTv.setText(item.get("release_num") + "");
-            viewHolder.childTreamTv.setText(item.get("time") + "");
+            viewHolder.accontTv.setText(item.get("time") + "");
+            viewHolder.yejiTv.setText(item.get("performance") + "");
+            viewHolder.childTreamTv.setText(item.get("profit") + "");
 
         }
 
