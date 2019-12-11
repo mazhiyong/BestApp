@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.meizu.flyme.internet:push-internal:3.4.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/72ee182ec62ab6829c3064ae70cde8ac/jetified-push-internal-3.4.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/72ee182ec62ab6829c3064ae70cde8ac/jetified-push-internal-3.4.2/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.meizu.flyme.internet/push-internal/3.4.2/fb9e9e8e6482e46dbf0e6d0f79d6702ca42dfb0f/push-internal-3.4.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.meizu.flyme.internet/push-internal/3.4.2/72718420cee76da45a08f03cb1b9a7a837bc7281/push-internal-3.4.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

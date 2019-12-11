@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: artifacts:avenginekit:unspecified@jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/avenginekit/build/.transforms/4741e42581f65354bcb11653b78f68f3/avenginekit/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/avenginekit/build/.transforms/4741e42581f65354bcb11653b78f68f3/avenginekit/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

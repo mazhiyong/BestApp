@@ -35,8 +35,8 @@ public class TradeFragment extends BasicFragment {
 
     private int Position = 0;
     public int TYPE = 0;
-    public String selectArea = "USDT";
-    public String selectSymbol = "BTC";
+    public String selectArea = "";
+    public String selectSymbol = "";
     public String buySell = "1";
 
     public TradeFragment() {
@@ -62,8 +62,8 @@ public class TradeFragment extends BasicFragment {
         mTabLayout.addTab(mTabLayout.newTab().setText("法币交易"));
 
         bbTradeFragment=new BBTradeFragment();
-        bbTradeFragment.symbol = selectSymbol;
-        bbTradeFragment.area = selectArea;
+        /*bbTradeFragment.symbol = selectSymbol;
+        bbTradeFragment.area = selectArea;*/
         mFragments.add(bbTradeFragment);
         fbTradeFragment=new FBTradeFragment();
         mFragments.add(fbTradeFragment);
@@ -75,10 +75,11 @@ public class TradeFragment extends BasicFragment {
             public void onTabSelected(XTabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition() == 0){
-                    bbTradeFragment.symbol = selectSymbol;
-                    bbTradeFragment.area = selectArea;
+                  /*  bbTradeFragment.symbol = selectSymbol;
+                    bbTradeFragment.area = selectArea;*/
                     bbTradeFragment.buysell = buySell;
                     bbTradeFragment.restartWs(selectArea,selectSymbol,buySell);
+
                     if (fbTradeFragment.mLoadingWindow != null){
                         fbTradeFragment.mLoadingWindow.cancleView();
                     }
@@ -107,7 +108,6 @@ public class TradeFragment extends BasicFragment {
             Objects.requireNonNull(mTabLayout.getTabAt(1)).select();
         }else {
             Objects.requireNonNull(mTabLayout.getTabAt(0)).select();
-            LogUtilDebug.i("show","BB************可见");
         }
     }
 
@@ -148,10 +148,10 @@ public class TradeFragment extends BasicFragment {
         LogUtilDebug.i("show","onResume()*******");
 
         if (getUserVisibleHint() && Position ==0) {
-            bbTradeFragment.symbol = selectSymbol;
+         /*   bbTradeFragment.symbol = selectSymbol;
             bbTradeFragment.area = selectArea;
             bbTradeFragment.buysell = buySell;
-            bbTradeFragment.restartWs(selectArea,selectSymbol,buySell);
+            bbTradeFragment.restartWs(selectArea,selectSymbol,buySell);*/
         }
     }
 
@@ -186,10 +186,10 @@ public class TradeFragment extends BasicFragment {
             }
             switch (Position){
                 case 0:
-                    bbTradeFragment.symbol = selectSymbol;
+                  /*  bbTradeFragment.symbol = selectSymbol;
                     bbTradeFragment.area = selectArea;
                     bbTradeFragment.buysell = buySell;
-                    bbTradeFragment.restartWs(selectArea,selectSymbol,buySell);
+                    bbTradeFragment.restartWs(selectArea,selectSymbol,buySell);*/
                     break;
                 case 1:
 

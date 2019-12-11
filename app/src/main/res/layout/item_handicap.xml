@@ -25,12 +25,14 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_3"
         android:textSize="@dimen/sp_12"
+        android:text="0.00"
         app:layout_constraintEnd_toStartOf="@id/tvNumber"
         app:layout_constraintStart_toEndOf="@id/textView59"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.5" />
 
     <TextView
+        android:text="0.00"
         android:id="@+id/tvNumber"
         android:layout_width="@dimen/dp_0"
         android:layout_height="wrap_content"

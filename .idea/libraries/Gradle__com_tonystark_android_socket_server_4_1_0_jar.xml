@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.tonystark.android:socket-server:4.1.0@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tonystark.android/socket-server/4.1.0/7477003a32fe635db49e4d85d3fa0536fb05c336/socket-server-4.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tonystark.android/socket-server/4.1.0/1fc337c5189aa85dd6aa9713142dfc0c862bc766/socket-server-4.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

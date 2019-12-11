@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.why168:LoopViewPagerLayout:2.1.5@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/94d81fc7902c18461fd602c0bcc71f6c/jetified-LoopViewPagerLayout-2.1.5/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/94d81fc7902c18461fd602c0bcc71f6c/jetified-LoopViewPagerLayout-2.1.5/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.why168/LoopViewPagerLayout/2.1.5/e56ca2c20a2236370cfe542b0241f67532f643ef/LoopViewPagerLayout-2.1.5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.why168/LoopViewPagerLayout/2.1.5/dbb4d86f9b2a8c5b8bf08927c9cd50e99e7894c2/LoopViewPagerLayout-2.1.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

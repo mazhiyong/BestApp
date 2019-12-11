@@ -817,8 +817,8 @@ public class MainActivity extends BasicActivity implements RequestView {
     public void toBBFragment(String selectArea, String slectSymbol, String type) {
         rlay2.performClick();
         mTradeFragment.TYPE = 0;
-        mTradeFragment.selectSymbol = slectSymbol;
-        mTradeFragment.selectArea = selectArea;
+      /*  mTradeFragment.selectSymbol = slectSymbol;
+        mTradeFragment.selectArea = selectArea;*/
         mTradeFragment.buySell = type;
     }
 

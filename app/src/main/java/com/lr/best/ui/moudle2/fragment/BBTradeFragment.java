@@ -77,6 +77,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -228,8 +229,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private KindSelectDialog mDialog;
 
     private String mRequestTag = "";
-    public String area = "USDT";
-    public String symbol = "BTC";
+    public String area = "";
+    public String symbol = "";
     public String buysell = "1";
     private String buysell2 = "0";
 
@@ -269,6 +270,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     };
 
     private void getPairDepthAction() {
+        if (UtilTools.empty(symbol) || UtilTools.empty(area)){
+            return;
+        }
         mRequestTag = MethodUrl.COIN_DEPTH;
         Map<String, Object> map = new HashMap<>();
         /*if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
@@ -283,6 +287,10 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     }
 
     private void getCurrentPriceAction() {
+        if (UtilTools.empty(area) || UtilTools.empty(symbol)){
+            return;
+        }
+
         mRequestTag = MethodUrl.CURRENT_PRICE;
         Map<String, Object> map = new HashMap<>();
        /* if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
@@ -334,16 +342,16 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     public boolean prepareFetchData(boolean forceUpdate) {
         if (isVisibleToUser && isViewInitiated && (!isDataInitiated || forceUpdate)) {
             //查询交易区列表
-            getAreaListAction();
+            //getAreaListAction();
 
             //查询交易区列表项
-            getAreaListItemAction();
+            //getAreaListItemAction();
 
             //查询委托单
             //getEntrustListAction();
 
             //账户当前交易区交易币可用
-            getCurAreaAccountAction();
+            //getCurAreaAccountAction();
 
             //setWebsocketListener();
             //handler.post(runnable);
@@ -381,6 +389,13 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 switch (checkedId) {
                     case R.id.rbSell:
                         mKindType = "1";
+                        if (symbol.equals("Best")){
+                            //获取账户下该币的可用额度
+                            getAccountDataAction();
+                        }else {
+                            //获取账户下该币的可用额度
+                            getAviableMoneyAction(symbol);
+                        }
                         //bundleSeekBar.setProgress(0);
                         tvOperateCoin.setText("卖出" + symbol);
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
@@ -404,6 +419,13 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         break;
                     case R.id.rbBuy:
                         mKindType = "0";
+                        if (area.equals("Best")){
+                            //获取账户下该币的可用额度
+                            getAccountDataAction();
+                        }else {
+                            //获取账户下该币的可用额度
+                            getAviableMoneyAction(area);
+                        }
                         //bundleSeekBar.setProgress(0);
                         tvOperateCoin.setText("买入" + symbol);
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
@@ -429,6 +451,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         }
                         break;
                 }
+
+
             }
         });
 
@@ -1098,7 +1122,32 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     rbNumber4.setBackgroundResource(R.drawable.selector_open_close_house3);
                 }
 
+                //查询委托单
                 getEntrustListAction();
+                //账户当前交易区交易币可用
+                getCurAreaAccountAction();
+                // 获取币当前价
+                getCurrentPriceAction();
+                //获取合约价格以及深度信息
+                getPairDepthAction();
+                if (mKindType.equals("0")){//买入 查询area
+                    if (area.equals("Best")){
+                        //获取账户下该币的可用额度
+                        getAccountDataAction();
+                    }else {
+                        //获取账户下该币的可用额度
+                        getAviableMoneyAction(area);
+                    }
+                }else {//卖出 查询symbol
+                    if (symbol.equals("Best")){
+                        //获取账户下该币的可用额度
+                        getAccountDataAction();
+                    }else {
+                        //获取账户下该币的可用额度
+                        getAviableMoneyAction(symbol);
+                    }
+                }
+
             }
         });
 
@@ -1209,9 +1258,36 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
             }
         });
-
-
     }
+
+    private void getAviableMoneyAction(String s) {
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("symbol",s);
+        map.put("type", "1");
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ACCOUNT_AVAIABLE_MONEY, map);
+    }
+
+    /**
+     * 获取个账户信息
+     */
+    public void getAccountDataAction() {
+        mRequestTag = MethodUrl.ZICHAN_ACCOUNT;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("type", "1");
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ZICHAN_ACCOUNT, map);
+    }
+
+
 
     private void cancelWeituoAction(Map<String, Object> mParentMap) {
         mRequestTag = MethodUrl.CANCEL_WEITUO;
@@ -1303,6 +1379,36 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 switch (tData.get("code") + "") {
                     case "0":
                         mtabsData = (List<Map<String, Object>>) tData.get("data");
+                        area = mtabsData.get(0).get("name") + "";
+                        getAreaListItemAction();
+                        break;
+                    case "1":
+                        if (getParentFragment().getActivity() != null) {
+                            getParentFragment().getActivity().finish();
+                        }
+                        intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+                }
+                break;
+            case  MethodUrl.ACCOUNT_AVAIABLE_MONEY:
+                switch (tData.get("code") + "") {
+                    case "0":
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            String avaiableNumber = tData.get("data")+"";
+                            if (UtilTools.empty(avaiableNumber)){
+                                avaiableNumber = "0";
+                            }
+                            if (mKindType.equals("0")){
+                                tvAvailable.setText("可用 "+UtilTools.getNormalMoney(avaiableNumber) + area);
+                            }else {
+                                tvAvailable.setText("可用 "+UtilTools.getNormalMoney(avaiableNumber) + symbol);
+                            }
+
+                        }
                         break;
                     case "1":
                         if (getParentFragment().getActivity() != null) {
@@ -1317,6 +1423,78 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 }
                 break;
 
+            case  MethodUrl.ZICHAN_ACCOUNT:
+                switch (tData.get("code") + "") {
+                    case "0":
+                        if (UtilTools.empty(tData.get("data") + "")) {
+                            if (mKindType.equals("0")){
+                                tvAvailable.setText("可用 0.00" + area);
+                            }else {
+                                tvAvailable.setText("可用 0.00" + symbol);
+                            }
+                        } else {
+                            Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
+                            if (!UtilTools.empty(mapData)) {
+                                if (UtilTools.empty(mapData.get("coin") + "")) {
+                                    if (mKindType.equals("0")){
+                                        tvAvailable.setText("可用 0.00" + area);
+                                    }else {
+                                        tvAvailable.setText("可用 0.00" + symbol);
+                                    }
+                                } else {
+                                    mDataList = (List<Map<String, Object>>) mapData.get("coin");
+                                    if (UtilTools.empty(mDataList) || mDataList.size() == 0) {
+                                        if (mKindType.equals("0")){
+                                            tvAvailable.setText("可用 0.00" + area);
+                                        }else {
+                                            tvAvailable.setText("可用 0.00" + symbol);
+                                        }
+                                    } else {
+                                        for (Map<String,Object> item:mDataList){
+                                            if (!UtilTools.empty(item.get("symbol")) && (item.get("symbol") + "").equals("Best")){
+                                                String balance = item.get("balance")+"";
+                                                String bounder = item.get("JGBEST")+"";
+                                                if (UtilTools.empty(balance)){
+                                                    balance = "0";
+                                                }
+                                                if (UtilTools.empty(bounder)){
+                                                    bounder = "0";
+                                                }
+                                                if (mKindType.equals("0")){
+                                                    tvAvailable.setText("可用 "+UtilTools.getNormalMoney(Double.parseDouble(balance)+Double.parseDouble(bounder)+"")+ area);
+                                                }else {
+                                                    tvAvailable.setText("可用 "+UtilTools.getNormalMoney(Double.parseDouble(balance)+Double.parseDouble(bounder)+"")+ symbol);
+                                                }
+
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                            } else {
+                                if (mKindType.equals("0")){
+                                    tvAvailable.setText("可用 0.00" + area);
+                                }else {
+                                    tvAvailable.setText("可用 0.00" + symbol);
+                                }
+                            }
+                        }
+                        break;
+                    case "1":
+                        if (getParentFragment().getActivity() != null) {
+                            getParentFragment().getActivity().finish();
+                        }
+                        intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+                }
+                break;
+
+
             case MethodUrl.AREA_ITEM:
                 switch (tData.get("code") + "") {
                     case "0":
@@ -1326,6 +1504,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                 Map<String, Object> map = mDatas.get(0);
                                 symbol = map.get("name")+"";
                                 area =map.get("area")+"";
+
                                 selectTv.setText(symbol + "/" + area);
                                 areaTv.setText(area);
                                 tvUnit.setText(symbol);
@@ -1335,6 +1514,34 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                 }else {
                                     tvOperateCoin.setText("卖出" + symbol);
                                 }
+                                //查询委托单
+                                getEntrustListAction();
+                                //账户当前交易区交易币可用
+                                getCurAreaAccountAction();
+                                // 获取币当前价
+                                getCurrentPriceAction();
+                                //获取合约价格以及深度信息
+                                getPairDepthAction();
+                                if (mKindType.equals("0")){//买入 查询area
+                                    if (area.equals("Best")){
+                                        //获取账户下该币的可用额度
+                                        getAccountDataAction();
+                                    }else {
+                                        //获取账户下该币的可用额度
+                                        getAviableMoneyAction(area);
+                                    }
+                                }else {//卖出 查询symbol
+                                    if (symbol.equals("Best")){
+                                        //获取账户下该币的可用额度
+                                        getAccountDataAction();
+                                    }else {
+                                        //获取账户下该币的可用额度
+                                        getAviableMoneyAction(symbol);
+                                    }
+                                }
+
+
+
                             }
                             if (mAdapter != null && mDatas != null && rcv != null) {
                                 mAdapter.setDatas(mDatas);
@@ -1625,13 +1832,21 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         super.onResume();
 
 
+
+        if (UtilTools.empty(area) || UtilTools.empty(symbol)){
+            //查询交易区列表
+            getAreaListAction();
+            if ( tabLayout != null){
+                Objects.requireNonNull(tabLayout.getTabAt(0)).select();
+            }
+        }
+
+
         if (!buysell2.equals("0")) {
             buysell = buysell2;
         }
 
-        //查询委托单
-        getEntrustListAction();
-        getAreaListItemAction();
+
         if (buysell.equals("1")) { //买入
             rbBuy.setChecked(true);
             mKindType = "0";

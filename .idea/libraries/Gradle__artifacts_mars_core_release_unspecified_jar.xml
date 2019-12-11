@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: artifacts:mars-core-release:unspecified@jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/mars-core-release/build/.transforms/e96b917dc08c716f3ef33b30cb682d3e/mars-core-release/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/mars-core-release/build/.transforms/e96b917dc08c716f3ef33b30cb682d3e/mars-core-release/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

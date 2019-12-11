@@ -540,8 +540,9 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                 break;
             case R.id.to_bb_lay: //币币交易
                 if (activity != null){
-                    activity.toBBFragment("USDT","BTC","1");
+                    activity.toBBFragment("","","1");
                 }
+
                 break;
             case R.id.fast_buy_lay: //闪兑
                 intent = new Intent(getActivity(), DuiHuanActivity.class);

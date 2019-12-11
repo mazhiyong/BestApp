@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.jdsjlzx:LRecyclerView:1.5.4.3@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/64d73186ca840d8c0c3f8ee51f113c8f/jetified-LRecyclerView-1.5.4.3/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/64d73186ca840d8c0c3f8ee51f113c8f/jetified-LRecyclerView-1.5.4.3/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.jdsjlzx/LRecyclerView/1.5.4.3/a540d227ad7f3ab8a1906e725201d3e03e724acd/LRecyclerView-1.5.4.3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.jdsjlzx/LRecyclerView/1.5.4.3/7cb3beca371d61ac874d71842bf24fe5e2b79373/LRecyclerView-1.5.4.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
