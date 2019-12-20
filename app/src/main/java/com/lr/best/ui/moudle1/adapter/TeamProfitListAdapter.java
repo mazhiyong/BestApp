@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lr.best.R;
 import com.lr.best.ui.moudle.adapter.ListBaseAdapter;
+import com.lr.best.utils.tool.UtilTools;
 
 import java.util.Map;
 
@@ -78,10 +79,23 @@ public class TeamProfitListAdapter extends ListBaseAdapter {
         } else {
             final Map<String, Object> item = mDataList.get(position-1);
             ViewHolder viewHolder = (ViewHolder) holder;
+            //时间
             viewHolder.accontTv.setText(item.get("time") + "");
-            viewHolder.yejiTv.setText(item.get("team_performance") + "");
+            //我的业绩
+            if (UtilTools.empty(item.get("team_performance"))){
+                viewHolder.yejiTv.setText(item.get("performance_total") + "");
+            }else {
+                viewHolder.yejiTv.setText(item.get("team_performance") + "");
+            }
+            //比例
             viewHolder.biliTv.setText(Float.parseFloat(item.get("rate") + "")*100+"%");
-            viewHolder.childTreamTv.setText(item.get("performance") + "");
+            //奖励
+            if (UtilTools.empty(item.get("performance"))){
+                viewHolder.childTreamTv.setText(item.get("award") + "");
+            }else {
+                viewHolder.childTreamTv.setText(item.get("performance") + "");
+            }
+
 
         }
 

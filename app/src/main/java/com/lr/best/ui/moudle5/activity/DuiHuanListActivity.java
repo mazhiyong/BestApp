@@ -114,7 +114,7 @@ public class DuiHuanListActivity extends BasicActivity implements RequestView,Re
 
         mAnimUtil = new AnimUtil();
 
-        mTitleText.setText("我的交割金");
+        mTitleText.setText("我的交割");
         mTitleText.setCompoundDrawables(null,null,null,null);
 
         mRightImg.setVisibility(View.GONE);

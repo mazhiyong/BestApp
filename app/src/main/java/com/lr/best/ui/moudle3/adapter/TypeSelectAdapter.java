@@ -77,7 +77,22 @@ public class TypeSelectAdapter extends RecyclerView.Adapter<TypeSelectAdapter.Vi
         }else {
             holder.tvType.setText("  ");
         }
-        holder.tvNum.setText(UtilTools.getNormalMoney(mDatas.get(position).get("price") + ""));
+        if ((mDatas.get(position).get("name") + "").equals("Best") && (mDatas.get(position).get("area").equals("Chip"))){
+            holder.tvNum.setVisibility(View.VISIBLE);
+            holder.tvNum.setText("请勿轻易选择这个交易对!");
+        }else {
+            holder.tvNum.setVisibility(View.GONE);
+        }
+
+        if ((mDatas.get(position).get("name") + "").equals("Chip") && (mDatas.get(position).get("area").equals("Best"))){
+            holder.tvTip.setVisibility(View.VISIBLE);
+            holder.tvTip.setText("只有在这个市场里的买卖交易才可以获得交易流水,卖的数量+买的数量=您今日的交易流水");
+        }else {
+            holder.tvTip.setVisibility(View.GONE);
+        }
+
+
+        //holder.tvNum.setText(UtilTools.getNormalMoney(mDatas.get(position).get("price") + ""));
         holder.llLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +123,8 @@ public class TypeSelectAdapter extends RecyclerView.Adapter<TypeSelectAdapter.Vi
         TextView tvType;
         @BindView(R.id.tv_num)
         TextView tvNum;
+        @BindView(R.id.tv_tip)
+        TextView tvTip;
         @BindView(R.id.ll_layout)
         LinearLayout llLayout;
 

@@ -3,7 +3,6 @@ package com.lr.best.ui.moudle1.activity;
 import android.animation.Animator;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidkun.xtablayout.XTabLayout;
 import com.flyco.dialog.utils.CornerUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -44,6 +44,7 @@ import com.lr.best.ui.moudle.activity.LoginActivity;
 import com.lr.best.ui.moudle.adapter.TradeDialogAdapter;
 import com.lr.best.ui.moudle1.adapter.TeamProfitListAdapter;
 import com.lr.best.utils.tool.AnimUtil;
+import com.lr.best.utils.tool.JSONUtil;
 import com.lr.best.utils.tool.SPUtils;
 import com.lr.best.utils.tool.SelectDataUtil;
 import com.lr.best.utils.tool.UtilTools;
@@ -55,7 +56,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -69,14 +69,10 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     TextView mBackText;
     @BindView(R.id.left_back_lay)
     LinearLayout mLeftBackLay;
-    @BindView(R.id.title_text)
-    TextView mTitleText;
     @BindView(R.id.right_img)
     ImageView mRightImg;
     @BindView(R.id.right_text_tv)
     TextView mRightTextTv;
-    @BindView(R.id.top_layout)
-    LinearLayout mTitleBarView;
     @BindView(R.id.right_lay)
     LinearLayout mRightLay;
     @BindView(R.id.refresh_list_view)
@@ -85,8 +81,11 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
-    @BindView(R.id.divide_line)
-    View divideLine;
+
+    @BindView(R.id.tab_layout)
+    XTabLayout tabLayout;
+    @BindView(R.id.title_text)
+    TextView titleText;
 
     private String mRequestTag = "";
 
@@ -103,6 +102,7 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     private List<Map<String, Object>> mDataList = new ArrayList<>();
     private int mPage = 1;
+    private int pageNumber = 1;
 
     private AnimUtil mAnimUtil;
 
@@ -115,12 +115,9 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     public void init() {
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
-        divideLine.setVisibility(View.GONE);
 
         mAnimUtil = new AnimUtil();
 
-        mTitleText.setText("我的收益");
-        mTitleText.setCompoundDrawables(null, null, null, null);
 
         mRightImg.setVisibility(View.GONE);
         mRightImg.setImageResource(R.drawable.shuaixuan);
@@ -140,8 +137,56 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
 
 
         initView();
+
+        if (UtilTools.empty(MbsConstans.USER_MAP)) {
+            String s = SPUtils.get(this, MbsConstans.SharedInfoConstans.LOGIN_INFO, "").toString();
+            MbsConstans.USER_MAP = JSONUtil.getInstance().jsonMap(s);
+        }
+        //普通用户
+        if ((MbsConstans.USER_MAP.get("padian") + "").equals("0")) {
+            titleText.setVisibility(View.VISIBLE);
+            tabLayout.setVisibility(View.GONE);
+        } else { //帕点用户
+            titleText.setVisibility(View.GONE);
+            tabLayout.setVisibility(View.VISIBLE);
+            tabLayout.addTab(tabLayout.newTab().setText("团队收益"));
+            tabLayout.addTab(tabLayout.newTab().setText("帕点收益"));
+        }
+
         showProgressDialog();
         traderListAction();
+
+        tabLayout.setOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(XTabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        mPage = 1;
+                        showProgressDialog();
+                        traderListAction();
+                        break;
+
+                    case 1:
+                        mPage = 1;
+                        mRefreshListView.setNoMore(false);
+                        showProgressDialog();
+                        padianListAction();
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onTabUnselected(XTabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(XTabLayout.Tab tab) {
+
+            }
+        });
+
 
     }
 
@@ -157,8 +202,18 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
         mRefreshListView.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPage = 1;
-                traderListAction();
+                switch (mRequestTag){
+                    case MethodUrl.TEAM_PROFIT:
+                        mPage = 1;
+                        traderListAction();
+                        break;
+                    case MethodUrl.PADIAN_PROFIT:
+                        mPage = 1;
+                        padianListAction();
+                        break;
+
+                }
+
             }
         });
 
@@ -166,12 +221,28 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
             @Override
             public void onLoadMore() {
                 //traderListAction();
-                mRefreshListView.setNoMore(true);
+                switch (mRequestTag){
+                    case MethodUrl.TEAM_PROFIT:
+                        mRefreshListView.setNoMore(true);
+                        break;
+                    case MethodUrl.PADIAN_PROFIT:
+                        if (mPage < pageNumber){
+                            mPage++;
+                            padianListAction();
+                        }else {
+                            mRefreshListView.setNoMore(true);
+                        }
+
+                        break;
+
+                }
+
             }
         });
     }
 
     private void traderListAction() {
+        mRequestTag = MethodUrl.TEAM_PROFIT;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(TeamProfitListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
@@ -179,6 +250,20 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
         map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.TEAM_PROFIT, map);
+    }
+
+
+    private void padianListAction() {
+        mRequestTag = MethodUrl.PADIAN_PROFIT;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(TeamProfitListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("page", mPage);
+        map.put("size", 15);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.PADIAN_PROFIT, map);
     }
 
 
@@ -191,10 +276,6 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
             adapter.setFirstOnly(false);
             adapter.setDuration(500);
             adapter.setInterpolator(new OvershootInterpolator(.5f));*/
-
-            View view = LayoutInflater.from(this).inflate(R.layout.item_team_profit_header, mRefreshListView, false);
-            //View view = LayoutInflater.from(this).inflate(R.layout.item_bank_bind, null);
-            mListAdapter.addHeaderView(view);
 
             mLRecyclerViewAdapter = new LRecyclerViewAdapter(mListAdapter);
 
@@ -233,6 +314,19 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
             mListAdapter.notifyDataSetChanged();
             mLRecyclerViewAdapter.notifyDataSetChanged();//必须调用此方法
         }
+        if (mRequestTag.equals(MethodUrl.TEAM_PROFIT)) {
+            View view = LayoutInflater.from(this).inflate(R.layout.item_team_profit_header, mRefreshListView, false);
+            //View view = LayoutInflater.from(this).inflate(R.layout.item_bank_bind, null);
+            mListAdapter.addHeaderView(view);
+        } else {
+            View view = LayoutInflater.from(this).inflate(R.layout.item_padian_profit_header, mRefreshListView, false);
+            //View view = LayoutInflater.from(this).inflate(R.layout.item_bank_bind, null);
+            mListAdapter.addHeaderView(view);
+        }
+
+
+
+
      /*   //设置底部加载颜色
         mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.black, android.R.color.white);
 
@@ -244,13 +338,13 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
         mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.red ,android.R.color.white);*/
 
         mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-        if (mDataList.size() < 10) {
+       /* if (mDataList.size() < 10) {
             mRefreshListView.setNoMore(true);
         } else {
             mRefreshListView.setNoMore(false);
             mPage++;
         }
-
+*/
         mRefreshListView.refreshComplete(10);
         mListAdapter.notifyDataSetChanged();
         if (mListAdapter.getDataList().size() <= 0) {
@@ -542,6 +636,35 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         Intent intent;
         switch (mType) {
+            case MethodUrl.PADIAN_PROFIT:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (UtilTools.empty(tData.get("data") + "")) {
+                            mPageView.showEmpty();
+                        } else {
+                            Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
+                            mDataList = (List<Map<String, Object>>) mapData.get("list");
+                            pageNumber = Integer.parseInt(mapData.get("page_mum")+"");
+                            if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
+                                mPageView.showContent();
+                                responseData();
+                            } else {
+                                mPageView.showEmpty();
+                            }
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        mPageView.showNetworkError();
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(TeamProfitListActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
             case MethodUrl.TEAM_PROFIT:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
@@ -552,7 +675,6 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
                             if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
                                 mPageView.showContent();
                                 responseData();
-                                mRefreshListView.refreshComplete(10);
                             } else {
                                 mPageView.showEmpty();
                             }
@@ -572,15 +694,7 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
 
 
                 break;
-            case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
-                MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
-                mIsRefreshToken = false;
-                switch (mRequestTag) {
-                    case MethodUrl.tradeList:
-                        traderListAction();
-                        break;
-                }
-                break;
+
         }
     }
 
@@ -588,7 +702,7 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     public void loadDataError(Map<String, Object> map, String mType) {
 
         switch (mType) {
-            case MethodUrl.tradeList://
+            case MethodUrl.tradeList:
                 if (mListAdapter != null) {
                     if (mListAdapter.getDataList().size() <= 0) {
                         mPageView.showNetworkError();
@@ -614,7 +728,16 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
     @Override
     public void reLoadingData() {
         showProgressDialog();
-        traderListAction();
+        switch (mRequestTag){
+            case MethodUrl.TEAM_PROFIT:
+                traderListAction();
+                break;
+            case MethodUrl.PADIAN_PROFIT:
+                padianListAction();
+                break;
+
+        }
+
     }
 
     @Override
@@ -634,10 +757,6 @@ public class TeamProfitListActivity extends BasicActivity implements RequestView
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
+
 }

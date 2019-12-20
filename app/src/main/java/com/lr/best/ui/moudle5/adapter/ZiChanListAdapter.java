@@ -58,7 +58,7 @@ public class ZiChanListAdapter extends ListBaseAdapter {
         viewHolder.typeTv.setText(item.get("symbol") + "");
         if (!UtilTools.empty(item.get("symbol")) && (item.get("symbol") + "").equals("Best")){
             viewHolder.jiaogeActionTv.setVisibility(View.VISIBLE);
-            viewHolder.jiaogeTv.setText("交割金");
+            viewHolder.jiaogeTv.setText("交割数量");
         }else {
             viewHolder.jiaogeActionTv.setVisibility(View.GONE);
             viewHolder.jiaogeTv.setText("冻结");

@@ -91,6 +91,10 @@ public class WeiTuoListAdapter extends ListBaseAdapter {
             textViewUtils.build();
         }
 
+        viewHolder.areaTv.setText("价格("+item.get("area")+")");
+        viewHolder.symbolTv.setText("数量("+item.get("symbol")+")");
+        viewHolder.symbolTv2.setText("实际成交("+item.get("symbol")+")");
+
         viewHolder.timeTv.setText(item.get("time") + "");
         viewHolder.priceTv.setText(UtilTools.getNormalMoney(item.get("price") + ""));
         viewHolder.numberTv.setText(UtilTools.getNormalMoney(item.get("total") + ""));
@@ -127,6 +131,12 @@ public class WeiTuoListAdapter extends ListBaseAdapter {
         TextView stateTv;
         @BindView(R.id.money_tv)
         TextView moneyTv;
+        @BindView(R.id.areaTv)
+        TextView areaTv;
+        @BindView(R.id.symbolTv)
+        TextView symbolTv;
+        @BindView(R.id.symbolTv2)
+        TextView symbolTv2;
         @BindView(R.id.money_lay)
         LinearLayout moneyLay;
         @BindView(R.id.item_lay)

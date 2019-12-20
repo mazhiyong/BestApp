@@ -172,7 +172,7 @@
                             android:layout_height="wrap_content">
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:text="闪兑BEST"
+                                android:text="快速交割"
                                 android:layout_gravity="center_vertical"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/sp_22"
@@ -181,7 +181,7 @@
                             <TextView
                                 android:layout_marginTop="@dimen/dp_10"
                                 android:layout_width="wrap_content"
-                                android:text="任意币种轻松兑"
+                                android:text="交割送指标了"
                                 android:layout_gravity="center_vertical"
                                 android:textStyle="bold"
                                 android:textSize="@dimen/sp_12"

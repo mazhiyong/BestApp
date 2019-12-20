@@ -49,8 +49,8 @@ import com.lr.best.ui.moudle1.adapter.MoreTypeAdapter;
 import com.lr.best.ui.moudle3.activity.CoinInfoDetailActivity;
 import com.lr.best.ui.moudle4.activity.RedRecordListActivity;
 import com.lr.best.ui.moudle5.activity.ChoseBiTypeActivity;
-import com.lr.best.ui.moudle5.activity.DuiHuanActivity;
 import com.lr.best.ui.moudle5.activity.HuaZhuanActivity;
+import com.lr.best.ui.moudle5.activity.JiaoGeActivity;
 import com.lr.best.utils.imageload.GlideUtils;
 import com.lr.best.utils.tool.AnimUtil;
 import com.lr.best.utils.tool.JSONUtil;
@@ -545,7 +545,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
 
                 break;
             case R.id.fast_buy_lay: //闪兑
-                intent = new Intent(getActivity(), DuiHuanActivity.class);
+                intent = new Intent(getActivity(), JiaoGeActivity.class);
                 startActivity(intent);
                 break;
         }

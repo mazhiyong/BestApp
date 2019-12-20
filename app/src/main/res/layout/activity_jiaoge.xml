@@ -54,7 +54,7 @@
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
                 android:singleLine="true"
-                android:text="交割金"
+                android:text="交割"
                 android:textColor="@color/black" />
             <com.androidkun.xtablayout.XTabLayout
                 android:id="@+id/tab_layout"
@@ -423,6 +423,7 @@
                     android:textColor="@color/black" />
             </LinearLayout>
             <TextView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/sp_12"
@@ -455,6 +456,7 @@
                    android:textColor="@color/black" />
            </LinearLayout>
             <TextView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/sp_12"

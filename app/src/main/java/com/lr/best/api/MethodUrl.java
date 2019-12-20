@@ -215,6 +215,7 @@ public class MethodUrl {
     public static final String DELIVERY_ACTION= "user_info/delivery";//交割
     public static final String MY_PROFIT= "user_info/profit";//我的分红
     public static final String TEAM_PROFIT= "user_info/teamProfit";//我的收益
+    public static final String PADIAN_PROFIT = "user_info/padian";//帕点收益
 
 
 

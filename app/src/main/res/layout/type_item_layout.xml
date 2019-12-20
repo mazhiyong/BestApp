@@ -21,8 +21,8 @@
             android:textColor="@color/black"
             android:layout_height="wrap_content"/>
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+
             android:text="/USDT"
             android:textSize="@dimen/sp_14"
             android:id="@+id/tv_type"
@@ -32,23 +32,32 @@
             android:textColor="@color/gray"
             android:layout_height="wrap_content"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:padding="@dimen/dp_10"
-            android:visibility="gone"
-            android:text="810921029109201"
-            android:textSize="16sp"
+            android:text=""
+            android:textSize="@dimen/sp_12"
             android:id="@+id/tv_num"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/red_light"
+            android:gravity="right"
+            android:lineSpacingExtra="@dimen/dp_5"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-
-
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5px"
         android:background="@color/divide_line"/>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:padding="@dimen/dp_10"
+        android:text=""
+        android:textSize="@dimen/sp_12"
+        android:id="@+id/tv_tip"
+        android:lineSpacingExtra="@dimen/dp_5"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

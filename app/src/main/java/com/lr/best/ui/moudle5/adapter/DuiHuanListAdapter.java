@@ -43,9 +43,9 @@ public class DuiHuanListAdapter extends ListBaseAdapter {
         final ViewHolder viewHolder = (ViewHolder) holder;
 
         viewHolder.typeTv.setText("流水号:" + item.get("id"));
-        viewHolder.timeTv.setText(item.get("no") + "");
         viewHolder.numberTv.setText(item.get("integral") + "");
-        viewHolder.fromtoTv.setText(item.get("integral_surplus") + "");
+        viewHolder.fromtoTv.setText(item.get("releases") + "");
+        viewHolder.timeTv.setText(item.get("integral_surplus") + "");
         viewHolder.jifenTv.setText(item.get("num") + "");
         viewHolder.jianglijinTv.setText(item.get("time") + "");
 

@@ -205,6 +205,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
 
     public LoadingWindow mLoadingWindow;
+
     @BindView(R.id.smartRefreshLay)
     SmartRefreshLayout smartRefreshLay;
 
@@ -389,13 +390,15 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 switch (checkedId) {
                     case R.id.rbSell:
                         mKindType = "1";
-                        if (symbol.equals("Best")){
+                        //获取账户下该币的可用额度
+                        getAviableMoneyAction(symbol);
+                       /* if (symbol.equals("Best")){
                             //获取账户下该币的可用额度
                             getAccountDataAction();
                         }else {
                             //获取账户下该币的可用额度
                             getAviableMoneyAction(symbol);
-                        }
+                        }*/
                         //bundleSeekBar.setProgress(0);
                         tvOperateCoin.setText("卖出" + symbol);
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
@@ -419,13 +422,15 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         break;
                     case R.id.rbBuy:
                         mKindType = "0";
-                        if (area.equals("Best")){
+                        //获取账户下该币的可用额度
+                        getAviableMoneyAction(area);
+                       /* if (area.equals("Best")){
                             //获取账户下该币的可用额度
                             getAccountDataAction();
                         }else {
                             //获取账户下该币的可用额度
                             getAviableMoneyAction(area);
-                        }
+                        }*/
                         //bundleSeekBar.setProgress(0);
                         tvOperateCoin.setText("买入" + symbol);
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
@@ -1095,7 +1100,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 symbol = mDatas.get(position).get("name") + "";
                 selectTv.setText(symbol + "/" + area);
                 areaTv.setText(area);
-                tvUnit.setText(symbol);
                 if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())) {
                     LogUtilDebug.i("show","交易额:"+Double.parseDouble(etNumber.getText().toString()) * Double.parseDouble(etPrice.getText().toString()));
                     tvTransactionAmount.setText(UtilTools.getNormalMoney(Double.parseDouble(etNumber.getText().toString()) * Double.parseDouble(etPrice.getText().toString()) + "") + "  " + area);
@@ -1104,6 +1108,12 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 }
                 if (buysell.equals("1")) { //买入
                     rbBuy.setChecked(true);
+                    if (mSelectType.equals("0")){//限价
+                        tvUnit.setText(symbol);
+                    }else {
+                        tvUnit.setText(area);
+                    }
+
                     mKindType = "0";
                     tvOperateCoin.setText("买入" + symbol);
                     tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
@@ -1113,6 +1123,11 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     rbNumber4.setBackgroundResource(R.drawable.selector_open_close_house2);
                 } else {
                     rbSell.setChecked(true);
+                    if (mSelectType.equals("0")){//限价
+                        tvUnit.setText(symbol);
+                    }else {
+                        tvUnit.setText(area);
+                    }
                     mKindType = "1";
                     tvOperateCoin.setText("卖出" + symbol);
                     tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
@@ -1122,6 +1137,35 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     rbNumber4.setBackgroundResource(R.drawable.selector_open_close_house3);
                 }
 
+
+                if (area.equals("Best") && symbol.equals("Chip")){
+                    tvLimitPrice.setEnabled(false);
+                    tvLimitPrice.setText("市价");
+                    tvCnyPrice.setText("以当前价格为1进行交易");
+                    mSelectType = "1"; //市价
+                    tvTransactionAmount.setText("--");
+                    if (mKindType.equals("0")) { //买入
+                       /* clPrice.setVisibility(View.VISIBLE);
+                        tvCnyPrice.setVisibility(View.GONE);
+                        etPrice.setHint("金额");*/
+                        etNumber.setHint("金额");
+                        tvUnit.setText(area);
+                        clPrice.setVisibility(View.GONE);
+                        tvCnyPrice.setVisibility(View.VISIBLE);
+
+                    } else { //卖出
+                        etNumber.setHint("数量");
+                        tvUnit.setText(symbol);
+                        clPrice.setVisibility(View.GONE);
+                        tvCnyPrice.setVisibility(View.VISIBLE);
+                    }
+                }else {
+                    tvLimitPrice.setEnabled(true);
+                    tvLimitPrice.setEnabled(true);
+                    tvCnyPrice.setText("以当前最优价格交易");
+                }
+
+
                 //查询委托单
                 getEntrustListAction();
                 //账户当前交易区交易币可用
@@ -1130,22 +1174,28 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 getCurrentPriceAction();
                 //获取合约价格以及深度信息
                 getPairDepthAction();
+
+
                 if (mKindType.equals("0")){//买入 查询area
-                    if (area.equals("Best")){
+                    //获取账户下该币的可用额度
+                    getAviableMoneyAction(area);
+                    /*if (area.equals("Best")){
                         //获取账户下该币的可用额度
                         getAccountDataAction();
                     }else {
                         //获取账户下该币的可用额度
                         getAviableMoneyAction(area);
-                    }
+                    }*/
                 }else {//卖出 查询symbol
-                    if (symbol.equals("Best")){
+                    //获取账户下该币的可用额度
+                    getAviableMoneyAction(symbol);
+                   /* if (symbol.equals("Best")){
                         //获取账户下该币的可用额度
                         getAccountDataAction();
                     }else {
                         //获取账户下该币的可用额度
                         getAviableMoneyAction(symbol);
-                    }
+                    }*/
                 }
 
             }
@@ -1523,21 +1573,25 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                 //获取合约价格以及深度信息
                                 getPairDepthAction();
                                 if (mKindType.equals("0")){//买入 查询area
-                                    if (area.equals("Best")){
+                                    //获取账户下该币的可用额度
+                                    getAviableMoneyAction(area);
+                                   /* if (area.equals("Best")){
                                         //获取账户下该币的可用额度
                                         getAccountDataAction();
                                     }else {
                                         //获取账户下该币的可用额度
                                         getAviableMoneyAction(area);
-                                    }
+                                    }*/
                                 }else {//卖出 查询symbol
-                                    if (symbol.equals("Best")){
+                                    //获取账户下该币的可用额度
+                                    getAviableMoneyAction(symbol);
+                                  /*  if (symbol.equals("Best")){
                                         //获取账户下该币的可用额度
                                         getAccountDataAction();
                                     }else {
                                         //获取账户下该币的可用额度
                                         getAviableMoneyAction(symbol);
-                                    }
+                                    }*/
                                 }
 
 
@@ -1831,8 +1885,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     public void onResume() {
         super.onResume();
 
-
-
         if (UtilTools.empty(area) || UtilTools.empty(symbol)){
             //查询交易区列表
             getAreaListAction();
@@ -1840,11 +1892,10 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 Objects.requireNonNull(tabLayout.getTabAt(0)).select();
             }
         }
-
-
         if (!buysell2.equals("0")) {
             buysell = buysell2;
         }
+
 
 
         if (buysell.equals("1")) { //买入
@@ -1861,14 +1912,15 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 clPrice.setVisibility(View.VISIBLE);
                 tvCnyPrice.setVisibility(View.GONE);
                 etPrice.setHint("价格");
+                tvUnit.setText(symbol);
             } else { //市价买
                            /* clPrice.setVisibility(View.VISIBLE);
                             tvCnyPrice.setVisibility(View.GONE);
                             etPrice.setHint("金额");*/
                 etNumber.setHint("金额");
-                tvUnit.setText(area);
                 clPrice.setVisibility(View.GONE);
                 tvCnyPrice.setVisibility(View.VISIBLE);
+                tvUnit.setText(area);
 
             }
 
@@ -1885,10 +1937,11 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             if (mSelectType.equals("0")) { //限价
                 clPrice.setVisibility(View.VISIBLE);
                 tvCnyPrice.setVisibility(View.GONE);
+                tvUnit.setText(symbol);
                 etPrice.setHint("价格");
             } else { //市价 卖
                 etNumber.setHint("数量");
-                tvUnit.setText(symbol);
+                tvUnit.setText(area);
                 clPrice.setVisibility(View.GONE);
                 tvCnyPrice.setVisibility(View.VISIBLE);
             }
@@ -1896,7 +1949,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
         selectTv.setText(symbol + "/" + area);
         areaTv.setText(area);
-        tvUnit.setText(symbol);
         if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())) {
             LogUtilDebug.i("show","交易额:"+Double.parseDouble(etNumber.getText().toString()) * Double.parseDouble(etPrice.getText().toString()));
             tvTransactionAmount.setText(UtilTools.getNormalMoney(Double.parseDouble(etNumber.getText().toString()) * Double.parseDouble(etPrice.getText().toString()) + "") + "  " + area);

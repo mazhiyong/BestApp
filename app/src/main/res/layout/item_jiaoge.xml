@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="释放比例"
+                        android:text="释放速度"
                         android:gravity="left"
                         android:textSize="@dimen/sp_14"
                         android:textColor="@color/gray"
